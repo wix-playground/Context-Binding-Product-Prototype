@@ -201,7 +201,7 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .spec-topbar-element-name{font-weight:600;color:var(--t1)}
 .spec-topbar-element-type{font-size:10px;color:var(--t3);font-family:'DM Mono',monospace}
 .spec-topbar-element-binding{display:flex;align-items:center;gap:4px;padding:2px 6px;background:var(--grn-d);border:1px solid var(--grn-b);border-radius:6px;font-size:10px;font-family:'DM Mono',monospace;color:var(--grn)}
-.spec-body{max-width:780px;margin:0 auto;padding:40px 32px 80px}
+.spec-body{max-width:900px;margin:0 auto;padding:40px 32px 80px}
 .spec-hero{margin-bottom:36px}
 .spec-hero h1{font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--t1);margin-bottom:8px}
 .spec-hero-sub{font-size:13px;color:var(--t3);line-height:1.6}
@@ -237,8 +237,14 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .spec-demo-badge{font-size:9px;padding:2px 8px;border-radius:10px;background:#22c55e18;color:#22c55e;font-weight:600;letter-spacing:.3px;display:flex;align-items:center;gap:4px}
 .spec-demo-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#22c55e;animation:spec-pulse 1.5s ease-in-out infinite}
 @keyframes spec-pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.spec-demo-body{padding:24px;display:flex;justify-content:center;background:var(--bg);position:relative;min-height:340px}
-.spec-demo-canvas{position:relative;width:100%;max-width:520px}
+.spec-demo-body{padding:8px;display:flex;justify-content:center;background:var(--bg);position:relative;min-height:340px}
+.spec-demo-canvas{position:relative;width:100%}
+.spec-demo-canvas img{width:100%;height:auto;display:block;border-radius:4px}
+.demo-frame{position:relative;display:inline-block;width:100%}
+.demo-cursor{position:absolute;width:24px;height:24px;z-index:5;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));animation:demo-cur .9s ease-in-out infinite}
+@keyframes demo-cur{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.65;transform:scale(.92)}}
+.demo-click{position:absolute;width:28px;height:28px;border-radius:50%;border:2px solid var(--acc);z-index:4;pointer-events:none;animation:demo-ring 1.4s ease-in-out infinite}
+@keyframes demo-ring{0%,100%{box-shadow:0 0 0 0 var(--acc-b);opacity:1}50%{box-shadow:0 0 0 8px transparent;opacity:.5}}
 .spec-demo-step{position:absolute;opacity:0;transition:opacity .4s ease}
 .spec-demo-step.active{opacity:1}
 .spec-demo-timeline{display:flex;align-items:center;gap:0;padding:10px 14px;border-top:1px solid var(--b1);background:var(--sur2)}
@@ -11565,126 +11571,63 @@ document.addEventListener('click', function() {
 });
 
 /* ── SPEC DEMO ANIMATION ── */
+var _cursorSvg = '<svg viewBox="-3 -1 12 17" class="demo-cursor" style="POS"><path d="M-1,0 L1,0 C1.5,0 1.5,.5 1.5,1 L1.5,5.5 C2,5 2.5,4.5 3,4.5 C3.5,4.5 4,5 4,5.5 L4,6 C4.5,5.5 5,5 5.5,5 C6,5 6.5,5.5 6.5,6 L6.5,6.5 C7,6 7.5,5.5 8,5.5 C8.5,5.5 9,6 9,6.5 L9,11 C9,12 8.5,13 7.5,14 L6.5,14.5 L1.5,14.5 C.5,14.5 -.5,13.5 -1,12.5 L-2.5,10 C-3,9.5 -3,8.5 -2.5,8 C-2,7.5 -1.5,7.5 -1,8 L-1,1 Z" fill="white" stroke="#1a1a2e" stroke-width=".7" stroke-linejoin="round"/></svg>';
+function _demoScreen(src, curTop, curLeft) {
+  var html = '<div class="demo-frame"><img src="' + src + '">';
+  if (curTop !== undefined) {
+    html += '<div class="demo-click" style="top:' + curTop + ';left:' + curLeft + ';transform:translate(-50%,-50%)"></div>';
+    html += _cursorSvg.replace('POS', 'top:' + curTop + ';left:calc(' + curLeft + ' + 10px)');
+  }
+  return html + '</div>';
+}
+
 const SPEC_DEMO_STEPS_MAP = {};
 
 SPEC_DEMO_STEPS_MAP['connect-value-panel'] = [
   {
-    caption: '<b>Step 1:</b> User clicks the ⚡ bind icon on the "Value" property row in the inspector',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas"><div class="dm-canvas-label">Canvas</div>' +
-          '<div class="dm-section"><div class="dm-section-pill">☁️ Weather App</div>' +
-            '<div class="dm-el"><div class="dm-el-name">City Text</div><div class="dm-el-val">Tel Aviv</div></div>' +
-            '<div class="dm-el sel"><div class="dm-el-name">Temperature</div><div class="dm-el-val">This is a Title</div></div>' +
-            '<div class="dm-el"><div class="dm-el-name">Condition</div><div class="dm-el-val">Sunny</div></div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="dm-inspector"><div class="dm-insp-head">Properties · Temperature</div><div class="dm-insp-body">' +
-          '<div class="dm-prop"><div class="dm-prop-label">Value</div><div class="dm-prop-row"><div class="dm-prop-val">This is a Title</div><div class="dm-prop-bind pulse active" title="Connect data">⚡</div></div></div>' +
-          '<div class="dm-prop"><div class="dm-prop-label">Visible</div><div class="dm-prop-row"><div class="dm-prop-val">true</div><div class="dm-prop-bind">⚡</div></div></div>' +
-        '</div></div>' +
-      '</div>';
-    }
+    caption: '<b>Step 1:</b> User selects the <b>Temperature</b> element — inspector shows properties with ⚡ bind icons',
+    render: function() { return _demoScreen('demo-screens/connect-value-panel/step1.png', '19%', '82%'); }
   },
   {
-    caption: '<b>Step 2:</b> The Connect panel opens — source dropdown is ready to select',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas" style="opacity:.4"><div class="dm-canvas-label">Canvas</div>' +
-          '<div class="dm-section"><div class="dm-section-pill">☁️ Weather App</div>' +
-            '<div class="dm-el"><div class="dm-el-name">City Text</div></div>' +
-            '<div class="dm-el sel"><div class="dm-el-name">Temperature</div></div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="dm-connect"><div class="dm-connect-head">Connect · Value <span class="dm-connect-x">✕</span></div>' +
-          '<div class="dm-dd-label">Select Source</div>' +
-          '<div class="dm-dd-box" style="border-color:var(--acc)"><span style="color:var(--t3)">Select…</span><span class="chevron">▾</span></div>' +
-          '<div class="dm-dd-label" style="opacity:.4">Select Field</div>' +
-          '<div class="dm-dd-box" style="opacity:.4"><span style="color:var(--t4)">Pick source first</span><span class="chevron">▾</span></div>' +
-          '<div class="dm-bind-btn disabled">✓ Bind</div>' +
-        '</div>' +
-      '</div>';
-    }
+    caption: '<b>Step 2:</b> The <b>Connect panel</b> opens — source dropdown is ready to select',
+    render: function() { return _demoScreen('demo-screens/connect-value-panel/step2.png', '5%', '59%'); }
   },
   {
-    caption: '<b>Step 3:</b> User opens the source dropdown and selects <b>"Weather App"</b>',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas" style="opacity:.3"><div class="dm-canvas-label">Canvas</div></div>' +
-        '<div class="dm-connect"><div class="dm-connect-head">Connect · Value <span class="dm-connect-x">✕</span></div>' +
-          '<div class="dm-dd-label">Select Source</div>' +
-          '<div class="dm-dd-box open"><span>Select…</span><span class="chevron" style="color:var(--acc)">▴</span></div>' +
-          '<div class="dm-dd-list">' +
-            '<div class="dm-dd-group">Contexts</div>' +
-            '<div class="dm-dd-item sel">☁️ Weather App <span class="dm-dd-item-type">object</span></div>' +
-            '<div class="dm-dd-item">📝 CMS Articles <span class="dm-dd-item-type">array</span></div>' +
-            '<div class="dm-dd-group">Function Libraries</div>' +
-            '<div class="dm-dd-item">🔧 Formatters</div>' +
-          '</div>' +
-          '<div class="dm-bind-btn disabled">✓ Bind</div>' +
-        '</div>' +
-      '</div>';
-    }
+    caption: '<b>Step 3:</b> Source selected — <b>field dropdown</b> auto-opens showing compatible fields',
+    render: function() { return _demoScreen('demo-screens/connect-value-panel/step3.png', '26%', '55%'); }
   },
   {
-    caption: '<b>Step 4:</b> Source selected — field dropdown auto-opens showing compatible fields',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas" style="opacity:.3"><div class="dm-canvas-label">Canvas</div></div>' +
-        '<div class="dm-connect"><div class="dm-connect-head">Connect · Value <span class="dm-connect-x">✕</span></div>' +
-          '<div class="dm-dd-label">Select Source</div>' +
-          '<div class="dm-dd-box selected">☁️ Weather App <span class="chevron">▾</span></div>' +
-          '<div class="dm-dd-label">Select Field</div>' +
-          '<div class="dm-dd-box open"><span style="color:var(--t3)">Select…</span><span class="chevron" style="color:var(--acc)">▴</span></div>' +
-          '<div class="dm-dd-list">' +
-            '<div class="dm-dd-item">city <span class="dm-dd-item-type">string</span></div>' +
-            '<div class="dm-dd-item sel">temperature <span class="dm-dd-item-type">number</span></div>' +
-            '<div class="dm-dd-item">condition <span class="dm-dd-item-type">enum</span></div>' +
-            '<div class="dm-dd-item">humidity <span class="dm-dd-item-type">number</span></div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }
+    caption: '<b>Step 4:</b> Field <b>"temperature"</b> selected — Bind button activates',
+    render: function() { return _demoScreen('demo-screens/connect-value-panel/step4.png', '17%', '59%'); }
   },
   {
-    caption: '<b>Step 5:</b> Field "temperature" selected — <b>Bind button activates</b>',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas" style="opacity:.3"><div class="dm-canvas-label">Canvas</div></div>' +
-        '<div class="dm-connect"><div class="dm-connect-head">Connect · Value <span class="dm-connect-x">✕</span></div>' +
-          '<div class="dm-dd-label">Select Source</div>' +
-          '<div class="dm-dd-box selected">☁️ Weather App <span class="chevron">▾</span></div>' +
-          '<div class="dm-dd-label">Select Field</div>' +
-          '<div class="dm-dd-box selected" style="color:var(--acc)">temperature <span class="chevron">▾</span></div>' +
-          '<div class="dm-bind-btn active pulse">✓ Bind · temperature</div>' +
-        '</div>' +
-      '</div>';
-    }
+    caption: '<b>Step 5:</b> Binding confirmed — canvas updates with <b>bound data</b>',
+    render: function() { return _demoScreen('demo-screens/connect-value-panel/step5.png'); }
   },
   {
-    caption: '<b>Step 6:</b> Binding confirmed! Canvas element now shows <b>bound data</b> with visual indicators',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas"><div class="dm-canvas-label">Canvas</div>' +
-          '<div class="dm-section"><div class="dm-section-pill">☁️ Weather App</div>' +
-            '<div class="dm-el bound"><div class="dm-el-name">City Text</div><div class="dm-el-val bound">Weather · city</div><div class="dm-el-dot"></div></div>' +
-            '<div class="dm-el bound sel"><div class="dm-el-tag">☁️ Weather · temperature</div><div class="dm-el-dot"></div><div class="dm-el-name">Temperature</div><div class="dm-el-val bound">"24°C"</div></div>' +
-            '<div class="dm-el"><div class="dm-el-name">Condition</div><div class="dm-el-val">Sunny</div></div>' +
-          '</div>' +
-          '<div class="dm-toast"><span class="check">✓</span> Bound to temperature</div>' +
-        '</div>' +
-        '<div class="dm-inspector"><div class="dm-insp-head">Properties · Temperature</div><div class="dm-insp-body">' +
-          '<div class="dm-prop"><div class="dm-prop-label">Value</div><div class="dm-prop-row"><div class="dm-prop-val bound">temperature</div><div class="dm-prop-bind bound">⚡</div></div></div>' +
-          '<div class="dm-prop"><div class="dm-prop-label">Visible</div><div class="dm-prop-row"><div class="dm-prop-val">true</div><div class="dm-prop-bind">⚡</div></div></div>' +
-        '</div></div>' +
-      '</div>';
-    }
+    caption: '<b>Step 6:</b> Final state — element shows <b>bound value</b> in inspector',
+    render: function() { return _demoScreen('demo-screens/connect-value-panel/step6.png'); }
   }
 ];
 
 SPEC_DEMO_STEPS_MAP['repeater-context:flow1'] = [
   {
-    caption: '<b>Step 1:</b> User drags a <b>Products Gallery</b> (pre-bound repeater) from the Add Panel',
+    caption: '<b>Step 1:</b> Repeater selected — inspector shows <b>properties and context bindings</b>',
+    render: function() { return _demoScreen('demo-screens/repeater-context/step1.png', '18%', '82%'); }
+  },
+  {
+    caption: '<b>Step 2:</b> Open <b>Items binding</b> dropdown — context picker shows available sources',
+    render: function() { return _demoScreen('demo-screens/repeater-context/step2.png', '18%', '59%'); }
+  },
+  {
+    caption: '<b>Step 3:</b> Inner element selected — inspector shows <b>scoped binding</b> to repeater item',
+    render: function() { return _demoScreen('demo-screens/repeater-context/step3.png', '47%', '33%'); }
+  }
+];
+
+/* removed old flow1 */ void [
+  {
+    caption: 'OLD',
     render: function() {
       return '<div class="dm">' +
         '<div class="dm-canvas"><div class="dm-canvas-label">Canvas</div>' +
@@ -11902,84 +11845,24 @@ SPEC_DEMO_STEPS_MAP['repeater-context:flow6'] = [
 
 SPEC_DEMO_STEPS_MAP['add-context-panel'] = [
   {
-    caption: '<b>Step 1:</b> User clicks <b>"+ Add Context"</b> from the inspector or section settings',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas"><div class="dm-canvas-label">Canvas</div>' +
-          '<div class="dm-section" style="min-height:100px">' +
-            '<div style="font-size:9px;color:var(--t3);padding:20px;text-align:center">Empty section — no context attached</div>' +
-          '</div>' +
-        '</div>' +
-        '<div class="dm-inspector"><div class="dm-insp-head">Section · Empty</div><div class="dm-insp-body">' +
-          '<div style="font-size:10px;font-weight:600;color:var(--t1);margin-bottom:6px">Context</div>' +
-          '<div style="font-size:9px;color:var(--t3);margin-bottom:8px">No data context attached</div>' +
-          '<div style="padding:6px 10px;border-radius:6px;border:1px dashed var(--acc-b);background:var(--acc-d);color:var(--acc);font-size:10px;font-weight:600;text-align:center;cursor:pointer">+ Add Context</div>' +
-        '</div></div>' +
-      '</div>';
-    }
+    caption: '<b>Step 1:</b> Section selected — inspector shows <b>settings</b> with context area and "+ Add Context"',
+    render: function() { return _demoScreen('demo-screens/add-context-panel/step1.png', '31%', '73%'); }
   },
   {
-    caption: '<b>Step 2:</b> Modal opens showing available contexts grouped by <b>CMS</b> and <b>Custom</b>',
-    render: function() {
-      return '<div class="dm" style="position:relative">' +
-        '<div class="dm-canvas" style="opacity:.3"><div class="dm-canvas-label">Canvas</div></div>' +
-        '<div class="dm-inspector" style="opacity:.3"><div class="dm-insp-head">Section</div></div>' +
-        '<div class="dm-modal-overlay">' +
-          '<div class="dm-modal"><div class="dm-modal-head">Add Context <span style="font-size:9px;color:var(--t3);font-weight:400">Section · Empty</span></div>' +
-            '<div class="dm-modal-body">' +
-              '<div class="dm-modal-group">CMS Collections</div>' +
-              '<div class="dm-modal-item"><div class="dm-modal-check">✓</div><div><div class="dm-modal-item-name">📝 CMS Articles</div><div class="dm-modal-item-type">CMS Collection · array</div></div></div>' +
-              '<div class="dm-modal-item"><div class="dm-modal-check">✓</div><div><div class="dm-modal-item-name">👥 My Team</div><div class="dm-modal-item-type">CMS Collection · array</div></div></div>' +
-              '<div class="dm-modal-group">Custom</div>' +
-              '<div class="dm-modal-item"><div class="dm-modal-check">✓</div><div><div class="dm-modal-item-name">☁️ Weather App</div><div class="dm-modal-item-type">Custom Code · object</div></div></div>' +
-            '</div>' +
-            '<div class="dm-modal-footer"><div class="dm-modal-btn ghost">Cancel</div><div class="dm-modal-btn primary" style="opacity:.4">Apply changes</div></div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }
+    caption: '<b>Step 2:</b> <b>Add Context modal</b> opens — showing CMS and Custom contexts with checkboxes',
+    render: function() { return _demoScreen('demo-screens/add-context-panel/step2.png', '30%', '61%'); }
   },
   {
-    caption: '<b>Step 3:</b> User selects <b>"My Team"</b> — checkbox fills, Apply button becomes active',
-    render: function() {
-      return '<div class="dm" style="position:relative">' +
-        '<div class="dm-canvas" style="opacity:.3"><div class="dm-canvas-label">Canvas</div></div>' +
-        '<div class="dm-inspector" style="opacity:.3"><div class="dm-insp-head">Section</div></div>' +
-        '<div class="dm-modal-overlay">' +
-          '<div class="dm-modal"><div class="dm-modal-head">Add Context <span style="font-size:9px;color:var(--t3);font-weight:400">Section · Empty</span></div>' +
-            '<div class="dm-modal-body">' +
-              '<div class="dm-modal-group">CMS Collections</div>' +
-              '<div class="dm-modal-item"><div class="dm-modal-check">✓</div><div><div class="dm-modal-item-name">📝 CMS Articles</div><div class="dm-modal-item-type">CMS Collection · array</div></div></div>' +
-              '<div class="dm-modal-item sel"><div class="dm-modal-check">✓</div><div><div class="dm-modal-item-name">👥 My Team</div><div class="dm-modal-item-type">CMS Collection · array</div></div></div>' +
-              '<div class="dm-modal-group">Custom</div>' +
-              '<div class="dm-modal-item"><div class="dm-modal-check">✓</div><div><div class="dm-modal-item-name">☁️ Weather App</div><div class="dm-modal-item-type">Custom Code · object</div></div></div>' +
-            '</div>' +
-            '<div class="dm-modal-footer"><div class="dm-modal-btn ghost">Cancel</div><div class="dm-modal-btn primary">Apply changes</div></div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    }
+    caption: '<b>Step 3:</b> User selects a context — <b>checkbox fills</b>, Apply button activates',
+    render: function() { return _demoScreen('demo-screens/add-context-panel/step3.png', '58%', '61%'); }
   },
   {
-    caption: '<b>Step 4:</b> User clicks <b>"Apply changes"</b> — context is attached and <b>appears on canvas</b>',
-    render: function() {
-      return '<div class="dm">' +
-        '<div class="dm-canvas"><div class="dm-canvas-label">Canvas</div>' +
-          '<div class="dm-section" style="border-color:var(--grn-b);border-style:solid"><div class="dm-section-pill">👥 My Team</div>' +
-            '<div style="font-size:9px;color:var(--t2);padding:16px;text-align:center">Section now has <b>My Team</b> context — elements can bind to team member fields</div>' +
-          '</div>' +
-          '<div class="dm-toast"><span class="check">✓</span> Context added to section</div>' +
-        '</div>' +
-        '<div class="dm-inspector"><div class="dm-insp-head">Section · Empty</div><div class="dm-insp-body">' +
-          '<div style="font-size:10px;font-weight:600;color:var(--t1);margin-bottom:6px">Context</div>' +
-          '<div style="padding:6px 8px;border-radius:6px;background:var(--grn-d);border:1px solid var(--grn-b);display:flex;align-items:center;gap:6px;margin-bottom:4px">' +
-            '<span style="font-size:12px">👥</span>' +
-            '<div><div style="font-size:10px;font-weight:600;color:var(--t1)">My Team</div><div style="font-size:8px;color:var(--t3);font-family:\'DM Mono\',monospace">CMS Collection</div></div>' +
-          '</div>' +
-          '<div style="padding:6px 10px;border-radius:6px;border:1px dashed var(--b2);color:var(--t3);font-size:9px;text-align:center;margin-top:6px">+ Add Context</div>' +
-        '</div></div>' +
-      '</div>';
-    }
+    caption: '<b>Step 4:</b> Context <b>applied</b> — section now has the selected context attached',
+    render: function() { return _demoScreen('demo-screens/add-context-panel/step4.png', '73%', '56%'); }
+  },
+  {
+    caption: '<b>Step 5:</b> Inspector shows <b>attached context card</b> with fields available for binding',
+    render: function() { return _demoScreen('demo-screens/add-context-panel/step5.png'); }
   }
 ];
 
