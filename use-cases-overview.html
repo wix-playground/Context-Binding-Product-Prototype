@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="he" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Context Binding Platform — Use Cases Overview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --border: #e5e5e5;
+  --text-1: #111111;
+  --text-2: #555555;
+  --text-3: #999999;
+  --done: #10b981;
+  --done-bg: #ecfdf5;
+  --done-border: #a7f3d0;
+  --partial: #f59e0b;
+  --partial-bg: #fffbeb;
+  --partial-border: #fde68a;
+  --todo: #e5e7eb;
+  --todo-text: #9ca3af;
+  --accent: #6366f1;
+  --accent-bg: #eef2ff;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 48px;
+}
+.header-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.header h1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+.header p {
+  font-size: 16px;
+  color: var(--text-2);
+  max-width: 700px;
+  line-height: 1.7;
+}
+.header-date {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 12px;
+}
+
+/* EXECUTIVE SUMMARY */
+.exec-summary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 40px;
+  box-shadow: var(--shadow);
+}
+.exec-summary h2 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-3);
+  margin-bottom: 24px;
+}
+
+.big-numbers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.big-num {
+  text-align: center;
+  padding: 16px 8px;
+  border-radius: 10px;
+}
+.big-num-value {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.big-num-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-2);
+}
+.big-num.total .big-num-value { color: var(--text-1); }
+.big-num.done { background: var(--done-bg); }
+.big-num.done .big-num-value { color: var(--done); }
+.big-num.partial { background: var(--partial-bg); }
+.big-num.partial .big-num-value { color: var(--partial); }
+.big-num.not-started .big-num-value { color: #ef4444; }
+
+.progress-bar-wrap {
+  margin-bottom: 20px;
+}
+.progress-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-3);
+  margin-bottom: 6px;
+}
+.progress-bar {
+  height: 10px;
+  background: #f3f4f6;
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+}
+.progress-done {
+  background: var(--done);
+  transition: width 0.6s ease;
+}
+.progress-partial {
+  background: var(--partial);
+  transition: width 0.6s ease;
+}
+
+.exec-callout {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #991b1b;
+  line-height: 1.6;
+}
+
+/* AREA CARDS */
+.areas-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+.area-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.2s;
+}
+.area-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+.area-card.untouched {
+  border-left: 3px solid #ef4444;
+}
+.area-card.complete {
+  border-left: 3px solid var(--done);
+}
+.area-card.in-progress {
+  border-left: 3px solid var(--partial);
+}
+
+.area-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.area-card-id {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-3);
+  letter-spacing: 0.5px;
+}
+.area-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.area-card-subtitle {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.area-card-stats {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.stat-done { color: var(--done); }
+.stat-partial { color: var(--partial); }
+.stat-todo { color: #9ca3af; }
+
+.area-progress {
+  height: 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  margin-bottom: 14px;
+}
+.area-progress .progress-done { background: var(--done); }
+.area-progress .progress-partial { background: var(--partial); }
+
+.area-card-items {
+  list-style: none;
+  padding: 0;
+}
+.area-card-items li {
+  font-size: 12.5px;
+  color: var(--text-2);
+  padding: 4px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.area-card-items li .uc-status {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  margin-top: 2px;
+}
+.uc-done { background: var(--done-bg); color: var(--done); border: 1px solid var(--done-border); }
+.uc-partial { background: var(--partial-bg); color: var(--partial); border: 1px solid var(--partial-border); }
+.uc-todo { background: #f9fafb; color: #d1d5db; border: 1px solid #e5e7eb; }
+
+.area-card-toggle {
+  font-size: 12px;
+  color: var(--accent);
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 8px;
+  display: inline-block;
+  user-select: none;
+}
+.area-card-toggle:hover { text-decoration: underline; }
+.area-card-items.collapsed li:nth-child(n+5) { display: none; }
+
+/* SECTION DIVIDERS */
+.section-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+.section-subtitle {
+  font-size: 14px;
+  color: var(--text-3);
+  margin-bottom: 24px;
+}
+
+/* UNTOUCHED AREAS */
+.untouched-section {
+  margin-bottom: 48px;
+}
+.untouched-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.untouched-card {
+  background: #fff5f5;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 20px;
+}
+.untouched-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #991b1b;
+}
+.untouched-card .uc-count {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ef4444;
+  margin-bottom: 4px;
+}
+.untouched-card p {
+  font-size: 12px;
+  color: #7f1d1d;
+  line-height: 1.5;
+}
+
+/* OUT OF SCOPE */
+.oos-section {
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 48px;
+}
+.oos-section h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-3);
+  margin-bottom: 8px;
+}
+.oos-section p {
+  font-size: 13px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 12px;
+  color: var(--text-3);
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+}
+
+@media (max-width: 768px) {
+  .page { padding: 24px 16px; }
+  .big-numbers { grid-template-columns: repeat(2, 1fr); }
+  .areas-grid { grid-template-columns: 1fr; }
+  .untouched-list { grid-template-columns: 1fr; }
+  .header h1 { font-size: 28px; }
+}
+
+@media print {
+  .page { max-width: 100%; padding: 24px; }
+  .area-card { break-inside: avoid; }
+  .area-card-toggle { display: none; }
+  .area-card-items.collapsed li:nth-child(n+5) { display: flex !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-label">Context Binding Platform</div>
+    <h1>Use Cases Coverage Overview</h1>
+    <p>A comprehensive mapping of all user scenarios the platform needs to support — from data binding and repeaters to forms, design variants, and developer extensibility.</p>
+    <div class="header-date">Last updated: March 10, 2026</div>
+  </div>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <div class="exec-summary">
+    <h2>Executive Summary</h2>
+
+    <div class="big-numbers">
+      <div class="big-num total">
+        <div class="big-num-value">161</div>
+        <div class="big-num-label">Total Use Cases</div>
+      </div>
+      <div class="big-num done">
+        <div class="big-num-value">58</div>
+        <div class="big-num-label">Prototyped</div>
+      </div>
+      <div class="big-num partial">
+        <div class="big-num-value">16</div>
+        <div class="big-num-label">Partially Done</div>
+      </div>
+      <div class="big-num not-started">
+        <div class="big-num-value">87</div>
+        <div class="big-num-label">Not Started</div>
+      </div>
+    </div>
+
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-label">
+        <span>Overall Progress</span>
+        <span>36% prototyped</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-done" style="width:36%"></div>
+        <div class="progress-partial" style="width:7.9%"></div>
+      </div>
+    </div>
+
+    <div class="exec-callout">
+      5 entire capability areas have zero prototyping coverage — representing 33 use cases. These include visitor-facing controls (UoU), forms &amp; write mode, design variants, custom components, and CMS-specific flows.
+    </div>
+  </div>
+
+  <!-- UNTOUCHED AREAS -->
+  <div class="untouched-section">
+    <div class="section-title">Untouched Areas</div>
+    <div class="section-subtitle">Entire capability domains with zero prototyping coverage</div>
+
+    <div class="untouched-list">
+      <div class="untouched-card">
+        <div class="uc-count">13</div>
+        <h4>G — UoU Interactions</h4>
+        <p>Search, sort controls, pagination, load more, infinite scroll, empty states, loading indicators, conditional filtering, input roles</p>
+      </div>
+      <div class="untouched-card">
+        <div class="uc-count">7</div>
+        <h4>N — Write Mode & Forms</h4>
+        <p>Form submission, input binding for data entry, review collection, profile updates, schema-driven validation, permissions</p>
+      </div>
+      <div class="untouched-card">
+        <div class="uc-count">5</div>
+        <h4>O — Custom Components & Dev</h4>
+        <p>Custom components with binding, built-in contexts, Velo/React custom contexts, inline CMS field creation, AI-first config</p>
+      </div>
+      <div class="untouched-card">
+        <div class="uc-count">4</div>
+        <h4>M — Design Variants</h4>
+        <p>Conditional styling based on data, variant switching, "Sale" badges, layout variants per item state</p>
+      </div>
+      <div class="untouched-card">
+        <div class="uc-count">4</div>
+        <h4>P — CMS-Specific Flows</h4>
+        <p>Empty field handling, add field from context panel, collection usage overview, context-to-context filtering</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALL AREAS -->
+  <div class="section-title">All Capability Areas</div>
+  <div class="section-subtitle">16 areas, 151 use cases — click any card to expand the full list</div>
+
+  <div class="areas-grid">
+
+    <!-- A -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION A</div>
+      </div>
+      <div class="area-card-title">Adding & Managing Data Sources</div>
+      <div class="area-card-subtitle">Adding contexts, replacing, naming, scope, Add Panel, shadowing, multiple instances</div>
+      <div class="area-card-stats">
+        <span class="stat-done">6 done</span>
+        <span class="stat-partial">5 partial</span>
+        <span class="stat-todo">6 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:35.3%"></div>
+        <div class="progress-partial" style="width:29.4%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-a">
+        <li><span class="uc-status uc-done">&#10003;</span> A01 — I want to add a data source (context) to my page or section</li>
+        <li><span class="uc-status uc-done">&#10003;</span> A02 — I want to use my own content instead of the placeholder</li>
+        <li><span class="uc-status uc-partial">~</span> A03 — I want to switch a list's data to a different context</li>
+        <li><span class="uc-status uc-partial">~</span> A04 — I want to add a second data source to the same section</li>
+        <li><span class="uc-status uc-todo">&middot;</span> A05 — I want to add a pre-connected section from Add Panel (context exists)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> A06 — I want to add a pre-connected section from Add Panel (new context)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> A07 — I want to use a Wix App as my data source (Stores, Bookings)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> A08 — I want to add a custom code context (Weather, Countdown)</li>
+        <li><span class="uc-status uc-partial">~</span> A09 — I want to detach a context from my page or section</li>
+        <li><span class="uc-status uc-done">&#10003;</span> A10 — I want to rename a context instance to something meaningful</li>
+        <li><span class="uc-status uc-done">&#10003;</span> A11 — I want to know what data a context exposes</li>
+        <li><span class="uc-status uc-done">&#10003;</span> A12 — I want to see which elements are using a specific context</li>
+        <li><span class="uc-status uc-partial">~</span> A13 — I want to share a context across all sections on the page</li>
+        <li><span class="uc-status uc-done">&#10003;</span> A14 — I want two different views of the same collection</li>
+        <li><span class="uc-status uc-partial">~</span> A15 — Add context to section when same collection already on page (shadowing)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> A16 — I want to use data in the header/footer (global section)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> A17 — I want to extend an app's data with my own custom fields</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-a', this)">Show all 17 &#9662;</span>
+    </div>
+
+    <!-- B -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION B</div>
+      </div>
+      <div class="area-card-title">Binding Properties to Data</div>
+      <div class="area-card-subtitle">Connect, disconnect, cross-context, object binding, functions, formatters, panel UX, visibility</div>
+      <div class="area-card-stats">
+        <span class="stat-done">14 done</span>
+        <span class="stat-partial">4 partial</span>
+        <span class="stat-todo">5 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:60.9%"></div>
+        <div class="progress-partial" style="width:17.4%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-b">
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">CORE BINDING ACTIONS</li>
+        <li><span class="uc-status uc-done">&#10003;</span> B01 — Connect a property to a data field <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B02 — Disconnect a property and return to static <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B03 — See which context and field a property is connected to <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B04 — Navigate from bound property to context settings <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B05 — Understand on canvas which elements are connected vs static <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-partial">~</span> B06 — Bind from ancestor context (cross-context) <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-todo">&middot;</span> B07 — Bind to an entire object (not a single field) <span style="font-size:9px;color:#888">High</span></li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">EDITING BOUND CONTENT</li>
+        <li><span class="uc-status uc-done">&#10003;</span> B08 — Edit content bound to a collection (table data) <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-partial">~</span> B09 — Understand computed content (function result) <span style="font-size:9px;color:#888">High</span></li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">BINDING WITHOUT CONTEXT</li>
+        <li><span class="uc-status uc-done">&#10003;</span> B10 — Bind when no context available — add from binding flow <span style="font-size:9px;color:#888">CNF</span></li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">FUNCTIONS &amp; FORMATTERS</li>
+        <li><span class="uc-status uc-done">&#10003;</span> B11 — Connect a property to a function <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B12 — Pass parameters to a function (static or bound) <span style="font-size:9px;color:#888">High</span></li>
+        <li><span class="uc-status uc-todo">&middot;</span> B13 — Format date, time, or date+time field <span style="font-size:9px;color:#888">High</span></li>
+        <li><span class="uc-status uc-todo">&middot;</span> B14 — Format a link / URL field <span style="font-size:9px;color:#888">High</span></li>
+        <li><span class="uc-status uc-todo">&middot;</span> B15 — Connect navigation to a dynamic page <span style="font-size:9px;color:#888">High</span></li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">BINDING PANEL UX</li>
+        <li><span class="uc-status uc-done">&#10003;</span> B16 — Choose context from source dropdown <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B17 — Choose field from values dropdown <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B18 — Understand field type compatibility <span style="font-size:9px;color:#888">CNF</span></li>
+        <li><span class="uc-status uc-todo">&middot;</span> B19 — No compatible fields — what happens <span style="font-size:9px;color:#888">High</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B20 — See sample / preview data when selecting <span style="font-size:9px;color:#aaa;font-style:italic">NTH</span></li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">SPECIFIC PROPERTY TYPES</li>
+        <li><span class="uc-status uc-partial">~</span> B21 — Show/hide element based on data <span style="font-size:9px;color:#888">High</span></li>
+        <li><span class="uc-status uc-done">&#10003;</span> B22 — Bind alt text for image accessibility <span style="font-size:9px;color:#888">High</span></li>
+        <li><span class="uc-status uc-partial">~</span> B23 — Mark image as decorative (no alt) <span style="font-size:9px;color:#aaa;font-style:italic">NTH</span></li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-b', this)">Show all 23 &#9662;</span>
+    </div>
+
+    <!-- C -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION C</div>
+      </div>
+      <div class="area-card-title">Repeater & List Renderers</div>
+      <div class="area-card-subtitle">Repeater core, auto-bind, canvas states, design, operations, Gallery, Table, Accordion, Maps</div>
+      <div class="area-card-stats">
+        <span class="stat-done">4 done</span>
+        <span class="stat-partial">2 partial</span>
+        <span class="stat-todo">15 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:19%"></div>
+        <div class="progress-partial" style="width:9.5%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-c">
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">REPEATER CORE</li>
+        <li><span class="uc-status uc-done">&#10003;</span> C01 — Add a repeater and connect it to my collection</li>
+        <li><span class="uc-status uc-done">&#10003;</span> C02 — Connect inner elements to fields</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C03 — Connect inner elements when "Items" is not bound</li>
+        <li><span class="uc-status uc-partial">~</span> C04 — Switch repeater to a different data source</li>
+        <li><span class="uc-status uc-partial">~</span> C05 — Disconnect repeater from data</li>
+        <li><span class="uc-status uc-done">&#10003;</span> C06 — "Items" auto-binds when context attached</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C07 — Canvas: "Items unbound" vs "no context at all"</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C08 — "Items" connected to a different context than repeater's</li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">REPEATER DESIGN &amp; LAYOUT</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C09 — Add blank repeater, design before connecting</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C10 — Add pre-designed repeater from presets</li>
+        <li><span class="uc-status uc-done">&#10003;</span> C11 — Two repeaters, same data, different filters</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C12 — Bind repeater to nested array (tags, reviews)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C13 — A/B alternating layout pattern</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C14 — Repeater inside repeater (nested lists)</li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">REPEATER OPERATIONS</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C15 — Copy-paste repeater with bindings</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C16 — Drag repeater to different section</li>
+        <li style="font-weight:600;color:var(--t2,#666);font-size:11px;letter-spacing:.5px;padding:6px 0 2px">MORE LIST COMPONENTS</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C17 — Gallery as data-driven list</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C18 — Table component with list data</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C19 — Accordion / Tabs with list data</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C20 — Slideshow driven by list data</li>
+        <li><span class="uc-status uc-todo">&middot;</span> C21 — Google Maps driven by list of locations</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-c', this)">Show all 21 &#9662;</span>
+    </div>
+
+    <!-- D -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION D</div>
+      </div>
+      <div class="area-card-title">Context Configuration</div>
+      <div class="area-card-subtitle">Filter, sort, random order, page size, app settings, bindable config, reset</div>
+      <div class="area-card-stats">
+        <span class="stat-done">3 done</span>
+        <span class="stat-partial">2 partial</span>
+        <span class="stat-todo">6 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:27.3%"></div>
+        <div class="progress-partial" style="width:18.2%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-d">
+        <li><span class="uc-status uc-done">&#10003;</span> D01 — Filter the list to show specific items</li>
+        <li><span class="uc-status uc-done">&#10003;</span> D02 — Sort my list by a specific field</li>
+        <li><span class="uc-status uc-todo">&middot;</span> D03 — Show items in random order</li>
+        <li><span class="uc-status uc-todo">&middot;</span> D04 — Limit how many items load per page</li>
+        <li><span class="uc-status uc-partial">~</span> D05 — Add multiple filter rules (AND logic)</li>
+        <li><span class="uc-status uc-partial">~</span> D06 — Edit or delete an existing filter rule</li>
+        <li><span class="uc-status uc-todo">&middot;</span> D07 — Sort by multiple fields</li>
+        <li><span class="uc-status uc-todo">&middot;</span> D08 — Configure app-specific settings (currency, units)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> D09 — Bind config property to data (dynamic filter)</li>
+        <li><span class="uc-status uc-done">&#10003;</span> D10 — Filter by current page context value</li>
+        <li><span class="uc-status uc-todo">&middot;</span> D11 — Reset config to default</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-d', this)">Show all 11 &#9662;</span>
+    </div>
+
+    <!-- E -->
+    <div class="area-card complete">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION E</div>
+      </div>
+      <div class="area-card-title">Reference Fields</div>
+      <div class="area-card-subtitle">Single ref, multi-ref, reverse ref, self-ref, dynamic filtering, not-in</div>
+      <div class="area-card-stats">
+        <span class="stat-done">8 done</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:100%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-e">
+        <li><span class="uc-status uc-done">&#10003;</span> E01 — Show referenced field in repeater</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E02 — Show details from referenced item on item page</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E03 — Show list of multi-referenced items</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E04 — Show reverse-referenced items</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E05 — Filter by reference field</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E06 — Exclude current and related items</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E07 — Filter list by current page item</li>
+        <li><span class="uc-status uc-done">&#10003;</span> E08 — Self-referencing items</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-e', this)">Show all 8 &#9662;</span>
+    </div>
+
+    <!-- F -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION F</div>
+      </div>
+      <div class="area-card-title">Functions, Actions & Event Handlers</div>
+      <div class="area-card-subtitle">Function binding, params, events, action chaining, OOTB libraries, conflict resolution</div>
+      <div class="area-card-stats">
+        <span class="stat-done">4 done</span>
+        <span class="stat-todo">7 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:36.4%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-f">
+        <li><span class="uc-status uc-done">&#10003;</span> F01 — Bind text to a formatting function</li>
+        <li><span class="uc-status uc-done">&#10003;</span> F02 — Pass static parameters to function</li>
+        <li><span class="uc-status uc-done">&#10003;</span> F03 — Pass context field as function parameter</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F04 — Bind button click to action (addToCart)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F05 — Bind page event to function</li>
+        <li><span class="uc-status uc-done">&#10003;</span> F06 — See available function libraries</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F07 — Function combining values from multiple contexts</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F08 — Bind repeater event to navigation</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F09 — Chain multiple actions on one event</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F10 — Use OOTB Wix function libraries</li>
+        <li><span class="uc-status uc-todo">&middot;</span> F11 — Custom action vs built-in behavior conflict</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-f', this)">Show all 11 &#9662;</span>
+    </div>
+
+    <!-- G -->
+    <div class="area-card untouched">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION G</div>
+      </div>
+      <div class="area-card-title">UoU Interactions (Visitor Controls)</div>
+      <div class="area-card-subtitle">Search, sort, pagination, load more, infinite scroll, empty states, loading, conditional filtering</div>
+      <div class="area-card-stats">
+        <span class="stat-todo">13 not started</span>
+      </div>
+      <div class="area-progress">
+      </div>
+      <ul class="area-card-items collapsed" id="items-g">
+        <li><span class="uc-status uc-todo">&middot;</span> G01 — Search input that filters repeater</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G02 — Sort buttons for visitors</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G03 — Pagination (next/prev)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G04 — Show total number of items</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G05 — "Load more" button</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G06 — Category filter tabs</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G07 — Loading state indicator</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G08 — "No results" empty state</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G09 — Promote context for external controls</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G10 — Infinite scroll</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G11 — Conditional / dependent filter options</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G12 — Input component as filter</li>
+        <li><span class="uc-status uc-todo">&middot;</span> G13 — Input component as sort control</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-g', this)">Show all 13 &#9662;</span>
+    </div>
+
+    <!-- H -->
+    <div class="area-card complete">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION H</div>
+      </div>
+      <div class="area-card-title">Multi-State Box (MSB)</div>
+      <div class="area-card-subtitle">Static design, connected mode, remap, join, default view, canvas dropdown</div>
+      <div class="area-card-stats">
+        <span class="stat-done">8 done</span>
+        <span class="stat-partial">1 partial</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:88.9%"></div>
+        <div class="progress-partial" style="width:11.1%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-h">
+        <li><span class="uc-status uc-done">&#10003;</span> H01 — Design multiple views/states</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H02 — Connect MSB to states field</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H03 — Remap which state shows which design</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H04 — Join two data states to same design</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H05 — Set fallback/default view</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H06 — Disconnect and go back to static</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H07 — Add/delete/duplicate/reorder views</li>
+        <li><span class="uc-status uc-partial">~</span> H08 — Switch to a different states field</li>
+        <li><span class="uc-status uc-done">&#10003;</span> H09 — See active view per state on canvas</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-h', this)">Show all 9 &#9662;</span>
+    </div>
+
+    <!-- I -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION I</div>
+      </div>
+      <div class="area-card-title">Dynamic Pages (Item Pages)</div>
+      <div class="area-card-subtitle">Primary context, related items, page generation, URL binding, page variants, app pages</div>
+      <div class="area-card-stats">
+        <span class="stat-done">5 done</span>
+        <span class="stat-todo">5 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:50%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-i">
+        <li><span class="uc-status uc-done">&#10003;</span> I01 — Create item page per entity</li>
+        <li><span class="uc-status uc-done">&#10003;</span> I02 — Bind elements to current item's fields</li>
+        <li><span class="uc-status uc-done">&#10003;</span> I03 — Repeater of related items on item page</li>
+        <li><span class="uc-status uc-todo">&middot;</span> I04 — Filter which items get their own page</li>
+        <li><span class="uc-status uc-done">&#10003;</span> I05 — Show "Other items" excluding current</li>
+        <li><span class="uc-status uc-todo">&middot;</span> I06 — Navigate from list to item page</li>
+        <li><span class="uc-status uc-done">&#10003;</span> I07 — Add suggested repeaters from Add Elements panel</li>
+        <li><span class="uc-status uc-todo">&middot;</span> I08 — URL binding / SEO slug from data</li>
+        <li><span class="uc-status uc-todo">&middot;</span> I09 — Different layouts for same page based on data</li>
+        <li><span class="uc-status uc-todo">&middot;</span> I10 — App-owned dynamic page with app context</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-i', this)">Show all 10 &#9662;</span>
+    </div>
+
+    <!-- J -->
+    <div class="area-card untouched">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION J</div>
+      </div>
+      <div class="area-card-title">Scope, Hierarchy & Lifecycle</div>
+      <div class="area-card-subtitle">Scope resolution, shadowing, promote, remove, move, duplicate, system contexts, lightbox, missing context</div>
+      <div class="area-card-stats">
+        <span class="stat-done">1 done</span>
+        <span class="stat-partial">1 partial</span>
+        <span class="stat-todo">8 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:10%"></div>
+        <div class="progress-partial" style="width:10%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-j">
+        <li><span class="uc-status uc-done">&#10003;</span> J01 — Understand available data sources for an element</li>
+        <li><span class="uc-status uc-partial">~</span> J02 — Override page-level context with section-specific one</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J03 — Promote context from repeater to section</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J04 — Remove context and understand impact</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J05 — Move section to another page</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J06 — Duplicate section with data connections</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J07 — Use system context (Identity, Business Info)</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J08 — Bind to logged-in user's name</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J09 — Use data inside a Lightbox</li>
+        <li><span class="uc-status uc-todo">&middot;</span> J10 — Guidance when component needs missing context</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-j', this)">Show all 10 &#9662;</span>
+    </div>
+
+    <!-- K -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION K</div>
+      </div>
+      <div class="area-card-title">Add Elements Panel & Presets</div>
+      <div class="area-card-subtitle">Suggested elements, drag pre-bound, preset gallery, new collection, contextual panel</div>
+      <div class="area-card-stats">
+        <span class="stat-done">1 done</span>
+        <span class="stat-partial">1 partial</span>
+        <span class="stat-todo">3 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:20%"></div>
+        <div class="progress-partial" style="width:20%"></div>
+      </div>
+      <ul class="area-card-items collapsed" id="items-k">
+        <li><span class="uc-status uc-done">&#10003;</span> K01 — Suggested elements based on page data</li>
+        <li><span class="uc-status uc-partial">~</span> K02 — Drag suggested element pre-connected</li>
+        <li><span class="uc-status uc-todo">&middot;</span> K03 — Pre-designed repeater from preset gallery</li>
+        <li><span class="uc-status uc-todo">&middot;</span> K04 — Create new collection from preset schema</li>
+        <li><span class="uc-status uc-todo">&middot;</span> K05 — Contextual add panel per active context</li>
+      </ul>
+      <span class="area-card-toggle" onclick="toggleItems('items-k', this)">Show all 5 &#9662;</span>
+    </div>
+
+    <!-- L -->
+    <div class="area-card in-progress">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION L</div>
+      </div>
+      <div class="area-card-title">Canvas & Visual Feedback</div>
+      <div class="area-card-subtitle">Canvas pills, chip navigation, scope badges, MSB indicators, live preview</div>
+      <div class="area-card-stats">
+        <span class="stat-done">5 done</span>
+        <span class="stat-partial">1 partial</span>
+        <span class="stat-todo">1 not started</span>
+      </div>
+      <div class="area-progress">
+        <div class="progress-done" style="width:71.4%"></div>
+        <div class="progress-partial" style="width:14.3%"></div>
+      </div>
+      <ul class="area-card-items" id="items-l">
+        <li><span class="uc-status uc-done">&#10003;</span> L01 — Pills on bound elements</li>
+        <li><span class="uc-status uc-done">&#10003;</span> L02 — Click chip to navigate to context settings</li>
+        <li><span class="uc-status uc-done">&#10003;</span> L03 — MSB states switching on canvas</li>
+        <li><span class="uc-status uc-partial">~</span> L04 — See bound vs static repeater items</li>
+        <li><span class="uc-status uc-done">&#10003;</span> L05 — Scope badges</li>
+        <li><span class="uc-status uc-done">&#10003;</span> L06 — MSB border style per connection state</li>
+        <li><span class="uc-status uc-todo">&middot;</span> L07 — Live Preview with real data</li>
+      </ul>
+    </div>
+
+    <!-- M -->
+    <div class="area-card untouched">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION M</div>
+      </div>
+      <div class="area-card-title">Design Variants & Conditional Styling</div>
+      <div class="area-card-subtitle">Data-driven styling, CSS switching, conditional badges, layout variants</div>
+      <div class="area-card-stats">
+        <span class="stat-todo">4 not started</span>
+      </div>
+      <div class="area-progress">
+      </div>
+      <ul class="area-card-items" id="items-m">
+        <li><span class="uc-status uc-todo">&middot;</span> M01 — Change element design based on data ("out of stock")</li>
+        <li><span class="uc-status uc-todo">&middot;</span> M02 — Apply different CSS/animation based on field value</li>
+        <li><span class="uc-status uc-todo">&middot;</span> M03 — Show "Sale" badge only when discount exists</li>
+        <li><span class="uc-status uc-todo">&middot;</span> M04 — Switch layout variants based on item state</li>
+      </ul>
+    </div>
+
+    <!-- N -->
+    <div class="area-card untouched">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION N</div>
+      </div>
+      <div class="area-card-title">Write Mode & Forms</div>
+      <div class="area-card-subtitle">Form submission, data entry, reviews, profile updates, validation, permissions</div>
+      <div class="area-card-stats">
+        <span class="stat-todo">7 not started</span>
+      </div>
+      <div class="area-progress">
+      </div>
+      <ul class="area-card-items" id="items-n">
+        <li><span class="uc-status uc-todo">&middot;</span> N01 — Create form that submits to collection</li>
+        <li><span class="uc-status uc-todo">&middot;</span> N02 — Bind input to collection field for data entry</li>
+        <li><span class="uc-status uc-todo">&middot;</span> N03 — Visitors submit reviews</li>
+        <li><span class="uc-status uc-todo">&middot;</span> N04 — Visitors update their profile</li>
+        <li><span class="uc-status uc-todo">&middot;</span> N05 — Validation from data schema</li>
+        <li><span class="uc-status uc-todo">&middot;</span> N06 — Custom form from individual inputs</li>
+        <li><span class="uc-status uc-todo">&middot;</span> N07 — Read vs write permissions</li>
+      </ul>
+    </div>
+
+    <!-- O -->
+    <div class="area-card untouched">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION O</div>
+      </div>
+      <div class="area-card-title">Custom Components & Developer Extensibility</div>
+      <div class="area-card-subtitle">Custom components, Velo/React contexts, inline field creation, AI-first setup</div>
+      <div class="area-card-stats">
+        <span class="stat-todo">5 not started</span>
+      </div>
+      <div class="area-progress">
+      </div>
+      <ul class="area-card-items" id="items-o">
+        <li><span class="uc-status uc-todo">&middot;</span> O01 — Custom component that binds to ancestor context</li>
+        <li><span class="uc-status uc-todo">&middot;</span> O02 — Custom component with its own context</li>
+        <li><span class="uc-status uc-todo">&middot;</span> O03 — Build custom context via Velo/React</li>
+        <li><span class="uc-status uc-todo">&middot;</span> O04 — Add CMS field from binding flow</li>
+        <li><span class="uc-status uc-todo">&middot;</span> O05 — AI handles wiring and setup</li>
+      </ul>
+    </div>
+
+    <!-- P -->
+    <div class="area-card untouched">
+      <div class="area-card-header">
+        <div class="area-card-id">SECTION P</div>
+      </div>
+      <div class="area-card-title">CMS-Specific Flows</div>
+      <div class="area-card-subtitle">Empty field handling, schema editing, usage overview, cross-context filtering</div>
+      <div class="area-card-stats">
+        <span class="stat-todo">4 not started</span>
+      </div>
+      <div class="area-progress">
+      </div>
+      <ul class="area-card-items" id="items-p">
+        <li><span class="uc-status uc-todo">&middot;</span> P01 — Manage behavior for empty bound fields</li>
+        <li><span class="uc-status uc-todo">&middot;</span> P02 — Add new field from context panel</li>
+        <li><span class="uc-status uc-todo">&middot;</span> P03 — See which collections connect where</li>
+        <li><span class="uc-status uc-todo">&middot;</span> P04 — Connect one context's filter to another's selection</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- OUT OF SCOPE -->
+  <div class="oos-section">
+    <h3>Out of Scope — This Phase</h3>
+    <p><strong>DB Drivers</strong> — Backend data connectivity layer. Mentioned in the high-level architecture but not part of the current context binding product scope. Will be addressed in a future phase.</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Context Binding Platform &middot; Use Cases Overview &middot; March 2026
+  </div>
+
+</div>
+
+<script>
+function toggleItems(id, trigger) {
+  const list = document.getElementById(id);
+  if (!list) return;
+  const isCollapsed = list.classList.contains('collapsed');
+  if (isCollapsed) {
+    list.classList.remove('collapsed');
+    trigger.innerHTML = 'Show less &#9652;';
+  } else {
+    list.classList.add('collapsed');
+    const count = list.querySelectorAll('li').length;
+    trigger.innerHTML = 'Show all ' + count + ' &#9662;';
+  }
+}
+</script>
+</body>
+</html>
