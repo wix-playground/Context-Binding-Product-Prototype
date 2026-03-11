@@ -1242,9 +1242,8 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .cfg-toggle-wrap .seg-b{padding:4px 10px}
 .cfg-info{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1px solid var(--b2);color:var(--t3);font-size:9px;font-weight:600;cursor:default;position:relative;flex-shrink:0;font-family:'DM Sans',sans-serif;line-height:1}
 .cfg-info:hover{border-color:var(--acc);color:var(--acc)}
-.cfg-info:hover .cfg-info-tip{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-.cfg-info-tip{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(4px);background:#1a1a1a;color:#ddd;border-radius:8px;padding:8px 12px;width:200px;font-size:11px;line-height:1.5;font-weight:400;z-index:100;pointer-events:none;box-shadow:0 6px 20px #00000050;opacity:0;visibility:hidden;transition:all .15s}
-.cfg-info-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a1a1a}
+.cfg-info:hover .cfg-info-tip{opacity:1;visibility:visible}
+.cfg-info-tip{position:fixed;background:#1a1a1a;color:#ddd;border-radius:8px;padding:8px 12px;width:200px;font-size:11px;line-height:1.5;font-weight:400;z-index:9999;pointer-events:none;box-shadow:0 6px 20px #00000050;opacity:0;visibility:hidden;transition:opacity .15s;text-transform:none;letter-spacing:normal}
 .cfg-reset{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;color:var(--t3);font-size:10px;cursor:pointer;opacity:0;transition:opacity .15s;flex-shrink:0}
 .ctx-cfg-row:hover .cfg-reset.visible{opacity:.6}
 .cfg-reset.visible:hover{opacity:1;color:var(--acc)}
@@ -4305,6 +4304,7 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
       </div>
       <span class="modal-x" onclick="closeModalSafe()">✕</span>
     </div>
+    <div style="padding:10px 20px 0;font-size:12px;line-height:1.6;color:var(--t3, #888)">These are all the data sources available for your site. Select which ones to add to this container — their fields will then be available for connecting to elements inside.</div>
     <div class="modal-list" id="modal-list"></div>
     <div class="modal-foot">
       <button class="modal-btn modal-cancel" onclick="closeModal()">Cancel</button>
@@ -8996,6 +8996,9 @@ function removeFieldElement(ctxId, fieldName, sectionId) {
 function getCtxDisplayName(ctxId, sectionId) {
   const alias = (S.ctxAliases[sectionId] || {})[ctxId];
   if (alias) return alias;
+  for (const key in S.ctxAliases) {
+    if (S.ctxAliases[key][ctxId]) return S.ctxAliases[key][ctxId];
+  }
   const ctx = findSource(ctxId);
   if (!ctx) return ctxId;
   const pageSections = getPageSectionsForSection(sectionId);
@@ -9157,7 +9160,7 @@ function renderCtxList() {
   let parentNote = '';
   if (!isPage && inheritedUserCtxs.length > 0) {
     parentNote = `<div class="ctx-parent-note-wrap">
-      <div class="ctx-parent-note-label">Also available from parent containers</div>
+      <div class="ctx-parent-note-label">Also available from parent containers <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">These data sources are connected to a parent container (section or page) and are inherited by all elements inside, including this one. Click to navigate to the parent.</span></span></div>
       ${inheritedUserCtxs.map(c => {
         const ctxOwner = sectionId && (S.ctxMap[sectionId] || []).includes(c.id) ? sectionId : parentPageId;
         return `<div class="ctx-parent-note-item" onclick="navToPageCtx('${ctxOwner || parentPageId}')">
@@ -9201,7 +9204,7 @@ function renderCtxList() {
       <div style="border-bottom:1px solid var(--b1)">
         <div style="display:flex;align-items:center;gap:6px;padding:11px 14px 0;cursor:pointer" onclick="S.openCats.attachedCtx=!S.openCats.attachedCtx;renderBody()">
           <span style="font-size:10px;color:var(--t3);transition:transform .15s;display:inline-block;transform:rotate(${attOpen?'90':'0'}deg)">›</span>
-          <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Attached Contexts${attachedCtxs.length ? ' (' + attachedCtxs.length + ')' : ''}</span>
+          <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Attached Contexts${attachedCtxs.length ? ' (' + attachedCtxs.length + ')' : ''} <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">Data sources directly connected to this container. Their fields are available for binding to any element inside.</span></span></span>
         </div>
         ${attOpen ? `<div style="padding:0 0 4px">
           ${attachedCtxs.map(renderCtxCard).join('')}
@@ -9222,7 +9225,7 @@ function renderCtxList() {
     <div style="border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:6px;padding:11px 14px 0;cursor:pointer" onclick="S.openCats.attachedCtx=!S.openCats.attachedCtx;renderBody()">
         <span style="font-size:10px;color:var(--t3);transition:transform .15s;display:inline-block;transform:rotate(${attOpenSec?'90':'0'}deg)">›</span>
-        <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Attached Contexts${userCtxs.length ? ' (' + userCtxs.length + ')' : ''}</span>
+        <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Attached Contexts${userCtxs.length ? ' (' + userCtxs.length + ')' : ''} <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">Data sources directly connected to this container. Their fields are available for binding to any element inside.</span></span></span>
       </div>
       ${attOpenSec ? `<div style="padding:0 0 4px">
         ${userCtxs.map(renderCtxCard).join('')}
@@ -9323,7 +9326,7 @@ function closeCtxSettings() {
 function renderCtxSettings(ctxId) {
   const ctx = findSource(ctxId);
   if (!ctx) { S.ctxSettingsView = null; return renderCtxList(); }
-  const displayName = (S.ctxAliases[S.sel]||{})[ctxId] || ctx.name;
+  const displayName = getCtxDisplayName(ctxId, S.sel);
   const configs = ctx.config || [];
   const badgeClass = ctx.type === 'list' ? 'tb-list' : 'tb-obj';
 
@@ -9343,7 +9346,7 @@ function renderCtxSettings(ctxId) {
       </div>
       <div class="ctx-settings-section">
         <div class="ctx-cfg-row">
-          <div class="ctx-cfg-lbl">Context Name <span class="cfg-info">?<span class="cfg-info-tip">A custom display name for this context instance. Rename it to keep things clear when using multiple contexts of the same type.</span></span></div>
+          <div class="ctx-cfg-lbl">Instance Name <span class="cfg-info">?<span class="cfg-info-tip">A custom display name for this specific instance. Useful when you have multiple instances of the same data source — rename to tell them apart.</span></span></div>
           <div class="ctx-cfg-right">
             <div class="cfg-prop-row">
               <div class="cfg-main">
@@ -16281,5 +16284,19 @@ function sfAddRule() {
   <div class="ctx-menu-item danger" onclick="removeContextMenuTarget()">🗑 Remove</div>
 </div>
 
+<script>
+document.addEventListener('mouseover', function(e) {
+  const info = e.target.closest('.cfg-info');
+  if (!info) return;
+  const tip = info.querySelector('.cfg-info-tip');
+  if (!tip) return;
+  const r = info.getBoundingClientRect();
+  tip.style.left = Math.max(8, r.left + r.width / 2 - 100) + 'px';
+  tip.style.top = (r.top - tip.offsetHeight - 8) + 'px';
+  if (r.top - tip.offsetHeight - 8 < 4) {
+    tip.style.top = (r.bottom + 8) + 'px';
+  }
+});
+</script>
 </body>
 </html>
