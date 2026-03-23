@@ -837,6 +837,10 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .dd-sel-item.sel{background:var(--acc-d);color:var(--acc)}
 .dd-sel-item-name{font-size:12px;font-weight:500;color:var(--t1);line-height:1.3}
 .dd-sel-item.sel .dd-sel-item-name{color:var(--acc)}
+.fn-src-tag{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:500;font-family:'DM Mono',monospace;letter-spacing:.02em;vertical-align:middle;margin-left:4px}
+.fn-src-custom{background:color-mix(in srgb, var(--acc) 12%, transparent);color:var(--acc)}
+.fn-src-app{background:color-mix(in srgb, #f59e0b 12%, transparent);color:#d97706}
+.fn-src-platform{background:color-mix(in srgb, var(--t3) 12%, transparent);color:var(--t3)}
 .dd-sel-item-sub{font-size:10px;color:var(--t3);font-family:'DM Mono',monospace;line-height:1.3;margin-top:1px}
 .dd-sel-item.sel .dd-sel-item-sub{color:var(--acc);opacity:.6}
 .dd-sel-tag{margin-left:auto;font-size:9px;padding:2px 6px;border-radius:4px;background:var(--sur2);color:var(--t3);font-family:'DM Mono',monospace;flex-shrink:0;border:1px solid var(--b1)}
@@ -1066,19 +1070,31 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-explorer-search input::placeholder{color:var(--t3)}
 .ctx-explorer-list{flex:1;overflow-y:auto;padding:4px 6px;display:flex;flex-direction:column;gap:2px}
 .ctx-explorer-group{margin-bottom:4px}
-.ctx-explorer-group-label{font-size:10px;font-weight:600;color:var(--t3);padding:10px 8px 4px;letter-spacing:.06em;text-transform:uppercase}
+.ctx-explorer-group-label{font-size:10px;font-weight:600;color:var(--t3);padding:10px 8px 4px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:5px}
+.ctx-explorer-group-count{font-size:9px;font-weight:500;color:var(--t3);opacity:.7;text-transform:none;letter-spacing:0}
+.ctx-explorer-create-btn{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:6px;cursor:pointer;transition:.15s;color:var(--acc);font-size:11px;font-weight:500;background:transparent;margin-top:2px}
+.ctx-explorer-create-btn:hover{background:var(--acc-d)}
 .ctx-explorer-group-label:first-child{padding-top:6px}
 .ctx-explorer-item{padding:8px 10px;border-radius:7px;cursor:pointer;transition:background .1s;display:flex;align-items:center;gap:8px;margin-bottom:2px}
 .ctx-explorer-item:hover{background:var(--sur3)}
+.ctx-explorer-item.dyn-child{padding-left:28px;opacity:.75}
+.ctx-explorer-item.dyn-child .ctx-explorer-item-icon{font-size:11px;color:var(--acc);width:16px}
+.ctx-explorer-item.dyn-child .ctx-explorer-item-name{font-size:11px}
+.ctx-explorer-item.dyn-child:hover{opacity:1}
 .ctx-explorer-item-icon{font-size:14px;width:20px;text-align:center;flex-shrink:0}
 .ctx-explorer-item-info{flex:1;min-width:0}
-.ctx-explorer-item-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ctx-explorer-item-sub{font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;margin-top:1px}
+.ctx-explorer-item-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--t1)}
+.ctx-explorer-item-sub{font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;margin-top:1px;display:flex;align-items:center;gap:4px}
+.ctx-explorer-perm-badge{font-size:8px;cursor:default}
 .ctx-explorer-item-scope{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:500;margin-left:auto;flex-shrink:0;white-space:nowrap}
 .ctx-explorer-detail{flex:1;overflow-y:auto;display:flex;flex-direction:column}
 .ctx-explorer-detail-empty{flex:1;display:flex;align-items:center;justify-content:center;color:var(--t3);font-size:13px;flex-direction:column;gap:6px}
-.ctx-explorer-detail-head{padding:16px 20px 14px;border-bottom:1px solid var(--b1);flex-shrink:0}
-.ctx-explorer-detail-title{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px}
+.ctx-explorer-detail-head{padding:16px 20px 14px;border-bottom:1px solid var(--b1);flex-shrink:0;transition:padding .25s ease}
+.ctx-explorer-detail-head.collapsed{padding:10px 20px 8px}
+.ctx-explorer-detail-head.collapsed .ctx-explorer-detail-title{font-size:14px;gap:6px}
+.ctx-explorer-detail-head .exp-head-collapsible{max-height:300px;opacity:1;overflow:hidden;transition:max-height .3s ease,opacity .2s ease,margin .25s ease}
+.ctx-explorer-detail-head.collapsed .exp-head-collapsible{max-height:0;opacity:0;margin:0;pointer-events:none}
+.ctx-explorer-detail-title{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;display:flex;align-items:center;gap:8px;transition:font-size .25s ease,gap .25s ease}
 .ctx-explorer-detail-meta{font-size:11px;color:var(--t3);margin-top:6px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .ctx-explorer-detail-meta span{display:inline-flex;align-items:center;gap:4px}
 .ctx-explorer-detail-meta .exp-meta-dot{width:3px;height:3px;border-radius:50%;background:var(--t3);opacity:.5;flex-shrink:0}
@@ -1131,6 +1147,8 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-explorer-scope-strip{margin-top:8px;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:5px}
 .ctx-explorer-scope-strip.out{background:color-mix(in srgb, #f59e0b 10%, transparent);color:#d97706}
 .ctx-explorer-scope-strip.in{background:color-mix(in srgb, #10b981 10%, transparent);color:#10b981}
+.ctx-explorer-usage-strip{margin-top:6px;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:5px;background:color-mix(in srgb, var(--acc) 8%, transparent);color:var(--acc)}
+.ctx-explorer-usage-strip.unused{background:color-mix(in srgb, var(--t3) 8%, transparent);color:var(--t3)}
 .ctx-explorer-obj-preview{padding:12px 20px 14px;border-bottom:1px solid var(--b1)}
 .ctx-explorer-obj-preview-label{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .ctx-explorer-obj-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
@@ -5101,7 +5119,41 @@ const CTX_DEFS = [
       {key:'stockThreshold', label:'Low stock threshold',   input:'number', default:'5', description:'Number of items below which "low stock" label appears'},
     ]},
 
-  { id:'cms-articles', name:'Articles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:12,
+  { id:'custom-featured-articles', name:'Featured Articles', icon:'⭐', type:'list', source:'Custom Code', group:'Custom', customCode: true, itemCount:5,
+    backedBy: {source:'CMS', collectionId:'cms-articles'},
+    description:'A curated list of top-performing articles, ranked by a custom scoring algorithm. Reads from the CMS Articles collection and enriches each item with relevance scores, trending status, and formatted reading time. Fields from CMS are passthrough; computed fields are generated at runtime.',
+    fields:[
+      ...CMS_LIST_STATES,
+      {name:'items', type:'array', sample:'[{title, author, score, …}]', itemFields:[
+        {name:'title',         type:'string',  sample:'"Building Design Systems at Scale"', fieldOrigin:'cms'},
+        {name:'author',        type:'string',  sample:'"Jane Doe"', fieldOrigin:'cms'},
+        {name:'publishedAt',   type:'dateTime',sample:'"Jan 15, 2025"', fieldOrigin:'cms'},
+        {name:'category',      type:'string',  sample:'"Tech"', fieldOrigin:'cms'},
+        {name:'thumbnail',     type:'image',   sample:'[img url]', fieldOrigin:'cms'},
+        {name:'readTime',      type:'number',  sample:'"5 min"', fieldOrigin:'cms'},
+        {name:'relevanceScore',type:'number',  sample:'"92"', fieldOrigin:'computed'},
+        {name:'trendingLabel', type:'string',  sample:'"🔥 Trending"', fieldOrigin:'computed'},
+        {name:'readingTimeLabel', type:'string', sample:'"5 min read"', fieldOrigin:'computed'},
+        {name:'isFeatured',    type:'boolean', sample:'true', fieldOrigin:'computed'},
+        ...CMS_ITEM_SYSTEM_FIELDS,
+      ]},
+      ...CMS_COLLECTION_FIELDS,
+    ],
+    contextActions:[
+      {name:'refreshRankings', label:'Refresh rankings', icon:'🔄'},
+    ],
+    metadata:[
+      {name:'lastRanked',    label:'Last ranked',     type:'dateTime', sample:'"5 min ago"'},
+      {name:'algorithm',     label:'Algorithm',        type:'string',   sample:'"engagement-weighted v2"'},
+      {name:'dataSource',    label:'Data source',      type:'string',   sample:'"CMS: Articles + custom scoring"'},
+    ],
+    config:[
+      {key:'maxItems',    label:'Max items',       input:'number', default:'5', description:'Maximum number of featured articles to show'},
+      {key:'timeWindow',  label:'Time window',     input:'select', options:['Last 7 days','Last 30 days','Last 90 days','All time'], default:'Last 30 days', description:'How far back to look when scoring articles'},
+      {key:'boostRecent', label:'Boost recent',    input:'toggle', options:['On','Off'], default:'On', description:'Give higher scores to recently published articles'},
+    ]},
+
+  { id:'cms-articles', name:'Articles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:12, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items',       type:'array',   sample:'[{title, author, …}]', itemFields:[
@@ -5128,7 +5180,29 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-article-authors', name:'Article Authors', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:6,
+  { id:'cms-article-current', name:'Current Article', icon:'', type:'object', source:'CMS', group:'CMS', cmsPermissions:'show',
+    isDynamicPageCtx: true, dynamicPageOf: 'cms-articles',
+    description:'The article currently being viewed on its dynamic page. Fields come from the Articles collection.',
+    fields:[
+      {name:'title',       type:'string',  sample:'"The Future of AI in Design"'},
+      {name:'author',      type:'string',  sample:'"Sarah Chen"'},
+      {name:'publishedAt', type:'dateTime',sample:'"Jan 15, 2025"'},
+      {name:'category',    type:'string',  sample:'"Tech"'},
+      {name:'thumbnail',   type:'image',   sample:'[img url]'},
+      {name:'readTime',    type:'number',  sample:'"5 min"'},
+      {name:'tags',        type:'array',   sample:'["Tech","AI","Design"]', itemFields:[
+        {name:'tag value',  type:'string',  sample:'"Tech"'},
+      ]},
+      {name:'authors', type:'multiReference', sample:'[{name, bio}]', referencedCollection:'cms-article-authors', refFields:[
+        {name:'name', type:'string', sample:'"Sarah Chen"'},
+        {name:'bio',  type:'string', sample:'"Tech writer & AI researcher"'},
+        {name:'avatar', type:'image', sample:'[img url]'},
+        {name:'role', type:'string', sample:'"Lead Author"'},
+      ]},
+      ...CMS_OBJECT_SYSTEM_FIELDS,
+    ],
+    contextActions:[], metadata:[], config:[]},
+  { id:'cms-article-authors', name:'Article Authors', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:6, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{name, bio, …}]', itemFields:[
@@ -5146,7 +5220,7 @@ const CTX_DEFS = [
     config:[
       {key:'filterByArticle', label:'Filter by article (Ref → Articles)', input:'toggle', options:['On','Off'], default:'On', description:'Show only authors related to the current article'},
     ]},
-  { id:'cms-my-team', name:'My Team', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:8,
+  { id:'cms-my-team', name:'My Team', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:8, cmsPermissions:'collect',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{name, role, …}]', itemFields:[
@@ -5162,7 +5236,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-empty-collection', name:'Empty Collection', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:0,
+  { id:'cms-empty-collection', name:'Empty Collection', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:0, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[]', itemFields:[
@@ -5263,7 +5337,7 @@ const CTX_DEFS = [
     config:[
       {key:'radius',   label:'Search radius', input:'select', options:['5 km','10 km','25 km','50 km'], default:'10 km', description:'Max distance to show store locations from user'},
     ]},
-  { id:'cms-categories', name:'Categories', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:6,
+  { id:'cms-categories', name:'Categories', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:6, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'categories', type:'array', sample:'[{name, articles, …}]', itemFields:[
@@ -5369,7 +5443,7 @@ const CTX_DEFS = [
       {key:'urgencyThreshold', label:'Urgency at', input:'select', options:['30 min before','1 hour before','2 hours before'], default:'1 hour before', description:'When to start showing urgency indicators for upcoming classes'},
     ]},
   // ── Reference Field Collections ──────────────────────────────────
-  { id:'cms-team-members', name:'Team Members', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:6,
+  { id:'cms-team-members', name:'Team Members', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:6, cmsPermissions:'advanced',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{name, role, …}]', itemFields:[
@@ -5391,7 +5465,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-team-members-filtered', name:'Team Members', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:2,
+  { id:'cms-team-members-filtered', name:'Team Members', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:2, cmsPermissions:'advanced',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{name, role, …}]', itemFields:[
@@ -5413,7 +5487,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-team-members-by-role', name:'Team Members', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:2,
+  { id:'cms-team-members-by-role', name:'Team Members', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:2, cmsPermissions:'advanced',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{name, role, …}]', itemFields:[
@@ -5435,7 +5509,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-roles', name:'Roles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:4,
+  { id:'cms-roles', name:'Roles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:4, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{roleName, roleIcon, …}]', itemFields:[
@@ -5457,7 +5531,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-roles-other', name:'Roles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:3,
+  { id:'cms-roles-other', name:'Roles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:3, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{roleName, roleIcon, …}]', itemFields:[
@@ -5472,7 +5546,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-books-other', name:'Books', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:3,
+  { id:'cms-books-other', name:'Books', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:3, cmsPermissions:'collect',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{title, coverImage, …}]', itemFields:[
@@ -5495,7 +5569,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-books', name:'Books', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:8,
+  { id:'cms-books', name:'Books', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:8, cmsPermissions:'collect',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{title, authors, …}]', itemFields:[
@@ -5525,7 +5599,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-authors', name:'Authors', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:5,
+  { id:'cms-authors', name:'Authors', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:5, cmsPermissions:'show',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{name, image, …}]', itemFields:[
@@ -5550,7 +5624,7 @@ const CTX_DEFS = [
     metadata: [],
     config:[]},
   // ── Reference: Current Item contexts (dynamic pages) ─────────────
-  { id:'cms-team-member-current', name:'Current Team Member', icon:'', type:'object', source:'CMS', group:'CMS',
+  { id:'cms-team-member-current', name:'Current Team Member', icon:'', type:'object', source:'CMS', group:'CMS', cmsPermissions:'advanced',
     isDynamicPageCtx: true,
     fields:[
       {name:'name',  type:'string', sample:'"Riley Carter"'},
@@ -5566,7 +5640,7 @@ const CTX_DEFS = [
       ...CMS_OBJECT_SYSTEM_FIELDS,
     ],
     contextActions:[], metadata:[], config:[]},
-  { id:'cms-role-current', name:'Current Role', icon:'', type:'object', source:'CMS', group:'CMS',
+  { id:'cms-role-current', name:'Current Role', icon:'', type:'object', source:'CMS', group:'CMS', cmsPermissions:'show',
     isDynamicPageCtx: true,
     fields:[
       {name:'roleName',    type:'string', sample:'"UX Designer"'},
@@ -5582,7 +5656,7 @@ const CTX_DEFS = [
       ...CMS_OBJECT_SYSTEM_FIELDS,
     ],
     contextActions:[], metadata:[], config:[]},
-  { id:'cms-books-by-author', name:'Books by Same Author', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:2,
+  { id:'cms-books-by-author', name:'Books by Same Author', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:2, cmsPermissions:'collect',
     fields:[
       ...CMS_LIST_STATES,
       {name:'items', type:'array', sample:'[{title, coverImage, …}]', itemFields:[
@@ -5605,7 +5679,7 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
-  { id:'cms-book-current', name:'Current Book', icon:'', type:'object', source:'CMS', group:'CMS',
+  { id:'cms-book-current', name:'Current Book', icon:'', type:'object', source:'CMS', group:'CMS', cmsPermissions:'collect',
     isDynamicPageCtx: true,
     fields:[
       {name:'title',         type:'string', sample:'"The Design of Everyday Things"'},
@@ -5630,7 +5704,7 @@ const CTX_DEFS = [
       ...CMS_OBJECT_SYSTEM_FIELDS,
     ],
     contextActions:[], metadata:[], config:[]},
-  { id:'cms-author-current', name:'Current Author', icon:'', type:'object', source:'CMS', group:'CMS',
+  { id:'cms-author-current', name:'Current Author', icon:'', type:'object', source:'CMS', group:'CMS', cmsPermissions:'show',
     isDynamicPageCtx: true,
     fields:[
       {name:'name',    type:'string', sample:'"Don Norman"'},
@@ -5651,7 +5725,7 @@ const CTX_DEFS = [
 ];
 
 const FN_LIBS = [
-  { id:'lib-my-functions', name:'myFunctions', icon:'⚡', description:'Custom formatters & helpers',
+  { id:'lib-my-functions', name:'myFunctions', icon:'⚡', fnSource:'custom', description:'Custom formatters & helpers',
     functions:[
       {name:'twoValuesConcat()', type:'string', sample:'"text · text"', template:'{text1} · {text2}', description:'Concatenates two text values with a separator',
         params:[
@@ -5663,33 +5737,33 @@ const FN_LIBS = [
           {name:'name', type:'string', description:'User display name', default:'text'},
         ]},
     ]},
-  { id:'lib-formatting', name:'Formatting', icon:'', description:'Date, number & text formatting',
+  { id:'lib-formatting', name:'Formatting', icon:'📐', fnSource:'platform', description:'Date, number & text formatting',
     functions:[
       {name:'formatDate()',   type:'string',  sample:'"Feb 22, 2026"',  description:'Formats a date value'},
       {name:'formatCurrency()', type:'string', sample:'"$49.99"',       description:'Formats a number as currency'},
       {name:'capitalize()',   type:'string',  sample:'"Hello World"',   description:'Capitalizes text'},
       {name:'truncate()',     type:'string',  sample:'"Lorem ipsum…"',  description:'Truncates text to length'},
     ]},
-  { id:'lib-commerce', name:'Commerce', icon:'', description:'Pricing, stock & cart utilities',
+  { id:'lib-commerce', name:'Commerce', icon:'💰', fnSource:'app', fnApp:'Wix Stores', description:'Pricing, stock & cart utilities',
     functions:[
       {name:'calcDiscount()', type:'number', sample:'"$39.99"',   description:'Calculates discounted price'},
       {name:'getSavings()',   type:'number', sample:'"$10.00"',   description:'Returns amount saved'},
       {name:'getStockStatus()', type:'string', sample:'"In Stock"', description:'Returns stock label'},
       {name:'isInStock()',    type:'boolean', sample:'true',       description:'Checks stock availability'},
     ]},
-  { id:'lib-utils', name:'Utils', icon:'', description:'General purpose helpers',
+  { id:'lib-utils', name:'Utils', icon:'🔧', fnSource:'platform', description:'General purpose helpers',
     functions:[
       {name:'getGreeting()',  type:'string',  sample:'"Good morning!"', description:'Time-based greeting'},
       {name:'getTimeAgo()',   type:'string',  sample:'"2 hours ago"',   description:'Relative time string'},
       {name:'generateId()',   type:'string',  sample:'"abc123"',        description:'Generates unique ID'},
     ]},
-  { id:'lib-validation', name:'Validation', icon:'', description:'Input & data validation',
+  { id:'lib-validation', name:'Validation', icon:'✅', fnSource:'platform', description:'Input & data validation',
     functions:[
       {name:'isEmail()',      type:'boolean', sample:'true',            description:'Validates email format'},
       {name:'isRequired()',   type:'boolean', sample:'false',           description:'Checks if value exists'},
       {name:'minLength()',    type:'boolean', sample:'true',            description:'Checks minimum length'},
     ]},
-  { id:'lib-state-handlers', name:'State Handlers', icon:'🔄', description:'Multi-State Box transitions & controls',
+  { id:'lib-state-handlers', name:'State Handlers', icon:'🔄', fnSource:'platform', description:'Multi-State Box transitions & controls',
     functions:[
       {name:'autoRotate()',       type:'function', sample:'(event) => {}', description:'Cycles through states on a timer interval',
         params:[
@@ -6383,7 +6457,7 @@ const S = {
     'page-demo':       [],
     'sec-hero':     ['custom-countdown'],
     'sec-weather':  ['weather'],
-    'sec-articles': [],
+    'sec-articles': ['custom-featured-articles'],
     'repeater-articles': [],
     'sec-empty':    [],
     'sec-home-nested': [],
@@ -10433,7 +10507,7 @@ function renderCtxList() {
       return `
       <div class="ctx-group">
         <div class="ctx-card${primary ? ' primary' : ''}${isUnconfigured ? ' unconfigured' : ''}">
-          <div class="ctx-card-name">${c.icon ? c.icon + ' ' : ''}${getCtxDisplayName(c.id, S.sel)} <span class="type-badge ${c.type==='list'?'tb-list':'tb-obj'}">${c.type}${c.itemCount ? ' · ' + c.itemCount + ' items' : ''}</span>${primary && isPage ? '<span class="type-badge" style="background:var(--b2);color:var(--t2)">Page</span>' : ''}${isUnconfigured ? '<span class="type-badge" style="background:var(--yel);color:#000;font-weight:600">New</span>' : ''}</div>
+          <div class="ctx-card-name">${c.icon ? c.icon + ' ' : ''}${getCtxDisplayName(c.id, S.sel)} <span class="type-badge ${c.type==='list'?'tb-list':'tb-obj'}">${c.type}</span>${primary && isPage ? '<span class="type-badge" style="background:var(--b2);color:var(--t2)">Page</span>' : ''}${isUnconfigured ? '<span class="type-badge" style="background:var(--yel);color:#000;font-weight:600">New</span>' : ''}</div>
           <div class="ctx-card-src">from ${c.source}</div>
           ${primary && isPage ? '<div class="ctx-card-lock"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Comes with this page</div>' : ''}
           ${isUnconfigured ? '<div class="ctx-card-lock" style="color:var(--yel);font-style:normal"><svg viewBox="0 0 24 24" style="stroke:var(--yel)"><path d="M12 9v4"/><circle cx="12" cy="16" r="0.5"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg> Configure settings to use as binding source</div>' : ''}
@@ -12541,13 +12615,17 @@ function renderDd() {
   // Function library items
   const ddFnOpen = S.dd._fnOpen || false;
   const totalFnCount = FN_LIBS.reduce((sum, lib) => sum + lib.functions.length, 0);
-  const fnLibItems = FN_LIBS.map(lib => `
-        <div class="dd-sel-item ${srcId===lib.id?'sel':''}" onclick="ddSelSource(event,'${lib.id}')">
+  const fnLibItems = FN_LIBS.map(lib => {
+    const srcTag = lib.fnSource === 'custom' ? '<span class="fn-src-tag fn-src-custom">Custom</span>'
+      : lib.fnSource === 'app' ? `<span class="fn-src-tag fn-src-app">${lib.fnApp || 'App'}</span>`
+      : '<span class="fn-src-tag fn-src-platform">Platform</span>';
+    return `<div class="dd-sel-item ${srcId===lib.id?'sel':''}" onclick="ddSelSource(event,'${lib.id}')">
           <div style="flex:1;min-width:0">
-            <div class="dd-sel-item-name">${lib.name}</div>
+            <div class="dd-sel-item-name">${lib.name} ${srcTag}</div>
             <div class="dd-sel-item-sub">${lib.functions.length} functions · ${lib.description}</div>
           </div>
-        </div>`).join('');
+        </div>`;
+  }).join('');
 
   const ddScopeTarget = (function(){ const d = EL_DEFS[elId]; return d?.section || d?.parentPage || elId; })();
   const addCtxLink = `<div class="dd-add-ctx" onclick="ddAddContext(event)" style="padding:5px 12px 8px;font-size:11px;color:var(--acc);cursor:pointer;font-weight:600;display:flex;align-items:center;gap:4px"><span style="font-size:14px">＋</span> Add context</div>`;
@@ -13536,9 +13614,17 @@ function renderExplorerList() {
   const scopeIds = S.explorer.scopeTargetId ? getExplorerScopeCtxIds() : null;
 
   const grouped = {};
+  const dynamicByParent = {};
   const groupOrder = ['CMS', 'Custom', 'Apps', 'System'];
   CTX_DEFS.forEach(ctx => {
-    if (ctx.isDynamicPageCtx) return;
+    if (ctx.isDynamicPageCtx) {
+      if (ctx.dynamicPageOf) {
+        if (!dynamicByParent[ctx.dynamicPageOf]) dynamicByParent[ctx.dynamicPageOf] = [];
+        if (filter && !ctx.name.toLowerCase().includes(filter) && !ctx.source.toLowerCase().includes(filter) && !(ctx.group||'').toLowerCase().includes(filter)) return;
+        dynamicByParent[ctx.dynamicPageOf].push(ctx);
+      }
+      return;
+    }
     if (filter && !ctx.name.toLowerCase().includes(filter) && !ctx.source.toLowerCase().includes(filter) && !(ctx.group||'').toLowerCase().includes(filter)) return;
     const g = ctx.group || 'Other';
     if (!grouped[g]) grouped[g] = [];
@@ -13546,12 +13632,22 @@ function renderExplorerList() {
     if (!seen) grouped[g].push(ctx);
   });
 
+  const renderItemWithChildren = (ctx) => {
+    let h = renderExplorerItem(ctx, scopeIds);
+    const children = dynamicByParent[ctx.id];
+    if (children && children.length > 0) {
+      children.forEach(dc => { h += renderExplorerItem(dc, scopeIds, true); });
+    }
+    return h;
+  };
+
   let html = '';
   groupOrder.forEach(g => {
     if (!grouped[g] || grouped[g].length === 0) return;
     const label = g === 'Apps' ? 'Apps' : g;
+    const count = grouped[g].length;
     html += `<div class="ctx-explorer-group">`;
-    html += `<div class="ctx-explorer-group-label">${label}</div>`;
+    html += `<div class="ctx-explorer-group-label">${label} <span class="ctx-explorer-group-count">${count}</span></div>`;
     if (g === 'Apps') {
       const bySource = {};
       grouped[g].forEach(ctx => {
@@ -13561,10 +13657,16 @@ function renderExplorerList() {
       });
       Object.keys(bySource).forEach(src => {
         html += `<div style="padding:4px 8px 2px;font-size:9px;color:var(--t3);font-weight:500">${src}</div>`;
-        bySource[src].forEach(ctx => { html += renderExplorerItem(ctx, scopeIds); });
+        bySource[src].forEach(ctx => { html += renderItemWithChildren(ctx); });
       });
     } else {
-      grouped[g].forEach(ctx => { html += renderExplorerItem(ctx, scopeIds); });
+      grouped[g].forEach(ctx => { html += renderItemWithChildren(ctx); });
+    }
+    if (g === 'CMS') {
+      html += `<div class="ctx-explorer-create-btn" onclick="toast('Create new CMS collection…')">+ New collection</div>`;
+    }
+    if (g === 'Custom') {
+      html += `<div class="ctx-explorer-create-btn" onclick="toast('Create new custom context…')">+ New context</div>`;
     }
     html += `</div>`;
   });
@@ -13573,15 +13675,19 @@ function renderExplorerList() {
   listEl.innerHTML = html;
 }
 
-function renderExplorerItem(ctx, scopeIds) {
+function renderExplorerItem(ctx, scopeIds, isDynChild) {
   const sel = S.explorer.selectedCtxId === ctx.id ? ' sel' : '';
   const icon = ctx.icon || (ctx.group === 'System' ? '⚙' : ctx.source === 'Custom Code' ? '⚡' : ctx.source === 'CMS' ? '🗃' : '📄');
-  const typeBadge = ctx.type === 'list'
+  const typeBadge = ctx.isDynamicPageCtx
+    ? `<span style="font-size:8px;background:color-mix(in srgb,#6366f1 12%,transparent);color:#6366f1;padding:1px 4px;border-radius:3px;margin-left:4px">page</span>`
+    : ctx.type === 'list'
     ? `<span style="font-size:8px;background:color-mix(in srgb,#8b5cf6 12%,transparent);color:#8b5cf6;padding:1px 4px;border-radius:3px;margin-left:4px">list</span>`
     : `<span style="font-size:8px;background:color-mix(in srgb,#10b981 12%,transparent);color:#10b981;padding:1px 4px;border-radius:3px;margin-left:4px">object</span>`;
   let scopeTag = '';
   let scopeClass = '';
-  if (scopeIds) {
+  if (isDynChild) {
+    scopeClass = ' dyn-child';
+  } else if (scopeIds) {
     const inScope = scopeIds.has(ctx.id);
     if (inScope) {
       scopeTag = '<span class="ctx-explorer-scope-badge ctx-explorer-in-scope">✓</span>';
@@ -13589,11 +13695,18 @@ function renderExplorerItem(ctx, scopeIds) {
       scopeClass = ' not-in-scope';
     }
   }
+  const permBadge = ctx.cmsPermissions
+    ? ctx.cmsPermissions === 'show' ? '<span class="ctx-explorer-perm-badge perm-show" title="Show content — read only">👁</span>'
+    : ctx.cmsPermissions === 'collect' ? '<span class="ctx-explorer-perm-badge perm-collect" title="Collect content — visitors can submit">📥</span>'
+    : '<span class="ctx-explorer-perm-badge perm-advanced" title="Advanced — custom role permissions">🔐</span>'
+    : '';
+  const dynIcon = isDynChild ? '↳' : icon;
+  const subText = isDynChild ? 'Dynamic page context' : `${ctx.source}${ctx.backedBy ? ' <span style="opacity:.7">· via ' + ctx.backedBy.source + '</span>' : ''}`;
   return `<div class="ctx-explorer-item${sel}${scopeClass}" onclick="selectExplorerCtx('${ctx.id}')">
-    <div class="ctx-explorer-item-icon">${icon}</div>
+    <div class="ctx-explorer-item-icon">${dynIcon}</div>
     <div class="ctx-explorer-item-info">
       <div class="ctx-explorer-item-name">${ctx.name}${typeBadge}</div>
-      <div class="ctx-explorer-item-sub">${ctx.source}${ctx.itemCount ? ' · ' + ctx.itemCount + ' items' : ''}</div>
+      <div class="ctx-explorer-item-sub">${subText}${permBadge}</div>
     </div>
     ${scopeTag}
   </div>`;
@@ -13611,9 +13724,10 @@ function renderExplorerDetail(ctxId) {
   const detailEl = document.getElementById('ctx-explorer-detail');
   const icon = ctx.icon || (ctx.group === 'System' ? '⚙' : ctx.source === 'Custom Code' ? '⚡' : ctx.source === 'CMS' ? '🗃' : '📄');
   const sampleRows = REP_SAMPLE_DATA[ctxId];
-  const rowCountLabel = (ctx.type === 'list' && sampleRows) ? ' · ' + sampleRows.length + ' rows' : ctx.itemCount ? ' · ' + ctx.itemCount + ' items' : '';
-  const typeBadge = ctx.type === 'list'
-    ? `<span style="font-size:10px;background:color-mix(in srgb,#8b5cf6 14%,transparent);color:#8b5cf6;padding:2px 8px;border-radius:5px;font-weight:600;letter-spacing:.02em">list${rowCountLabel}</span>`
+  const typeBadge = ctx.isDynamicPageCtx
+    ? '<span style="font-size:10px;background:color-mix(in srgb,#6366f1 14%,transparent);color:#6366f1;padding:2px 8px;border-radius:5px;font-weight:600;letter-spacing:.02em">page</span>'
+    : ctx.type === 'list'
+    ? `<span style="font-size:10px;background:color-mix(in srgb,#8b5cf6 14%,transparent);color:#8b5cf6;padding:2px 8px;border-radius:5px;font-weight:600;letter-spacing:.02em">list</span>`
     : '<span style="font-size:10px;background:color-mix(in srgb,#10b981 14%,transparent);color:#10b981;padding:2px 8px;border-radius:5px;font-weight:600;letter-spacing:.02em">object</span>';
   const srcLabel = getExplorerSourceLabel(ctx);
   const scopeIds = S.explorer.scopeTargetId ? getExplorerScopeCtxIds() : null;
@@ -13661,7 +13775,15 @@ function renderExplorerDetail(ctxId) {
   const metaDots = '<span class="exp-meta-dot"></span>';
   const metaParts = [`<span>${ctx.source}</span>`];
   if (ctx.group && ctx.group !== ctx.source) metaParts.push(`<span>${ctx.group}</span>`);
-  if (ctx.itemCount) metaParts.push(`<span>${ctx.itemCount} items</span>`);
+  if (ctx.cmsPermissions) {
+    const permLabel = ctx.cmsPermissions === 'show' ? 'Permission: 👁 Show content' : ctx.cmsPermissions === 'collect' ? 'Permission: 📥 Collect content' : 'Permission: 🔐 Advanced';
+    metaParts.push(`<span>${permLabel}</span>`);
+  }
+  if (ctx.backedBy) {
+    const backingCtx = findSource(ctx.backedBy.collectionId);
+    const backingName = backingCtx ? backingCtx.name : ctx.backedBy.collectionId;
+    metaParts.push(`<span>Backed by ${ctx.backedBy.source}: ${backingName}</span>`);
+  }
 
   const fieldCount = dataFields.length;
   const actionCount = allActions.length;
@@ -13681,6 +13803,30 @@ function renderExplorerDetail(ctxId) {
     }
   }
 
+  const containerCount = Object.keys(S.ctxMap).filter(k => (S.ctxMap[k] || []).includes(ctxId)).length;
+  const bindingCount = Object.keys(S.bindings).filter(k => {
+    const b = S.bindings[k];
+    return b && b.ctxId === ctxId && !k.includes('|param:');
+  }).length;
+  let usageHtml = '';
+  if (containerCount > 0 || bindingCount > 0) {
+    const parts = [];
+    if (containerCount > 0) parts.push(`${containerCount} container${containerCount > 1 ? 's' : ''}`);
+    if (bindingCount > 0) parts.push(`${bindingCount} binding${bindingCount > 1 ? 's' : ''}`);
+    usageHtml = `<div class="ctx-explorer-usage-strip">📊 Used in ${parts.join(' · ')}</div>`;
+  } else {
+    usageHtml = `<div class="ctx-explorer-usage-strip unused">Not used on this site</div>`;
+  }
+
+  let backedByHtml = '';
+  if (ctx.backedBy) {
+    const backingCtx = findSource(ctx.backedBy.collectionId);
+    const backingName = backingCtx ? backingCtx.name : ctx.backedBy.collectionId;
+    const cmsFields = (ctx.fields || []).flatMap(f => f.type === 'array' && f.itemFields ? f.itemFields : [f]).filter(f => f.fieldOrigin === 'cms').length;
+    const computedFields = (ctx.fields || []).flatMap(f => f.type === 'array' && f.itemFields ? f.itemFields : [f]).filter(f => f.fieldOrigin === 'computed').length;
+    backedByHtml = `<div class="ctx-explorer-usage-strip" style="background:color-mix(in srgb, #f59e0b 10%, transparent);color:#d97706">🗃 Reads from ${backingName} collection · ${cmsFields} passthrough field${cmsFields !== 1 ? 's' : ''} · ${computedFields} computed</div>`;
+  }
+
   let objPreviewHtml = '';
   if (!isList && dataFields.length > 0) {
     const previewFields = dataFields.slice(0, 6);
@@ -13694,8 +13840,17 @@ function renderExplorerDetail(ctxId) {
     </div>`;
   }
 
+  let dynPageHtml = '';
+  if (ctx.isDynamicPageCtx) {
+    const parentCtx = ctx.dynamicPageOf ? findSource(ctx.dynamicPageOf) : null;
+    const parentName = parentCtx ? parentCtx.name : '';
+    dynPageHtml = `<div class="ctx-explorer-usage-strip" style="background:color-mix(in srgb, #6366f1 10%, transparent);color:#6366f1">📄 Dynamic page context${parentName ? ' · item from ' + parentName : ''} · auto-provided, not attachable to containers</div>`;
+  }
+
   let actionsBarHtml = `<div class="ctx-explorer-actions">`;
-  if (!inScope && S.explorer.scopeTargetId) {
+  if (ctx.isDynamicPageCtx) {
+    // no "Add to scope" for dynamic page contexts
+  } else if (!inScope && S.explorer.scopeTargetId) {
     actionsBarHtml += `<button class="ctx-explorer-btn ctx-explorer-btn-primary" onclick="explorerAddToScope('${ctxId}')">+ Add to scope</button>`;
   }
   actionsBarHtml += `<span class="ctx-explorer-open-src" onclick="toast('${srcLabel}…')">📂 ${srcLabel}</span>`;
@@ -13709,9 +13864,14 @@ function renderExplorerDetail(ctxId) {
     <div class="ctx-explorer-detail-head">
       <div class="ctx-explorer-detail-title">${icon} ${ctx.name} ${typeBadge}</div>
       <div class="ctx-explorer-detail-meta">${metaParts.join(metaDots)}</div>
-      ${descHtml}
-      ${summaryHtml}
-      ${scopeStripHtml}
+      <div class="exp-head-collapsible">
+        ${descHtml}
+        ${summaryHtml}
+        ${scopeStripHtml}
+      ${usageHtml}
+      ${backedByHtml}
+      ${dynPageHtml}
+    </div>
     </div>
     <div class="ctx-explorer-detail-body">
       ${previewHtml}
@@ -13719,6 +13879,14 @@ function renderExplorerDetail(ctxId) {
       ${fieldsHtml ? `<div class="ctx-explorer-index-label"><span style="font-size:12px">🗂</span> Context index</div>` + fieldsHtml : ''}
     </div>
     ${actionsBarHtml}`;
+
+  const body = detailEl.querySelector('.ctx-explorer-detail-body');
+  const head = detailEl.querySelector('.ctx-explorer-detail-head');
+  if (body && head) {
+    body.addEventListener('scroll', () => {
+      head.classList.toggle('collapsed', body.scrollTop > 10);
+    });
+  }
 }
 
 function renderExplorerSection(title, fields, openDefault, sectionIcon) {
@@ -13728,6 +13896,8 @@ function renderExplorerSection(title, fields, openDefault, sectionIcon) {
       const sampleText = (f.sample || '').replace(/^"|"$/g, '');
       const isSystem = f.name.startsWith('_');
       const sysBadge = isSystem ? '<span style="font-size:8px;padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--b1) 60%, transparent);color:var(--t2);margin-left:4px;font-family:\'DM Mono\',monospace;letter-spacing:.3px">sys</span>' : '';
+      const originBadge = f.fieldOrigin === 'cms' ? '<span style="font-size:8px;padding:1px 4px;border-radius:3px;background:color-mix(in srgb, #f59e0b 12%, transparent);color:#d97706;margin-left:4px;font-family:\'DM Mono\',monospace;letter-spacing:.3px">cms</span>'
+        : f.fieldOrigin === 'computed' ? '<span style="font-size:8px;padding:1px 4px;border-radius:3px;background:color-mix(in srgb, var(--acc) 12%, transparent);color:var(--acc);margin-left:4px;font-family:\'DM Mono\',monospace;letter-spacing:.3px">computed</span>' : '';
       let childRows = '';
       if (f.itemFields && f.itemFields.length > 0) {
         childRows = renderFieldRows(f.itemFields, depth + 1);
@@ -13744,7 +13914,7 @@ function renderExplorerSection(title, fields, openDefault, sectionIcon) {
       return `<div>
         <div class="ctx-explorer-field" style="padding-left:${indent}px;${borderStyle}">
           <div class="ctx-explorer-field-icon" style="${iconStyle}">${icon}</div>
-          <div class="ctx-explorer-field-name" style="${nameStyle}">${f.name}${sysBadge}</div>
+          <div class="ctx-explorer-field-name" style="${nameStyle}">${f.name}${sysBadge}${originBadge}</div>
           <div class="ctx-explorer-field-type">${f.type}</div>
           <div class="ctx-explorer-field-sample">${sampleText}</div>
         </div>
@@ -13777,9 +13947,9 @@ function renderExplorerActionsSection(actions) {
   return `<div class="ctx-explorer-section">
     <div class="ctx-explorer-section-head" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.ctx-explorer-section-chevron').classList.toggle('open')">
       <span class="exp-sec-icon">⚡</span><span class="exp-sec-label">Actions</span><span class="exp-sec-count">${actions.length}</span>
-      <span class="ctx-explorer-section-chevron">›</span>
+      <span class="ctx-explorer-section-chevron open">›</span>
     </div>
-    <div class="ctx-explorer-section-body">
+    <div class="ctx-explorer-section-body open">
       ${rows}
     </div>
   </div>`;
@@ -13797,9 +13967,9 @@ function renderExplorerMetadataSection(metadata) {
   return `<div class="ctx-explorer-section">
     <div class="ctx-explorer-section-head" onclick="this.nextElementSibling.classList.toggle('open');this.querySelector('.ctx-explorer-section-chevron').classList.toggle('open')">
       <span class="exp-sec-icon">📊</span><span class="exp-sec-label">Metadata</span><span class="exp-sec-count">${metadata.length}</span>
-      <span class="ctx-explorer-section-chevron">›</span>
+      <span class="ctx-explorer-section-chevron open">›</span>
     </div>
-    <div class="ctx-explorer-section-body">
+    <div class="ctx-explorer-section-body open">
       ${rows}
     </div>
   </div>`;
@@ -18046,6 +18216,13 @@ const REP_SAMPLE_DATA = {
     {name:"David Kim", bio:"Backend architect", role:"Lead Author", avatar:"[img url]"},
     {name:"Emma Wilson", bio:"UX prototyping expert", role:"Co-Author", avatar:"[img url]"},
   ],
+  'custom-featured-articles': [
+    {title:"The Future of AI in Design", author:"Sarah Chen", category:"Tech", readTime:"5 min", relevanceScore:"92", trendingLabel:"🔥 Trending", isFeatured:"true"},
+    {title:"Building Better Products", author:"Mark Rivera", category:"Product", readTime:"8 min", relevanceScore:"87", trendingLabel:"", isFeatured:"true"},
+    {title:"Design Systems at Scale", author:"Jane Doe", category:"Design", readTime:"6 min", relevanceScore:"81", trendingLabel:"🔥 Trending", isFeatured:"true"},
+    {title:"Why Accessibility Matters", author:"Lena Park", category:"Design", readTime:"4 min", relevanceScore:"76", trendingLabel:"", isFeatured:"true"},
+    {title:"Scaling Microservices", author:"David Kim", category:"Tech", readTime:"7 min", relevanceScore:"73", trendingLabel:"", isFeatured:"true"},
+  ],
   'cms-empty-collection': [],
   'cms-my-team': [
     {name:"Riley Carter", role:"Content Crafter", tagline:"Weaving words into wonders", image:"[img url]"},
@@ -18371,13 +18548,17 @@ function renderDdRepeaterItems(body, elId, srcId) {
 
   const rDdFnOpen = S.dd._fnOpen || false;
   const rTotalFnCount = FN_LIBS.reduce((sum, lib) => sum + lib.functions.length, 0);
-  const fnLibSrcItems = FN_LIBS.map(lib => `
-        <div class="dd-sel-item ${srcId===lib.id?'sel':''}" onclick="ddRepSelSource(event,'${lib.id}')">
+  const fnLibSrcItems = FN_LIBS.map(lib => {
+    const srcTag = lib.fnSource === 'custom' ? '<span class="fn-src-tag fn-src-custom">Custom</span>'
+      : lib.fnSource === 'app' ? `<span class="fn-src-tag fn-src-app">${lib.fnApp || 'App'}</span>`
+      : '<span class="fn-src-tag fn-src-platform">Platform</span>';
+    return `<div class="dd-sel-item ${srcId===lib.id?'sel':''}" onclick="ddRepSelSource(event,'${lib.id}')">
           <div style="flex:1;min-width:0">
-            <div class="dd-sel-item-name">${lib.name}</div>
+            <div class="dd-sel-item-name">${lib.name} ${srcTag}</div>
             <div class="dd-sel-item-sub">${lib.functions.length} functions · ${lib.description}</div>
           </div>
-        </div>`).join('');
+        </div>`;
+  }).join('');
 
   const repDdScopeTarget = (function(){ const d = EL_DEFS[elId]; return d?.section || d?.parentPage || elId; })();
   const repAddCtxLink = `<div class="dd-add-ctx" onclick="ddAddContext(event)" style="padding:5px 12px 8px;font-size:11px;color:var(--acc);cursor:pointer;font-weight:600;display:flex;align-items:center;gap:4px"><span style="font-size:14px">＋</span> Add context</div>`;
