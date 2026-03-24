@@ -1553,6 +1553,8 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
         <div class="pp-sub" onclick="selectPage(this,'Role Item')">🏷 Role Item</div>
         <div class="pp-sub" onclick="selectPage(this,'Book Item')">📖 Book Item</div>
         <div class="pp-sub" onclick="selectPage(this,'Author Item')">✍️ Author Item</div>
+        <div class="pp-group">Input Components</div>
+        <div class="pp-sub" onclick="selectPage(this,'Dropdown Component')">📋 Dropdown Component</div>
         <div class="pp-group pp-archive-toggle" onclick="toggleArchive()" id="archive-toggle">📦 Archive <span class="pp-archive-chevron">▸</span></div>
         <div class="pp-archive-items" id="archive-items" style="display:none">
           <div class="pp-sub" onclick="selectPage(this,'Repeater Usecases')">📄 Repeater Usecases</div>
@@ -4211,6 +4213,75 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
       </div>
     </div>
 
+    <!-- DROPDOWN COMPONENT PAGE -->
+    <div class="items-page" id="dropdown-page">
+      <div class="page-sel-bar" id="psb-dropdown" onclick="selectPageEl(event,'page-dropdown')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Page · Dropdown Component</div>
+
+      <div class="c-section has-ctx" id="sec-dropdown" onclick="selEl(event,'sec-dropdown')" style="margin:16px">
+        <div class="ctx-pill" id="pill-sec-dropdown"></div>
+        <div class="s-body" style="padding:32px 36px">
+
+          <div style="text-align:center;margin-bottom:24px">
+            <div class="c-el" id="el-dd-title" onclick="selEl(event,'el-dd-title')" style="cursor:pointer;display:inline-block">
+              <div class="c-el-overlay" style="border-radius:4px"></div>
+              <div class="el-tags"><div class="el-type-tag">Text</div></div>
+              <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:22px;color:var(--t1)">Filter Articles</div>
+            </div>
+          </div>
+
+          <div style="max-width:320px;margin:0 auto">
+            <div class="c-el" id="el-dd-dropdown" onclick="selEl(event,'el-dd-dropdown')" style="cursor:pointer;padding:0">
+              <div class="c-el-overlay" style="border-radius:8px"></div>
+              <div class="el-tags"><div class="el-type-tag">Dropdown</div><div class="el-bind-tag" id="dd-bind-tag"></div></div>
+              <div style="padding:4px">
+                <div style="font-size:11px;font-weight:500;color:var(--t2);margin-bottom:4px;padding:0 2px" id="dd-preview-label">Category</div>
+                <div style="padding:9px 12px;border-radius:6px;border:1px solid var(--b2);background:var(--sur);font-size:12px;color:var(--t3);display:flex;align-items:center;justify-content:space-between">
+                  <span id="dd-preview-placeholder">Select category...</span>
+                  <span style="font-size:9px;color:var(--t4)">▾</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="c-section" id="sec-dropdown-list" onclick="selEl(event,'sec-dropdown-list')" style="margin:16px;margin-top:0">
+        <div class="ctx-pill" id="pill-sec-dropdown-list"></div>
+        <div class="s-body" style="padding:24px 36px">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <div class="c-el bound" id="el-dd-card-1" onclick="selEl(event,'el-dd-card-1')" style="cursor:pointer">
+              <div class="c-el-overlay"></div>
+              <div class="el-tags"><div class="el-type-tag">Card</div></div>
+              <div style="background:var(--sur2);border-radius:6px;padding:16px">
+                <div style="width:100%;height:60px;background:var(--b1);border-radius:4px;margin-bottom:10px"></div>
+                <div style="font-size:11px;font-weight:600;color:var(--t1);margin-bottom:3px">The Future of AI</div>
+                <div style="font-size:9px;color:var(--t3)">Tech · Jan 15, 2026</div>
+              </div>
+            </div>
+            <div class="c-el bound" id="el-dd-card-2" onclick="selEl(event,'el-dd-card-2')" style="cursor:pointer">
+              <div class="c-el-overlay"></div>
+              <div class="el-tags"><div class="el-type-tag">Card</div></div>
+              <div style="background:var(--sur2);border-radius:6px;padding:16px">
+                <div style="width:100%;height:60px;background:var(--b1);border-radius:4px;margin-bottom:10px"></div>
+                <div style="font-size:11px;font-weight:600;color:var(--t1);margin-bottom:3px">Design Systems 101</div>
+                <div style="font-size:9px;color:var(--t3)">Design · Feb 20, 2026</div>
+              </div>
+            </div>
+            <div class="c-el bound" id="el-dd-card-3" onclick="selEl(event,'el-dd-card-3')" style="cursor:pointer">
+              <div class="c-el-overlay"></div>
+              <div class="el-tags"><div class="el-type-tag">Card</div></div>
+              <div style="background:var(--sur2);border-radius:6px;padding:16px">
+                <div style="width:100%;height:60px;background:var(--b1);border-radius:4px;margin-bottom:10px"></div>
+                <div style="font-size:11px;font-weight:600;color:var(--t1);margin-bottom:3px">Scaling Startups</div>
+                <div style="font-size:9px;color:var(--t3)">Business · Mar 10, 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- DEMO PAGE -->
     <div class="canvas-inner hidden-page" id="demo-page">
       <div class="page-sel-bar" id="psb-demo" onclick="selectPageEl(event,'page-demo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Page · Demo</div>
@@ -6437,6 +6508,15 @@ const EL_DEFS = {
   'el-ref-ai-btitle-2':  {name:'Book Title', type:'Text', section:'sec-ref-ai-books', repTemplate:'el-ref-ai-btitle', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
   'el-ref-ai-binfo-1':   {name:'Book Info', type:'Text', section:'sec-ref-ai-books', repTemplate:'el-ref-ai-binfo', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
   'el-ref-ai-binfo-2':   {name:'Book Info', type:'Text', section:'sec-ref-ai-books', repTemplate:'el-ref-ai-binfo', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  // Dropdown Component page
+  'page-dropdown': {name:'Page · Dropdown Component', type:'Page', isPage:true, page:'dropdown', props:[{k:'onClick',t:'function'},{k:'onDblClick',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'sec-dropdown':      {name:'Section · Dropdown', type:'Section', isContainer:true, page:'dropdown', parentPage:'page-dropdown', props:[]},
+  'el-dd-title':       {name:'Title', type:'Text', section:'sec-dropdown', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-dd-dropdown':    {name:'Dropdown', type:'Dropdown', section:'sec-dropdown', props:[{k:'label',t:'string'},{k:'options',t:'list'},{k:'placeholder',t:'string'},{k:'selectedIndex',t:'number'},{k:'tabIndex',t:'number'},{k:'value',t:'string'},{k:'onChange',t:'function'},{k:'onCustomValidation',t:'function'},{k:'delete',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'},{k:'resetValidityIndication',t:'function'},{k:'restore',t:'function'},{k:'scrollTo',t:'function'},{k:'updateValidityIndication',t:'function'},{k:'collapse',t:'function'},{k:'expand',t:'function'},{k:'hide',t:'function'},{k:'show',t:'function'}]},
+  'sec-dropdown-list': {name:'Section · Articles List', type:'Section', isContainer:true, page:'dropdown', parentPage:'page-dropdown', props:[]},
+  'el-dd-card-1':      {name:'Article Card', type:'Card', section:'sec-dropdown-list', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-dd-card-2':      {name:'Article Card', type:'Card', section:'sec-dropdown-list', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-dd-card-3':      {name:'Article Card', type:'Card', section:'sec-dropdown-list', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
 
 };
 
@@ -6506,6 +6586,10 @@ const S = {
     'sec-optb-blank':   [],
     'sec-optb-uou':     ['cms-articles'],
     'sec-optb-empty':   [],
+    // Dropdown Component page
+    'page-dropdown':    [],
+    'sec-dropdown':     ['cms-articles'],
+    'sec-dropdown-list':['cms-articles'],
     // Reference pages
     'page-ref-tm':      [],
     'sec-ref-tm-all':   [],
@@ -7396,7 +7480,7 @@ function canvasClick(e) {
 }
 
 function getCurrentPageId() {
-  const map = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai'};
+  const map = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown'};
   return map[S.currentPage] || 'page-home';
 }
 
@@ -11116,7 +11200,7 @@ const ITEM_DATA = [
 function selectPage(el, name) {
   document.querySelectorAll('.pp-item, .pp-sub').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
-  const pageIcon = name === 'Product Item' ? '🛒' : name === 'Repeater Usecases' || name === 'Repeater' ? '↻' : name === 'Multi-State Box' ? '◫' : name === 'Repeaters' ? '↻' : name.startsWith('Option B') ? 'Ⓑ' : name === 'Team Members List' ? '👥' : name === 'Team Member Item' ? '👤' : name === 'Role Item' ? '🏷' : name === 'Book Item' ? '📖' : name === 'Author Item' ? '✍️' : '📄';
+  const pageIcon = name === 'Product Item' ? '🛒' : name === 'Repeater Usecases' || name === 'Repeater' ? '↻' : name === 'Multi-State Box' ? '◫' : name === 'Repeaters' ? '↻' : name.startsWith('Option B') ? 'Ⓑ' : name === 'Team Members List' ? '👥' : name === 'Team Member Item' ? '👤' : name === 'Role Item' ? '🏷' : name === 'Book Item' ? '📖' : name === 'Author Item' ? '✍️' : name === 'Dropdown Component' ? '📋' : '📄';
   document.querySelector('.page-sel').innerHTML = `<span class="page-sel-name">${pageIcon} ${name}</span> <span class="page-sel-chevron">▾</span>`;
   document.getElementById('pages-panel').classList.remove('open');
 
@@ -11135,6 +11219,7 @@ function selectPage(el, name) {
   const riPage = document.getElementById('role-item-page');
   const biPage = document.getElementById('book-item-page');
   const aiPage = document.getElementById('author-item-page');
+  const ddPage = document.getElementById('dropdown-page');
   S.currentPage = name;
   _addedSuggestedIds.clear();
 
@@ -11153,6 +11238,7 @@ function selectPage(el, name) {
   riPage.classList.remove('active-page');
   biPage.classList.remove('active-page');
   aiPage.classList.remove('active-page');
+  ddPage.classList.remove('active-page');
 
   if (name === 'Items (List)') {
     itemsPage.classList.add('active-page');
@@ -11180,6 +11266,8 @@ function selectPage(el, name) {
     biPage.classList.add('active-page');
   } else if (name === 'Author Item') {
     aiPage.classList.add('active-page');
+  } else if (name === 'Dropdown Component') {
+    ddPage.classList.add('active-page');
   } else if (name === 'Demo') {
     demoPage.classList.remove('hidden-page');
   } else if (name === 'Home Page') {
@@ -14690,7 +14778,7 @@ function renderTree() {
   const pageLabel = isItemsList ? 'Items (List)' : isConcept ? 'Product Item' : isRuc ? 'Repeater Usecases' : isRep ? 'Repeater' : isMsb ? 'Multi-State Box' : isDemo ? 'Demo' : isDemo262 ? 'Home Page' : isRefTm ? 'Team Members List' : isRefTmi ? 'Team Member Item' : isRefRi ? 'Role Item' : isRefBi ? 'Book Item' : isRefAi ? 'Author Item' : 'Homepage';
   const pageIcon = isConcept ? '🛒' : (isRefTm || isRefTmi) ? '👥' : (isRefRi) ? '🏷' : (isRefBi) ? '📖' : (isRefAi) ? '✍️' : '📄';
 
-  const pageIdMap = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai'};
+  const pageIdMap = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown'};
   const pageId = pageIdMap[pageLabel] || null;
   const pageCtxIds = pageId ? (S.ctxMap[pageId]||[]) : [];
   const hasDynamicPage = isConcept || isRefTmi || isRefRi || isRefBi || isRefAi;
