@@ -13824,13 +13824,17 @@ function renderExplorerDetail(ctxId) {
   const isList = ctx.type === 'list';
   const dataFields = ctx.fields || [];
 
+  const permLabel = ctx.cmsPermissions
+    ? (ctx.cmsPermissions === 'show' ? '👁 Show content' : ctx.cmsPermissions === 'collect' ? '📥 Collect content' : '🔐 Advanced')
+    : '';
+
   let previewHtml = '';
   if (isList && sampleRows && sampleRows.length > 0) {
     const cols = Object.keys(sampleRows[0]);
     const displayRows = sampleRows.slice(0, 5);
     previewHtml = `
       <div class="ctx-explorer-preview-wrap">
-        <div class="ctx-explorer-preview-label"><span style="font-size:12px">📊</span> Content preview · ${sampleRows.length} rows</div>
+        <div class="ctx-explorer-preview-label"><span style="font-size:12px">📊</span> Content preview · ${sampleRows.length} rows${permLabel ? `<span style="margin-left:auto;font-size:10px;opacity:.7;text-transform:none;letter-spacing:0">Permission: <span style="text-decoration:underline;cursor:pointer">${permLabel}</span></span>` : ''}</div>
         <div class="ctx-explorer-preview">
           <table class="ctx-explorer-table">
             <thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead>
@@ -13863,10 +13867,6 @@ function renderExplorerDetail(ctxId) {
   const metaDots = '<span class="exp-meta-dot"></span>';
   const metaParts = [`<span>${ctx.source}</span>`];
   if (ctx.group && ctx.group !== ctx.source) metaParts.push(`<span>${ctx.group}</span>`);
-  if (ctx.cmsPermissions) {
-    const permLabel = ctx.cmsPermissions === 'show' ? 'Permission: 👁 Show content' : ctx.cmsPermissions === 'collect' ? 'Permission: 📥 Collect content' : 'Permission: 🔐 Advanced';
-    metaParts.push(`<span>${permLabel}</span>`);
-  }
   if (ctx.backedBy) {
     const backingCtx = findSource(ctx.backedBy.collectionId);
     const backingName = backingCtx ? backingCtx.name : ctx.backedBy.collectionId;
@@ -13928,14 +13928,10 @@ function renderExplorerDetail(ctxId) {
     dynPageHtml = `<div class="ctx-explorer-usage-strip" style="background:color-mix(in srgb, #6366f1 10%, transparent);color:#6366f1">📄 Dynamic page context${parentName ? ' · item from ' + parentName : ''} · auto-provided, not attachable to containers</div>`;
   }
 
-  let actionsBarHtml = `<div class="ctx-explorer-actions">`;
-  if (ctx.isDynamicPageCtx) {
-    // no "Add to scope" for dynamic page contexts
-  } else if (!inScope && S.explorer.scopeTargetId) {
-    actionsBarHtml += `<button class="ctx-explorer-btn ctx-explorer-btn-primary" onclick="explorerAddToScope('${ctxId}')">+ Add to scope</button>`;
+  let actionsBarHtml = '';
+  if (!ctx.isDynamicPageCtx && !inScope && S.explorer.scopeTargetId) {
+    actionsBarHtml = `<div class="ctx-explorer-actions"><button class="ctx-explorer-btn ctx-explorer-btn-primary" onclick="explorerAddToScope('${ctxId}')">+ Add to scope</button></div>`;
   }
-  actionsBarHtml += `<span class="ctx-explorer-open-src" onclick="toast('${srcLabel}…')">📂 ${srcLabel}</span>`;
-  actionsBarHtml += `</div>`;
 
   const descHtml = ctx.description
     ? `<div style="font-size:12px;color:var(--t2);line-height:1.5;padding:6px 0 2px">${ctx.description}</div>`
@@ -13944,7 +13940,7 @@ function renderExplorerDetail(ctxId) {
   detailEl.innerHTML = `
     <div class="ctx-explorer-detail-head">
       <div class="ctx-explorer-detail-title">${icon} ${ctx.name} ${typeBadge}${usageHtml}</div>
-      <div class="ctx-explorer-detail-meta">${metaParts.join(metaDots)}</div>
+      <div class="ctx-explorer-detail-meta">${metaParts.join(metaDots)}${metaDots}<span class="ctx-explorer-open-src" onclick="toast('${srcLabel}…')" style="margin-left:0">📂 ${srcLabel}</span></div>
       <div class="exp-head-collapsible">
         ${descHtml}
         ${summaryHtml}
