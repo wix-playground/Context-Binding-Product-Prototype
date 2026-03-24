@@ -1147,7 +1147,7 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-explorer-scope-strip{margin-top:8px;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:5px}
 .ctx-explorer-scope-strip.out{background:color-mix(in srgb, #f59e0b 10%, transparent);color:#d97706}
 .ctx-explorer-scope-strip.in{background:color-mix(in srgb, #10b981 10%, transparent);color:#10b981}
-.ctx-explorer-usage-strip{margin-top:6px;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:5px;background:color-mix(in srgb, var(--acc) 8%, transparent);color:var(--acc)}
+.ctx-explorer-usage-strip{margin-left:auto;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:500;display:inline-flex;align-items:center;gap:4px;background:var(--grn-d);color:var(--grn);white-space:nowrap;flex-shrink:0}
 .ctx-explorer-usage-strip.unused{background:color-mix(in srgb, var(--t3) 8%, transparent);color:var(--t3)}
 .ctx-explorer-obj-preview{padding:12px 20px 14px;border-bottom:1px solid var(--b1)}
 .ctx-explorer-obj-preview-label{font-size:10px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
@@ -5079,6 +5079,40 @@ const CTX_DEFS = [
       {key:'refresh',  label:'Refresh',   input:'select', options:['On load only','Every 5 min','Every 15 min','Every 30 min'], default:'On load only', description:'How often weather data is re-fetched from the source'},
     ]},
 
+  { id:'custom-featured-articles', name:'Featured Articles', icon:'⭐', type:'list', source:'Custom Code', group:'Custom', customCode: true, itemCount:5,
+    backedBy: {source:'CMS', collectionId:'cms-articles'},
+    description:'A curated list of top-performing articles, ranked by a custom scoring algorithm. Reads from the CMS Articles collection and enriches each item with relevance scores, trending status, and formatted reading time. Fields from CMS are passthrough; computed fields are generated at runtime.',
+    fields:[
+      ...CMS_LIST_STATES,
+      {name:'items', type:'array', sample:'[{title, author, score, …}]', itemFields:[
+        {name:'title',         type:'string',  sample:'"Building Design Systems at Scale"', fieldOrigin:'cms'},
+        {name:'author',        type:'string',  sample:'"Jane Doe"', fieldOrigin:'cms'},
+        {name:'publishedAt',   type:'dateTime',sample:'"Jan 15, 2025"', fieldOrigin:'cms'},
+        {name:'category',      type:'string',  sample:'"Tech"', fieldOrigin:'cms'},
+        {name:'thumbnail',     type:'image',   sample:'[img url]', fieldOrigin:'cms'},
+        {name:'readTime',      type:'number',  sample:'"5 min"', fieldOrigin:'cms'},
+        {name:'relevanceScore',type:'number',  sample:'"92"', fieldOrigin:'computed'},
+        {name:'trendingLabel', type:'string',  sample:'"🔥 Trending"', fieldOrigin:'computed'},
+        {name:'readingTimeLabel', type:'string', sample:'"5 min read"', fieldOrigin:'computed'},
+        {name:'isFeatured',    type:'boolean', sample:'true', fieldOrigin:'computed'},
+        ...CMS_ITEM_SYSTEM_FIELDS,
+      ]},
+      ...CMS_COLLECTION_FIELDS,
+    ],
+    contextActions:[
+      {name:'refreshRankings', label:'Refresh rankings', icon:'🔄'},
+    ],
+    metadata:[
+      {name:'lastRanked',    label:'Last ranked',     type:'dateTime', sample:'"5 min ago"'},
+      {name:'algorithm',     label:'Algorithm',        type:'string',   sample:'"engagement-weighted v2"'},
+      {name:'dataSource',    label:'Data source',      type:'string',   sample:'"CMS: Articles + custom scoring"'},
+    ],
+    config:[
+      {key:'maxItems',    label:'Max items',       input:'number', default:'5', description:'Maximum number of featured articles to show'},
+      {key:'timeWindow',  label:'Time window',     input:'select', options:['Last 7 days','Last 30 days','Last 90 days','All time'], default:'Last 30 days', description:'How far back to look when scoring articles'},
+      {key:'boostRecent', label:'Boost recent',    input:'toggle', options:['On','Off'], default:'On', description:'Give higher scores to recently published articles'},
+    ]},
+
   { id:'countdown', name:'Countdown Timer', icon:'', type:'object', source:'Custom Code', group:'Custom', customCode: true,
     description:'Add a live countdown to any date — a product launch, sale, event, or deadline. Shows days, hours, and minutes remaining. You decide what happens when time runs out.',
     fields:[
@@ -5188,40 +5222,6 @@ const CTX_DEFS = [
       {key:'showVisitors',  label:'Show active visitors',  input:'toggle', options:['On','Off'], default:'On', description:'Display real-time visitor count on the page'},
       {key:'showPurchases', label:'Show recent purchases',  input:'toggle', options:['On','Off'], default:'On', description:'Display recent purchase notifications'},
       {key:'stockThreshold', label:'Low stock threshold',   input:'number', default:'5', description:'Number of items below which "low stock" label appears'},
-    ]},
-
-  { id:'custom-featured-articles', name:'Featured Articles', icon:'⭐', type:'list', source:'Custom Code', group:'Custom', customCode: true, itemCount:5,
-    backedBy: {source:'CMS', collectionId:'cms-articles'},
-    description:'A curated list of top-performing articles, ranked by a custom scoring algorithm. Reads from the CMS Articles collection and enriches each item with relevance scores, trending status, and formatted reading time. Fields from CMS are passthrough; computed fields are generated at runtime.',
-    fields:[
-      ...CMS_LIST_STATES,
-      {name:'items', type:'array', sample:'[{title, author, score, …}]', itemFields:[
-        {name:'title',         type:'string',  sample:'"Building Design Systems at Scale"', fieldOrigin:'cms'},
-        {name:'author',        type:'string',  sample:'"Jane Doe"', fieldOrigin:'cms'},
-        {name:'publishedAt',   type:'dateTime',sample:'"Jan 15, 2025"', fieldOrigin:'cms'},
-        {name:'category',      type:'string',  sample:'"Tech"', fieldOrigin:'cms'},
-        {name:'thumbnail',     type:'image',   sample:'[img url]', fieldOrigin:'cms'},
-        {name:'readTime',      type:'number',  sample:'"5 min"', fieldOrigin:'cms'},
-        {name:'relevanceScore',type:'number',  sample:'"92"', fieldOrigin:'computed'},
-        {name:'trendingLabel', type:'string',  sample:'"🔥 Trending"', fieldOrigin:'computed'},
-        {name:'readingTimeLabel', type:'string', sample:'"5 min read"', fieldOrigin:'computed'},
-        {name:'isFeatured',    type:'boolean', sample:'true', fieldOrigin:'computed'},
-        ...CMS_ITEM_SYSTEM_FIELDS,
-      ]},
-      ...CMS_COLLECTION_FIELDS,
-    ],
-    contextActions:[
-      {name:'refreshRankings', label:'Refresh rankings', icon:'🔄'},
-    ],
-    metadata:[
-      {name:'lastRanked',    label:'Last ranked',     type:'dateTime', sample:'"5 min ago"'},
-      {name:'algorithm',     label:'Algorithm',        type:'string',   sample:'"engagement-weighted v2"'},
-      {name:'dataSource',    label:'Data source',      type:'string',   sample:'"CMS: Articles + custom scoring"'},
-    ],
-    config:[
-      {key:'maxItems',    label:'Max items',       input:'number', default:'5', description:'Maximum number of featured articles to show'},
-      {key:'timeWindow',  label:'Time window',     input:'select', options:['Last 7 days','Last 30 days','Last 90 days','All time'], default:'Last 30 days', description:'How far back to look when scoring articles'},
-      {key:'boostRecent', label:'Boost recent',    input:'toggle', options:['On','Off'], default:'On', description:'Give higher scores to recently published articles'},
     ]},
 
   { id:'cms-articles', name:'Articles', icon:'', type:'list', source:'CMS', group:'CMS', itemCount:12, cmsPermissions:'show',
@@ -10639,7 +10639,7 @@ function renderCtxList() {
   let parentNote = '';
   if (!isPage && inheritedUserCtxs.length > 0) {
     parentNote = `<div class="ctx-parent-note-wrap">
-      <div class="ctx-parent-note-label">Also available from parent containers <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">These data sources are connected to a parent (section, page, or parent repeater) and are inherited by elements inside, including this one. Click to jump to where that context is attached.</span></span></div>
+      <div class="ctx-parent-note-label">Also available from parent containers <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">These contexts don't need to be added here — they are already attached to parent containers in this page. Any element in this container can bind to their fields. Click to see where they are attached.</span></span></div>
       ${inheritedUserCtxs.map(c => {
         const navT = findNavTargetForInheritedCtx(c.id, S.sel) || parentPageId || sectionId || '';
         const safeNav = String(navT).replace(/'/g, "\\'");
@@ -13883,13 +13883,6 @@ function renderExplorerDetail(ctxId) {
   summaryHtml += '</div>';
 
   let scopeStripHtml = '';
-  if (scopeIds) {
-    if (!inScope) {
-      scopeStripHtml = '<div class="ctx-explorer-scope-strip out">⚠ Not available in current scope</div>';
-    } else {
-      scopeStripHtml = '<div class="ctx-explorer-scope-strip in">✓ Available in current scope</div>';
-    }
-  }
 
   const containerCount = Object.keys(S.ctxMap).filter(k => (S.ctxMap[k] || []).includes(ctxId)).length;
   const bindingCount = Object.keys(S.bindings).filter(k => {
@@ -13901,7 +13894,7 @@ function renderExplorerDetail(ctxId) {
     const parts = [];
     if (containerCount > 0) parts.push(`${containerCount} container${containerCount > 1 ? 's' : ''}`);
     if (bindingCount > 0) parts.push(`${bindingCount} binding${bindingCount > 1 ? 's' : ''}`);
-    usageHtml = `<div class="ctx-explorer-usage-strip">📊 Used in ${parts.join(' · ')}</div>`;
+    usageHtml = `<div class="ctx-explorer-usage-strip">Used in ${parts.join(' · ')}</div>`;
   } else {
     usageHtml = `<div class="ctx-explorer-usage-strip unused">Not used on this site</div>`;
   }
@@ -13950,13 +13943,12 @@ function renderExplorerDetail(ctxId) {
 
   detailEl.innerHTML = `
     <div class="ctx-explorer-detail-head">
-      <div class="ctx-explorer-detail-title">${icon} ${ctx.name} ${typeBadge}</div>
+      <div class="ctx-explorer-detail-title">${icon} ${ctx.name} ${typeBadge}${usageHtml}</div>
       <div class="ctx-explorer-detail-meta">${metaParts.join(metaDots)}</div>
       <div class="exp-head-collapsible">
         ${descHtml}
         ${summaryHtml}
         ${scopeStripHtml}
-      ${usageHtml}
       ${backedByHtml}
       ${dynPageHtml}
     </div>
