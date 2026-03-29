@@ -858,9 +858,14 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-link-line{flex:1;height:0;border-top:1px dashed var(--grn);opacity:.4}
 .ctx-link-icon{display:flex;align-items:center;gap:4px;color:var(--grn);font-size:10px;white-space:nowrap;opacity:.8}
 .ctx-link-icon svg{width:12px;height:12px;stroke:var(--grn);fill:none;stroke-width:2}
-.ctx-filter-row{display:flex;align-items:center;gap:8px;margin:6px 0 2px;padding:5px 8px;background:var(--b1);border:1px solid var(--b2);border-radius:5px;font-size:10px;color:var(--t2);font-family:'Inter',sans-serif;position:relative}
-.ctx-filter-row.off{background:var(--b1);border-color:var(--b2);color:var(--t3)}
-.ctx-filter-row.off .ctx-filter-label{opacity:.6}
+.ctx-rel-indicator{display:flex;align-items:center;gap:5px;margin:4px 0 2px;padding:4px 0;font-size:10px;color:var(--t3);font-family:'DM Sans',sans-serif}
+.ctx-rel-indicator svg{opacity:.5;flex-shrink:0}
+.ctx-rel-indicator strong{font-weight:600;color:var(--t2)}
+.ctx-filter-parent-ref{cursor:pointer;border-bottom:1px dashed var(--t3);transition:.15s}
+.ctx-filter-parent-ref:hover{color:var(--acc);border-bottom-color:var(--acc)}
+.ctx-parent-note-item.highlight{border-color:var(--acc);background:color-mix(in srgb, var(--acc) 8%, var(--sur2));opacity:1;transition:.15s}
+.ctx-filter-row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px;font-size:11px;color:var(--t2);font-family:'DM Sans',sans-serif;position:relative}
+.ctx-filter-row.off{opacity:.6}
 .ctx-filter-label{flex:1;display:flex;align-items:center;gap:5px}
 .ctx-filter-label svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;flex-shrink:0}
 .ctx-filter-info{display:inline-flex;align-items:center;margin-left:2px;color:var(--t3);cursor:help;position:relative}
@@ -875,13 +880,13 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-filter-slider:before{content:'';position:absolute;height:12px;width:12px;left:2px;bottom:2px;background:#fff;border-radius:50%;transition:.2s}
 .ctx-filter-toggle input:checked + .ctx-filter-slider{background:#4caf50}
 .ctx-filter-toggle input:checked + .ctx-filter-slider:before{transform:translateX(14px)}
-.ctx-filter-confirm{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--sur);border:1px solid var(--b2);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.25);padding:10px 12px;z-index:100;font-family:'Inter',sans-serif;display:none}
+.ctx-filter-confirm{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--sur);border:1px solid var(--b2);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.25);padding:10px 12px;z-index:100;font-family:'DM Sans',sans-serif;display:none}
 .ctx-filter-confirm.open{display:block}
 .ctx-filter-confirm-msg{font-size:11px;color:var(--t2);line-height:1.5;margin-bottom:8px}
 .ctx-filter-confirm-actions{display:flex;gap:6px;justify-content:flex-end}
-.ctx-filter-confirm-actions button{border:none;border-radius:5px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;transition:.12s}
+.ctx-filter-confirm-actions button{border:none;border-radius:5px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.12s}
 .ctx-filter-confirm-actions .btn-off{background:var(--acc);color:#fff}
-.ctx-filter-confirm-actions .btn-off:hover{background:var(--acc-h)}
+.ctx-filter-confirm-actions .btn-off:hover{opacity:.85}
 .ctx-filter-confirm-actions .btn-keep{background:var(--b1);color:var(--t2)}
 .ctx-filter-confirm-actions .btn-keep:hover{background:var(--b2)}
 .ctx-link-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--sur);border:1px solid var(--b2);border-radius:8px;padding:8px 16px;font-size:12px;color:var(--t2);box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:200;opacity:0;transition:opacity .3s;pointer-events:none;font-family:'Inter',sans-serif}
@@ -894,10 +899,6 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-parent-note-item:hover{border-color:var(--acc);background:color-mix(in srgb, var(--acc) 4%, var(--sur2));opacity:1}
 .ctx-parent-note-arrow{font-size:10px;color:var(--t3);margin-left:auto;opacity:0;transition:.12s}
 .ctx-parent-note-item:hover .ctx-parent-note-arrow{opacity:1;color:var(--acc)}
-.ctx-tree-cta{display:flex;align-items:center;gap:6px;margin:4px 14px 10px;padding:6px 10px;border-radius:6px;font-size:11px;color:var(--t3);cursor:pointer;transition:.12s}
-.ctx-tree-cta:hover{background:var(--b1);color:var(--t1)}
-.ctx-tree-cta svg{opacity:.5;transition:.12s}
-.ctx-tree-cta:hover svg{opacity:1}
 
 .ctx-card{background:var(--sur2);border:1px solid var(--b2);border-radius:8px;padding:8px 10px;position:relative;margin:6px 14px}
 .ctx-card.primary{border-left:3px solid var(--acc);background:color-mix(in srgb, var(--acc) 4%, var(--sur2))}
@@ -1156,20 +1157,7 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-explorer-obj-card-label{font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.03em}
 .ctx-explorer-obj-card-value{font-size:12px;color:var(--t1);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
-/* Tree panel */
-.tree-panel{position:fixed;right:calc(var(--panel) + 8px);top:52px;width:196px;background:var(--sur2);border:1px solid var(--b2);border-radius:10px;box-shadow:0 8px 40px #00000060;z-index:1050;display:none;overflow:hidden;animation:pop .14s ease}
-.tree-panel.open{display:block}
-.tp-head{padding:7px 12px;border-bottom:1px solid var(--b1);font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);display:flex;justify-content:space-between;align-items:center}
-.tp-x{cursor:pointer}
-.tp-x:hover{color:var(--t1)}
-.tp-body{padding:8px}
-.tp-row{display:flex;gap:0;align-items:flex-start;margin-bottom:1px}
-.tp-indent{width:14px;height:18px;border-left:1px solid var(--b2);border-bottom:1px solid var(--b2);border-radius:0 0 0 4px;margin-top:-8px;flex-shrink:0}
-.tp-item{flex:1;padding:3px 7px;border-radius:5px;font-size:11px;color:var(--t2);display:flex;align-items:center;gap:5px;cursor:pointer;transition:.12s}
-.tp-item:hover{background:var(--sur3)}
-.tp-item.ctx{color:var(--grn);opacity:.6}
 .tp-item.ctx:hover{opacity:.9}
-.tp-dot{width:5px;height:5px;border-radius:50%;background:var(--grn);opacity:.5;flex-shrink:0}
 
 /* Toast */
 .toast{position:fixed;bottom:18px;right:18px;background:var(--sur2);border:1px solid var(--b2);border-radius:8px;padding:8px 14px;font-size:12px;z-index:1400;display:flex;align-items:center;gap:6px;opacity:0;transform:translateY(6px);transition:.22s;pointer-events:none;max-width:460px}
@@ -1281,8 +1269,6 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .inspector-toggle:hover{border-color:var(--b2);box-shadow:0 4px 14px rgba(0,0,0,.1)}
 .inspector-toggle svg{width:18px;height:18px}
 
-.ctx-tree-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s;display:flex;align-items:center;gap:5px}
-.ctx-tree-btn:hover{border-color:var(--acc);color:var(--acc)}
 
 /* Context settings sub-panel (drill-down) */
 .highlight-bind{outline:2px solid #e84393;outline-offset:2px;box-shadow:0 0 14px #e8439366;z-index:50;position:relative;transition:outline .15s,box-shadow .15s}
@@ -1553,6 +1539,8 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
         <div class="pp-sub" onclick="selectPage(this,'Role Item')">🏷 Role Item</div>
         <div class="pp-sub" onclick="selectPage(this,'Book Item')">📖 Book Item</div>
         <div class="pp-sub" onclick="selectPage(this,'Author Item')">✍️ Author Item</div>
+        <div class="pp-group">Explorations</div>
+        <div class="pp-sub" onclick="selectPage(this,'Items Config')">⚡ Items Config</div>
         <div class="pp-group">Input Components</div>
         <div class="pp-sub" onclick="selectPage(this,'Dropdown Component')">📋 Dropdown Component</div>
         <div class="pp-group pp-archive-toggle" onclick="toggleArchive()" id="archive-toggle">📦 Archive <span class="pp-archive-chevron">▸</span></div>
@@ -4282,6 +4270,73 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
       </div>
     </div>
 
+    <!-- ITEMS CONFIG PAGE -->
+    <div class="items-page" id="items-config-page">
+      <div class="page-sel-bar" id="psb-items-config" onclick="selectPageEl(event,'page-items-config')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Page · Items Config</div>
+
+      <div class="c-section has-ctx" id="sec-ic-articles" onclick="selEl(event,'sec-ic-articles')" style="margin:16px">
+        <div class="ctx-pill" id="pill-sec-ic-articles"></div>
+        <div style="padding:24px 24px 8px">
+          <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:18px;color:var(--t1);margin-bottom:4px">Articles</div>
+          <div style="font-size:12px;color:var(--t3);margin-bottom:12px">Repeater with Items-level sort & filter parameters</div>
+        </div>
+
+        <div class="c-repeater bound" id="repeater-ic-articles" onclick="selEl(event,'repeater-ic-articles')" style="margin:0 24px 24px;border-radius:6px">
+          <div class="ctx-pill rep-pill" id="pill-repeater-ic-articles"></div>
+          <div class="c-el-overlay"></div>
+          <div class="rep-header" onclick="selElSettings(event,'repeater-ic-articles')">
+            <span class="rep-icon">↻</span>
+            <span class="rep-label">Repeater</span>
+            <span class="rep-count" id="rep-count-repeater-ic-articles">12 items</span>
+            <div class="rep-bind-btn" onclick="openDd(event,'repeater-ic-articles','Items')" title="Connect to list">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;padding:8px">
+            <div class="rep-item" id="rep-ic-art-1" onclick="selEl(event,'rep-ic-art-1')" style="padding:12px 16px;border-radius:8px;border:1px solid var(--b1);cursor:pointer;position:relative">
+              <div class="c-el-overlay"></div>
+              <div class="c-el bound" id="el-ic-title-1" onclick="selEl(event,'el-ic-title-1')" style="cursor:pointer">
+                <div class="c-el-overlay" style="border-radius:4px"></div>
+                <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag"></div></div>
+                <div style="font-weight:600;font-size:14px;color:var(--t1)">The Future of AI</div>
+              </div>
+              <div class="c-el bound" id="el-ic-author-1" onclick="selEl(event,'el-ic-author-1')" style="cursor:pointer;margin-top:4px">
+                <div class="c-el-overlay" style="border-radius:4px"></div>
+                <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag"></div></div>
+                <div style="font-size:12px;color:var(--t2)">Jane Doe · 2024-03-15</div>
+              </div>
+            </div>
+            <div class="rep-item" id="rep-ic-art-2" onclick="selEl(event,'rep-ic-art-2')" style="padding:12px 16px;border-radius:8px;border:1px solid var(--b1);cursor:pointer;position:relative">
+              <div class="c-el-overlay"></div>
+              <div class="c-el bound" id="el-ic-title-2" onclick="selEl(event,'el-ic-title-2')" style="cursor:pointer">
+                <div class="c-el-overlay" style="border-radius:4px"></div>
+                <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag"></div></div>
+                <div style="font-weight:600;font-size:14px;color:var(--t1)">Design Systems at Scale</div>
+              </div>
+              <div class="c-el bound" id="el-ic-author-2" onclick="selEl(event,'el-ic-author-2')" style="cursor:pointer;margin-top:4px">
+                <div class="c-el-overlay" style="border-radius:4px"></div>
+                <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag"></div></div>
+                <div style="font-size:12px;color:var(--t2)">Alex Chen · 2024-02-28</div>
+              </div>
+            </div>
+            <div class="rep-item" id="rep-ic-art-3" onclick="selEl(event,'rep-ic-art-3')" style="padding:12px 16px;border-radius:8px;border:1px solid var(--b1);cursor:pointer;position:relative">
+              <div class="c-el-overlay"></div>
+              <div class="c-el bound" id="el-ic-title-3" onclick="selEl(event,'el-ic-title-3')" style="cursor:pointer">
+                <div class="c-el-overlay" style="border-radius:4px"></div>
+                <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag"></div></div>
+                <div style="font-weight:600;font-size:14px;color:var(--t1)">Remote Work Culture</div>
+              </div>
+              <div class="c-el bound" id="el-ic-author-3" onclick="selEl(event,'el-ic-author-3')" style="cursor:pointer;margin-top:4px">
+                <div class="c-el-overlay" style="border-radius:4px"></div>
+                <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag"></div></div>
+                <div style="font-size:12px;color:var(--t2)">Sam Rivera · 2024-01-10</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- DEMO PAGE -->
     <div class="canvas-inner hidden-page" id="demo-page">
       <div class="page-sel-bar" id="psb-demo" onclick="selectPageEl(event,'page-demo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Page · Demo</div>
@@ -4962,11 +5017,6 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
   </div>
 </div>
 
-<!-- TREE PANEL -->
-<div class="tree-panel" id="tree-panel">
-  <div class="tp-head">Context Hierarchy <span class="tp-x" onclick="document.getElementById('tree-panel').classList.remove('open')">✕</span></div>
-  <div class="tp-body" id="tp-body"></div>
-</div>
 
 <!-- ACTION BAR -->
 <div class="action-bar" id="action-bar"></div>
@@ -5228,8 +5278,8 @@ const CTX_DEFS = [
     fields:[
       ...CMS_LIST_STATES,
       {name:'items',       type:'array',   sample:'[{title, author, …}]', itemFields:[
-        {name:'title',       type:'string',  sample:'"Article Title"'},
-        {name:'author',      type:'string',  sample:'"Jane Doe"'},
+        {name:'title',       type:'string',  sample:'"The Future of AI in Design"'},
+        {name:'author',      type:'string',  sample:'"Sarah Chen"'},
         {name:'publishedAt', type:'dateTime',sample:'"Jan 15, 2025"'},
         {name:'category',    type:'string',  sample:'"Tech"'},
         {name:'thumbnail',   type:'image',   sample:'[img url]'},
@@ -5921,6 +5971,25 @@ function getScopedFields(ctxId, elId) {
 }
 
 function findArrayFieldDeep(fields, fieldName) {
+  // Handle dot-path field names (e.g. 'items.authors')
+  if (fieldName && fieldName.includes('.')) {
+    const parts = fieldName.split('.');
+    let currentFields = fields;
+    const pathSoFar = [];
+    for (let i = 0; i < parts.length; i++) {
+      const f = currentFields.find(ff => ff.name === parts[i] && (ff.type === 'array' || ff.type === 'multiReference'));
+      if (!f) break;
+      pathSoFar.push(f.name);
+      if (i === parts.length - 1) {
+        const normalized = {...f};
+        if (f.type === 'multiReference' && f.refFields && !f.itemFields) {
+          normalized.itemFields = f.refFields;
+        }
+        return { field: normalized, path: pathSoFar };
+      }
+      currentFields = f.itemFields || f.refFields || [];
+    }
+  }
   const direct = fields.find(f => f.name === fieldName && (f.type === 'array' || f.type === 'multiReference'));
   if (direct) {
     const normalized = {...direct};
@@ -6509,6 +6578,20 @@ const EL_DEFS = {
   'el-ref-ai-binfo-1':   {name:'Book Info', type:'Text', section:'sec-ref-ai-books', repTemplate:'el-ref-ai-binfo', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
   'el-ref-ai-binfo-2':   {name:'Book Info', type:'Text', section:'sec-ref-ai-books', repTemplate:'el-ref-ai-binfo', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
   // Dropdown Component page
+  // Items Config page
+  'page-items-config': {name:'Page · Items Config', type:'Page', isPage:true, page:'items-config', props:[{k:'onClick',t:'function'},{k:'onDblClick',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'sec-ic-articles': {name:'Section · Articles', type:'Section', isContainer:true, page:'items-config', parentPage:'page-items-config', props:[]},
+  'repeater-ic-articles': {name:'Repeater', type:'Repeater', section:'sec-ic-articles', isRepeater:true, contextModel:'on-repeater', itemsConfigMode:true, props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'rep-ic-art-1': {name:'Item 1', type:'RepItem', section:'sec-ic-articles', isRepItem:true, props:[]},
+  'rep-ic-art-2': {name:'Item 2', type:'RepItem', section:'sec-ic-articles', isRepItem:true, props:[]},
+  'rep-ic-art-3': {name:'Item 3', type:'RepItem', section:'sec-ic-articles', isRepItem:true, props:[]},
+  'el-ic-title-1': {name:'Title', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-title', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-ic-title-2': {name:'Title', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-title', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-ic-title-3': {name:'Title', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-title', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-ic-author-1': {name:'Author', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-author', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-ic-author-2': {name:'Author', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-author', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-ic-author-3': {name:'Author', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-author', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+
   'page-dropdown': {name:'Page · Dropdown Component', type:'Page', isPage:true, page:'dropdown', props:[{k:'onClick',t:'function'},{k:'onDblClick',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
   'sec-dropdown':      {name:'Section · Dropdown', type:'Section', isContainer:true, page:'dropdown', parentPage:'page-dropdown', props:[]},
   'el-dd-title':       {name:'Title', type:'Text', section:'sec-dropdown', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
@@ -6586,6 +6669,10 @@ const S = {
     'sec-optb-blank':   [],
     'sec-optb-uou':     ['cms-articles'],
     'sec-optb-empty':   [],
+    // Items Config page
+    'page-items-config': [],
+    'sec-ic-articles':   [],
+    'repeater-ic-articles': ['cms-articles'],
     // Dropdown Component page
     'page-dropdown':    [],
     'sec-dropdown':     ['cms-articles'],
@@ -6718,6 +6805,14 @@ const S = {
     'el-rp-price-1|Value':  {ctxId:'stores', fieldName:'price', sample:'"$49.99"'},
     'el-rp-price-2|Value':  {ctxId:'stores', fieldName:'price', sample:'"$49.99"'},
     'el-rp-price-3|Value':  {ctxId:'stores', fieldName:'price', sample:'"$49.99"'},
+    // Items Config page
+    'repeater-ic-articles|Items': {ctxId:'cms-articles', fieldName:'items', sample:'[{title, author, …}]'},
+    'el-ic-title-1|Value':  {ctxId:'cms-articles', fieldName:'title',  sample:'"The Future of AI"'},
+    'el-ic-title-2|Value':  {ctxId:'cms-articles', fieldName:'title',  sample:'"Design Systems at Scale"'},
+    'el-ic-title-3|Value':  {ctxId:'cms-articles', fieldName:'title',  sample:'"Remote Work Culture"'},
+    'el-ic-author-1|Value': {ctxId:'cms-articles', fieldName:'author', sample:'"Jane Doe"'},
+    'el-ic-author-2|Value': {ctxId:'cms-articles', fieldName:'author', sample:'"Alex Chen"'},
+    'el-ic-author-3|Value': {ctxId:'cms-articles', fieldName:'author', sample:'"Sam Rivera"'},
     // Repeater Concept page — Controls
     'repeater-rep-articles|Items': {ctxId:'cms-articles', fieldName:'items', sample:'[{title, author, …}]'},
     'el-rc-title-1|Value':  {ctxId:'cms-articles', fieldName:'title',  sample:'"Article Title"'},
@@ -7480,7 +7575,7 @@ function canvasClick(e) {
 }
 
 function getCurrentPageId() {
-  const map = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown'};
+  const map = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown','Items Config':'page-items-config'};
   return map[S.currentPage] || 'page-home';
 }
 
@@ -7869,6 +7964,123 @@ function refreshAllRepLoadMoreButtons() {
   });
 }
 
+/* ── ITEMS CONFIG: SORT/FILTER AS PARAMETERS ── */
+function renderItemsParams(repId, b, ctx) {
+  if (!S._itemsParams) S._itemsParams = {};
+  if (!S._itemsParams[repId]) S._itemsParams[repId] = {sort:null, filter:null, pageSize:'10'};
+  const p = S._itemsParams[repId];
+  const pag = getRepPag(repId);
+
+  // Resolve item-level fields from the bound array
+  const arrResult = b.fieldName ? findArrayFieldDeep(ctx.fields, b.fieldName) : null;
+  const itemFields = (arrResult && arrResult.field.itemFields) ? arrResult.field.itemFields : ctx.fields || [];
+  const sortableFields = itemFields.filter(f => f.type === 'string' || f.type === 'number' || f.type === 'dateTime');
+
+  const sortOptions = [{v:'',l:'None'}];
+  sortableFields.forEach(f => {
+    const lbl = f.type === 'dateTime' ? 'Newest first' : f.type === 'number' ? 'High → Low' : 'A → Z';
+    const lblR = f.type === 'dateTime' ? 'Oldest first' : f.type === 'number' ? 'Low → High' : 'Z → A';
+    sortOptions.push({v:f.name+'_desc', l:f.name+': '+lbl});
+    sortOptions.push({v:f.name+'_asc', l:f.name+': '+lblR});
+  });
+
+  const filterFields = itemFields.filter(f => f.type !== 'array' && f.type !== 'function' && f.type !== 'multiReference');
+
+  return `
+    <div style="margin-top:2px;padding:4px 0 0 12px;border-left:2px solid color-mix(in srgb, var(--acc) 30%, var(--b1))">
+      <div class="fn-params-header"><span class="fn-params-label">Parameters</span></div>
+
+      <div class="fn-param-wrap">
+        <div class="fn-param-key">Sort</div>
+        <div class="fn-param-row">
+          <div class="prop-main">
+            <div class="prop-val">
+              <select onchange="S._itemsParams['${repId}'].sort=this.value;renderBody()" style="flex:1;padding:5px 8px;border:none;font-size:11px;font-family:'DM Sans',sans-serif;background:transparent;color:var(--t1);cursor:pointer;width:100%">
+                ${sortOptions.map(o => `<option value="${o.v}" ${p.sort===o.v?'selected':''}>${o.l}</option>`).join('')}
+              </select>
+            </div>
+          </div>
+          <div class="bind-btn" onclick="openParamDd(event,'${repId}','Items','sort')" title="Bind sort to a context field">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="fn-param-wrap">
+        <div class="fn-param-key">Filter</div>
+        <div class="fn-param-row">
+          <div class="prop-main">
+            <div class="prop-val">
+              ${p.filter
+                ? `<div style="font-size:11px;color:var(--t2);display:flex;align-items:center;gap:6px;padding:0 4px">
+                    <span style="flex:1">${p.filter.field} ${p.filter.condition} "${p.filter.value}"</span>
+                    <span style="cursor:pointer;color:var(--t3);font-size:10px" onclick="S._itemsParams['${repId}'].filter=null;renderBody()">✕</span>
+                  </div>`
+                : `<div onclick="openItemsFilterDialog('${repId}')" style="padding:0 4px;font-size:11px;color:var(--t3);cursor:pointer;transition:.12s" onmouseenter="this.style.color='var(--acc)'" onmouseleave="this.style.color='var(--t3)'">+ Add filter</div>`
+              }
+            </div>
+          </div>
+          <div class="bind-btn" onclick="openParamDd(event,'${repId}','Items','filter')" title="Bind filter to a context field">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="fn-param-wrap">
+        <div class="fn-param-key">Page size</div>
+        <div class="fn-param-row">
+          <div class="prop-main">
+            <div class="prop-val">
+              <input type="number" min="1" max="100" value="${p.pageSize}" onchange="S._itemsParams['${repId}'].pageSize=this.value" style="border:none;font-size:11px;font-family:'DM Mono',monospace;background:transparent;color:var(--t1);width:60px;padding:0 4px">
+            </div>
+          </div>
+          <div class="bind-btn" onclick="openParamDd(event,'${repId}','Items','pageSize')" title="Bind page size to a context field">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="prop-wrap" style="margin-top:10px">
+      <div class="prop-key" style="font-size:11px">Pagination</div>
+      <div style="display:flex;gap:6px">
+        <div onclick="setRepPagMode('${repId}','scroll')" style="flex:1;padding:6px 6px;border-radius:6px;border:1.5px solid ${pag.mode==='scroll'?'var(--acc)':'var(--b1)'};background:${pag.mode==='scroll'?'color-mix(in srgb, var(--acc) 6%, transparent)':'var(--bg)'};cursor:pointer;text-align:center;transition:.15s">
+          <div style="font-size:10px;font-weight:${pag.mode==='scroll'?'600':'400'};color:${pag.mode==='scroll'?'var(--acc)':'var(--t3)'}">Infinite scroll</div>
+        </div>
+        <div onclick="setRepPagMode('${repId}','button')" style="flex:1;padding:6px 6px;border-radius:6px;border:1.5px solid ${pag.mode==='button'?'var(--acc)':'var(--b1)'};background:${pag.mode==='button'?'color-mix(in srgb, var(--acc) 6%, transparent)':'var(--bg)'};cursor:pointer;text-align:center;transition:.15s">
+          <div style="font-size:10px;font-weight:${pag.mode==='button'?'600':'400'};color:${pag.mode==='button'?'var(--acc)':'var(--t3)'}">Load more</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prop-wrap" style="margin-top:8px">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span class="prop-key" style="font-size:11px;margin-bottom:0">Show limit</span>
+        <div class="tog ${pag.showLimit?'on':''}" onclick="toggleRepShowLimit('${repId}')" style="transform:scale(.75)"></div>
+      </div>
+      ${pag.showLimit ? `
+      <div style="margin-top:4px;display:flex;align-items:center;gap:8px">
+        <input type="range" min="1" max="${pag.mode==='scroll'?100:1000}" value="${pag.limit}" oninput="setRepLimit('${repId}',this.value)" style="flex:1;accent-color:var(--acc);height:3px">
+        <input type="number" min="1" max="${pag.mode==='scroll'?100:1000}" value="${pag.limit}" onchange="setRepLimit('${repId}',this.value)" style="width:44px;padding:3px 4px;border:1px solid var(--b1);border-radius:4px;font-size:10px;font-family:'DM Mono',monospace;text-align:center;background:var(--bg);color:var(--t1)">
+      </div>` : ''}
+    </div>`;
+}
+
+function openItemsFilterDialog(repId) {
+  const b = S.bindings[repId + '|Items'];
+  if (!b) return;
+  const ctx = findSource(b.ctxId);
+  if (!ctx) return;
+  const fields = (ctx.fields || []).filter(f => f.type !== 'array' && f.type !== 'function' && f.type !== 'multiReference');
+  const field = fields[0]?.name || 'title';
+  if (!S._itemsParams) S._itemsParams = {};
+  if (!S._itemsParams[repId]) S._itemsParams[repId] = {sort:null, filter:null, pageSize:'10'};
+  S._itemsParams[repId].filter = {field: field, condition: 'equals', value: 'Tech'};
+  renderBody();
+  toast('Filter added — ' + field + ' equals "Tech"');
+}
+
 /* ── SETTINGS TAB: REPEATER ON-REPEATER MODEL ── */
 function renderSettingsRepeaterOnRepeater(def) {
   const repId = S.sel;
@@ -8013,9 +8225,10 @@ function renderSettingsRepeaterOnRepeater(def) {
           </div>
         </div>
       </div>
+      ${(b && ctx && def.itemsConfigMode) ? renderItemsParams(repId, b, ctx) : ''}
     </div>
   </div>
-  ${ctxSummaryHtml}
+  ${def.itemsConfigMode ? '' : ctxSummaryHtml}
   ${repVisHtml ? `<div class="rp-cat ${S.openCats.visibility ? 'open' : ''}" id="rp-cat-visibility">
     <div class="rp-cat-head" onclick="toggleCat('visibility')">
       <span class="rp-cat-chevron">›</span>
@@ -9895,10 +10108,26 @@ function doRepItemsBind(elId, propKey, srcId, fieldName) {
     for (const f of fields) {
       if (f.name === name) return f;
       if (f.itemFields) { const r = _findFieldDeep(f.itemFields, name); if (r) return r; }
+      if (f.refFields) { const r = _findFieldDeep(f.refFields, name); if (r) return r; }
     }
     return null;
   }
-  const field = ctx.fields.find(f => f.name === fieldName) || _findFieldDeep(ctx.fields, fieldName);
+  // Support dot-path field names (e.g. 'items.authors')
+  let field;
+  if (fieldName.includes('.')) {
+    const parts = fieldName.split('.');
+    let fields = ctx.fields;
+    for (let i = 0; i < parts.length; i++) {
+      const f = fields.find(ff => ff.name === parts[i]);
+      if (!f) break;
+      if (i === parts.length - 1) {
+        field = f;
+      } else {
+        fields = f.itemFields || f.refFields || [];
+      }
+    }
+  }
+  if (!field) field = ctx.fields.find(f => f.name === fieldName) || _findFieldDeep(ctx.fields, fieldName);
   if (!field) return;
   const def = EL_DEFS[elId];
   const templateKey = def.repTemplate || elId;
@@ -9913,30 +10142,44 @@ function doRepItemsBind(elId, propKey, srcId, fieldName) {
   const savedBindings = S._savedNestedBindings?.[templateKey];
   const savedStates = S._savedNestedRepState || {};
 
+  // Check if rebinding to the same field as before
+  const savedItemsB = savedBindings?.[elId + '|' + propKey];
+  const isSameField = savedItemsB && savedItemsB.fieldName === fieldName && savedItemsB.ctxId === srcId;
+
   allRepIds.forEach(repId => {
     const repDom = document.getElementById(repId);
     if (!repDom) return;
     const container = getRepContainer(repDom);
     if (container) container.querySelectorAll('.rep-unconnected-warn').forEach(el => el.remove());
-    if (container && savedStates[repId]) {
+    if (container && savedStates[repId] && isSameField) {
+      // Only restore saved DOM if rebinding to the same field
       container.innerHTML = savedStates[repId];
-      delete savedStates[repId];
+    }
+    delete savedStates[repId];
+  });
+
+  // Always set the new Items binding
+  const bkey = elId + '|' + propKey;
+  S.bindings[bkey] = {ctxId: srcId, fieldName, sample: field.sample};
+  allRepIds.forEach(repId => {
+    if (repId !== elId) {
+      S.bindings[repId + '|' + propKey] = {ctxId: srcId, fieldName, sample: field.sample};
     }
   });
 
   if (savedBindings) {
-    Object.keys(savedBindings).forEach(bk => {
-      S.bindings[bk] = savedBindings[bk];
-    });
+    if (isSameField) {
+      // Restore saved inner element bindings (not Items) when rebinding to same field
+      Object.keys(savedBindings).forEach(bk => {
+        if (!bk.endsWith('|Items')) S.bindings[bk] = savedBindings[bk];
+      });
+    } else {
+      // Different field — clear all old inner bindings so elements show unbound/placeholder state
+      Object.keys(savedBindings).forEach(bk => {
+        if (!bk.endsWith('|Items')) delete S.bindings[bk];
+      });
+    }
     delete S._savedNestedBindings[templateKey];
-  } else {
-    const bkey = elId + '|' + propKey;
-    S.bindings[bkey] = {ctxId: srcId, fieldName, sample: field.sample};
-    allRepIds.forEach(repId => {
-      if (repId !== elId) {
-        S.bindings[repId + '|' + propKey] = {ctxId: srcId, fieldName, sample: field.sample};
-      }
-    });
   }
 
   allRepIds.forEach(repId => {
@@ -9944,7 +10187,7 @@ function doRepItemsBind(elId, propKey, srcId, fieldName) {
     if (!repDom) return;
     repDom.classList.add('bound');
     const countEl = document.getElementById('rep-count-' + repId.replace('repeater-', ''));
-    if (countEl) countEl.textContent = formatRepCountLabel(repId, ctx.id);
+    if (countEl) countEl.textContent = formatRepCountLabel(repId, ctx.id, fieldName);
 
     Object.keys(EL_DEFS).forEach(childId => {
       const childDef = EL_DEFS[childId];
@@ -9963,7 +10206,16 @@ function doRepItemsBind(elId, propKey, srcId, fieldName) {
           }
         });
       } else {
+        // No binding — reset element to unbound placeholder state
         childDom?.classList.remove('bound');
+        const valChild = findValEl(childId);
+        if (valChild) {
+          const staticVal = S.staticValues?.[`${childId}|Value`] || '';
+          valChild.textContent = staticVal || propPlaceholder('Value');
+          if (valChild.classList.contains('val') && !valChild.classList.contains('static')) valChild.classList.add('static');
+        }
+        const bindTag = childDom?.querySelector('.el-bind-tag');
+        if (bindTag) bindTag.textContent = '';
       }
     });
     syncRepVisualItems(repId);
@@ -10053,7 +10305,18 @@ function syncRepVisualItems(repeaterId) {
     const d = EL_DEFS[elId];
     return d && d.section === sectionId && d.repTemplate;
   });
-  const sampleData = hasInnerBindings ? (REP_SAMPLE_DATA[b.ctxId] || []) : [];
+  // Resolve sample data — for nested multiReference, use the referenced collection's sample data
+  let sampleData = [];
+  if (hasInnerBindings) {
+    const ctx2 = findSource(b.ctxId);
+    if (ctx2 && b.fieldName) {
+      const arrResult = findArrayFieldDeep(ctx2.fields, b.fieldName);
+      if (arrResult && arrResult.field.type === 'multiReference' && arrResult.field.referencedCollection) {
+        sampleData = REP_SAMPLE_DATA[arrResult.field.referencedCollection] || [];
+      }
+    }
+    if (sampleData.length === 0) sampleData = REP_SAMPLE_DATA[b.ctxId] || [];
+  }
   const templateItem = realItems[0];
   if (!templateItem) return;
   for (let i = baseCount; i < targetCount; i++) {
@@ -10465,6 +10728,13 @@ function findNavTargetForInheritedCtx(ctxId, selElId) {
   return pp || secId;
 }
 
+function highlightParentCtx(ctxId) {
+  document.querySelectorAll('.ctx-parent-note-item[data-ctx-id="' + ctxId + '"]').forEach(el => el.classList.add('highlight'));
+}
+function clearParentCtxHighlight() {
+  document.querySelectorAll('.ctx-parent-note-item.highlight').forEach(el => el.classList.remove('highlight'));
+}
+
 function navToInheritedCtxOwner(targetId) {
   if (!targetId || !EL_DEFS[targetId]) return;
   S.sel = targetId;
@@ -10587,7 +10857,12 @@ function renderCtxList() {
       const relConfirmMsg = hasRel ? (resolveRelText(rel.confirmMsg) || `${childCtxName} will no longer be filtered. All items will be shown.`) : '';
       const safeRelKey = relKey.replace(/'/g, "\\'");
       const infoTooltip = hasRel ? `We detected a reference field between <b>${childCtxName}</b> and <b>${parentCtxName}</b>. This filter was applied automatically so each item only shows its related data.` : '';
-      const filterToggleHtml = hasRel ? `<div class="ctx-filter-row${rel.active ? '' : ' off'}" id="ctx-filter-${relKey}"><div class="ctx-filter-label"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> ${relLabel}<span class="ctx-filter-info"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v4"/><circle cx="8" cy="5" r="0.5" fill="currentColor" stroke="none"/></svg><span class="ctx-filter-info-tip">${infoTooltip}</span></span></div><label class="ctx-filter-toggle" onclick="event.stopPropagation()"><input type="checkbox" ${rel.active ? 'checked' : ''} onchange="onFilterToggle(event,'${safeRelKey}')"><span class="ctx-filter-slider"></span></label><div class="ctx-filter-confirm" id="filter-confirm-${relKey}"><div class="ctx-filter-confirm-msg">${relConfirmMsg}</div><div class="ctx-filter-confirm-actions"><button class="btn-keep" onclick="cancelFilterToggle(event,'${safeRelKey}')">Keep filter</button><button class="btn-off" onclick="confirmFilterOff(event,'${safeRelKey}')">Turn off</button></div></div></div>` : '';
+      const safeLinkedId = rel?.linkedTo ? String(rel.linkedTo).replace(/'/g, "\\'") : '';
+      const relDesc = hasRel ? (rel.isStatic ? relLabel : `Showing only <strong>${childCtxName}</strong> related to each <strong class="ctx-filter-parent-ref" onmouseenter="highlightParentCtx('${safeLinkedId}')" onmouseleave="clearParentCtxHighlight()">${parentCtxName}</strong> item`) : '';
+      const filterToggleHtml = hasRel ? `<div class="ctx-rel-indicator">
+        <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Related to <strong class="ctx-filter-parent-ref" onmouseenter="highlightParentCtx('${safeLinkedId}')" onmouseleave="clearParentCtxHighlight()">${parentCtxName}</strong>
+      </div>` : '';
       return `
       <div class="ctx-group">
         <div class="ctx-card${primary ? ' primary' : ''}${isUnconfigured ? ' unconfigured' : ''}">
@@ -10639,12 +10914,12 @@ function renderCtxList() {
   let parentNote = '';
   if (!isPage && inheritedUserCtxs.length > 0) {
     parentNote = `<div class="ctx-parent-note-wrap">
-      <div class="ctx-parent-note-label">Also available from parent containers <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">These contexts don't need to be added here — they are already attached to parent containers in this page. Any element in this container can bind to their fields. Click to see where they are attached.</span></span></div>
+      <div class="ctx-parent-note-label">Available from parent <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">These contexts are attached to parent containers in this page. Any element in this container can bind to their fields. Click to navigate to where they are attached.</span></span></div>
       ${inheritedUserCtxs.map(c => {
         const navT = findNavTargetForInheritedCtx(c.id, S.sel) || parentPageId || sectionId || '';
         const safeNav = String(navT).replace(/'/g, "\\'");
-        return `<div class="ctx-parent-note-item" onclick="navToInheritedCtxOwner('${safeNav}')">
-          <span>${c.icon} ${resolveCtxName(c.id)}</span><span class="ctx-parent-note-arrow">→</span>
+        return `<div class="ctx-parent-note-item" data-ctx-id="${c.id}" onclick="navToInheritedCtxOwner('${safeNav}')">
+          <span>${c.icon} ${resolveCtxName(c.id)} <span style="color:var(--t4);font-weight:400;font-size:11px">· ${c.source || ''}</span></span><span class="ctx-parent-note-arrow">→</span>
         </div>`;
       }).join('')}
     </div>`;
@@ -10664,6 +10939,8 @@ function renderCtxList() {
       </div>
       ${sysOpen ? `<div style="padding:0 0 8px">${systemCtxs.map(renderCtxCard).join('')}</div>` : ''}
     </div>` : '';
+
+  const scopeLabel = isPage ? 'page' : isRepeater ? 'repeater' : 'section';
 
   if (isPage) {
     const pageCtxs = userCtxs.filter(c => isPrimaryCtx(c.id, S.sel));
@@ -10689,7 +10966,7 @@ function renderCtxList() {
         </div>
         ${attOpen ? `<div style="padding:0 0 4px">
           ${attachedCtxs.map(renderCtxCard).join('')}
-          <div class="add-ctx-btn" onclick="openModal('${S.sel}')" style="margin:10px 14px 12px"><span style="font-size:15px">＋</span> Add Context</div>
+          <div class="add-ctx-btn" onclick="openModal('${S.sel}')" style="margin:10px 14px 12px"><span style="font-size:15px">＋</span> Add context to ${scopeLabel}</div>
         </div>` : ''}
       </div>`;
 
@@ -10697,25 +10974,23 @@ function renderCtxList() {
       ${pageCtxSection}
       ${attachedCtxSection}
       ${systemSection}
-      <div class="ctx-tree-cta" onclick="toggleTree()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"/><path d="M6 9v6"/><path d="M18 9v6"/><circle cx="12" cy="3" r="1.5"/><circle cx="6" cy="9" r="1.5"/><circle cx="18" cy="9" r="1.5"/><circle cx="6" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/><circle cx="12" cy="12" r="1.5"/><path d="M6 9L12 3L18 9"/></svg> Show context tree</div>
     </div>`;
   }
 
   const attOpenSec = S.openCats.attachedCtx !== false;
   return `<div class="ps" style="padding:0">
+    ${parentNote}
     <div style="border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:6px;padding:11px 14px 0;cursor:pointer" onclick="S.openCats.attachedCtx=!S.openCats.attachedCtx;renderBody()">
         <span style="font-size:10px;color:var(--t3);transition:transform .15s;display:inline-block;transform:rotate(${attOpenSec?'90':'0'}deg)">›</span>
-        <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Attached Contexts${userCtxs.length ? ' (' + userCtxs.length + ')' : ''} <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">Data sources directly connected to this container. Their fields are available for binding to any element inside.</span></span></span>
+        <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Local Contexts${userCtxs.length ? ' (' + userCtxs.length + ')' : ''} <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">Data sources directly connected to this container. Their fields are available for binding to any element inside.</span></span></span>
       </div>
       ${attOpenSec ? `<div style="padding:0 0 4px">
         ${userCtxs.map(renderCtxCard).join('')}
-        <div class="add-ctx-btn" onclick="openModal('${S.sel}')" style="margin:10px 14px 12px"><span style="font-size:15px">＋</span> Add Context</div>
+        <div class="add-ctx-btn" onclick="openModal('${S.sel}')" style="margin:10px 14px 12px"><span style="font-size:15px">＋</span> Add context to ${scopeLabel}</div>
       </div>` : ''}
     </div>
-    ${parentNote}
     ${systemSection}
-    <div class="ctx-tree-cta" onclick="toggleTree()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"/><path d="M6 9v6"/><path d="M18 9v6"/><circle cx="12" cy="3" r="1.5"/><circle cx="6" cy="9" r="1.5"/><circle cx="18" cy="9" r="1.5"/><circle cx="6" cy="18" r="1.5"/><circle cx="18" cy="18" r="1.5"/><circle cx="12" cy="12" r="1.5"/><path d="M6 9L12 3L18 9"/></svg> Show context tree</div>
   </div>`;
 }
 
@@ -11200,7 +11475,7 @@ const ITEM_DATA = [
 function selectPage(el, name) {
   document.querySelectorAll('.pp-item, .pp-sub').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
-  const pageIcon = name === 'Product Item' ? '🛒' : name === 'Repeater Usecases' || name === 'Repeater' ? '↻' : name === 'Multi-State Box' ? '◫' : name === 'Repeaters' ? '↻' : name.startsWith('Option B') ? 'Ⓑ' : name === 'Team Members List' ? '👥' : name === 'Team Member Item' ? '👤' : name === 'Role Item' ? '🏷' : name === 'Book Item' ? '📖' : name === 'Author Item' ? '✍️' : name === 'Dropdown Component' ? '📋' : '📄';
+  const pageIcon = name === 'Product Item' ? '🛒' : name === 'Repeater Usecases' || name === 'Repeater' ? '↻' : name === 'Multi-State Box' ? '◫' : name === 'Repeaters' ? '↻' : name.startsWith('Option B') ? 'Ⓑ' : name === 'Team Members List' ? '👥' : name === 'Team Member Item' ? '👤' : name === 'Role Item' ? '🏷' : name === 'Book Item' ? '📖' : name === 'Author Item' ? '✍️' : name === 'Dropdown Component' ? '📋' : name === 'Items Config' ? '⚡' : '📄';
   document.querySelector('.page-sel').innerHTML = `<span class="page-sel-name">${pageIcon} ${name}</span> <span class="page-sel-chevron">▾</span>`;
   document.getElementById('pages-panel').classList.remove('open');
 
@@ -11220,6 +11495,7 @@ function selectPage(el, name) {
   const biPage = document.getElementById('book-item-page');
   const aiPage = document.getElementById('author-item-page');
   const ddPage = document.getElementById('dropdown-page');
+  const icPage = document.getElementById('items-config-page');
   S.currentPage = name;
   _addedSuggestedIds.clear();
 
@@ -11239,6 +11515,7 @@ function selectPage(el, name) {
   biPage.classList.remove('active-page');
   aiPage.classList.remove('active-page');
   ddPage.classList.remove('active-page');
+  icPage.classList.remove('active-page');
 
   if (name === 'Items (List)') {
     itemsPage.classList.add('active-page');
@@ -11268,6 +11545,8 @@ function selectPage(el, name) {
     aiPage.classList.add('active-page');
   } else if (name === 'Dropdown Component') {
     ddPage.classList.add('active-page');
+  } else if (name === 'Items Config') {
+    icPage.classList.add('active-page');
   } else if (name === 'Demo') {
     demoPage.classList.remove('hidden-page');
   } else if (name === 'Home Page') {
@@ -11627,7 +11906,7 @@ function onSectionDrop(e) {
   cleanUpElDrag();
   refreshAllPills();
   reinitElementDrag();
-  renderTree();
+
   if (S.sel === elId) renderRP();
 
   if (promoted.length > 0) {
@@ -11667,7 +11946,7 @@ function undoElMove(elId, prevSection, curSection, promotedCtxIds) {
 
   refreshAllPills();
   reinitElementDrag();
-  renderTree();
+
   if (S.sel === elId) renderRP();
   toast('Move undone', true);
 }
@@ -12298,7 +12577,7 @@ function addBlankRepeater(sBody, sectionId, repId, itemIds, ts) {
 
   refreshAllPills();
   refreshRepeaterSkeletons();
-  renderTree();
+
   toast('Blank repeater added', true);
 }
 
@@ -12368,7 +12647,7 @@ function addTeamRepeater(sBody, sectionId, repId, itemIds, ts) {
 
   refreshAllPills();
   refreshRepeaterSkeletons();
-  renderTree();
+
   toast('Team members repeater added', true);
 }
 
@@ -12460,7 +12739,7 @@ function addArticlesRepeater(sBody, sectionId, repId, itemIds, ts) {
   refreshElementBindTags();
   refreshRepeaterSkeletons();
   renderBody();
-  renderTree();
+
   toast('Articles repeater added & connected', true);
 }
 
@@ -12898,7 +13177,39 @@ function renderDd() {
   const regularFields = filteredFields.filter(f => !f.isReverseRef);
   const reverseRefFields = filteredFields.filter(f => f.isReverseRef);
 
-  const allEmpty = regularFields.length === 0 && reverseRefFields.length === 0 && filteredAncestorFields.length === 0 && !unboundArraySections;
+  // Item detail fields — show array itemFields for non-repeater elements on list contexts
+  // Shows first item's fields directly (no repeater needed)
+  let itemDetailSection = '';
+  if (!scopedCtx && !def?.repTemplate && selectedCtx) {
+    const arrayFields = selectedCtx.fields.filter(f => f.type === 'array' && f.itemFields);
+    if (arrayFields.length > 0) {
+      itemDetailSection = arrayFields.map(arr => {
+        const arrItemFields = arr.itemFields.filter(fieldFilter);
+        if (arrItemFields.length === 0) return '';
+        return `<div style="margin-bottom:2px">
+          <div style="padding:6px 10px;font-size:9px;color:var(--acc);font-family:'DM Mono',monospace;background:color-mix(in srgb, var(--acc) 6%, transparent);border-bottom:1px solid color-mix(in srgb, var(--acc) 15%, transparent)">
+            <div style="text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;gap:4px">
+              FIRST ITEM · ${arr.name}
+            </div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:10px;color:var(--t3);margin-top:3px;text-transform:none;letter-spacing:0;line-height:1.5">Values from the first item in the list.</div>
+          </div>
+          ${arrItemFields.map(f => {
+            const fName = arr.name + '.' + f.name;
+            const isSel = fieldName === fName;
+            return `<div class="dd-sel-item ${isSel?'sel':''}" onclick="ddSelField(event,'${fName}')">
+              <div style="flex:1;min-width:0">
+                <div>${isSel ? '✓ ' : ''}${f.name}</div>
+                <div class="dd-sel-item-sub">${f.description || f.sample}</div>
+              </div>
+              <span class="dd-sel-tag">${f.type}</span>
+            </div>`;
+          }).join('')}
+        </div>`;
+      }).join('');
+    }
+  }
+
+  const allEmpty = regularFields.length === 0 && reverseRefFields.length === 0 && filteredAncestorFields.length === 0 && !unboundArraySections && !itemDetailSection;
 
   let reverseRefSection = '';
   if (reverseRefFields.length > 0) {
@@ -12919,7 +13230,7 @@ function renderDd() {
         <div style="font-size:11px;font-weight:600;color:var(--t2);margin-bottom:4px">No compatible fields</div>
         <div style="font-size:10px;color:var(--t3);line-height:1.5">No fields match the expected type in this scope.</div>
       </div>`
-    : scopeHeader + regularFields.map(f => renderFieldItemHtml(f, fieldName, isSelectedFn)).join('') + reverseRefSection + ancestorSection + unboundArraySections;
+    : itemDetailSection + scopeHeader + regularFields.map(f => renderFieldItemHtml(f, fieldName, isSelectedFn)).join('') + reverseRefSection + ancestorSection + unboundArraySections;
 
   const ddCanAddField = selectedCtx && (selectedCtx.source === 'CMS' || selectedCtx.source === 'Custom Code') && !isSelectedFn;
   const ddAddFieldBtn = ddCanAddField
@@ -13194,6 +13505,16 @@ function applyBindingToCanvas(elId, propKey, field, ctxId) {
   const ctx = ctxId ? findSource(ctxId) : null;
   const ctxName = ctxId ? resolveCtxName(ctxId) : '?';
 
+  // Resolve real sample value from REP_SAMPLE_DATA for first-item bindings (outside repeater)
+  let sampleValue = field ? field.sample : '';
+  if (field && field.name && field.name.includes('.') && !def?.repTemplate) {
+    const parts = field.name.split('.');
+    const firstRow = (REP_SAMPLE_DATA[ctxId] || [])[0];
+    if (firstRow && parts.length === 2 && firstRow[parts[1]] !== undefined) {
+      sampleValue = '"' + firstRow[parts[1]] + '"';
+    }
+  }
+
   if (field) {
     // ── BINDING APPLIED ──
     domEl.classList.add('bound');
@@ -13223,7 +13544,7 @@ function applyBindingToCanvas(elId, propKey, field, ctxId) {
       const bindTag = domEl.querySelector('.el-bind-tag');
       const ctxLabel = `${ctxName} · ${dfn}`;
       if (bindTag) bindTag.innerHTML = buildBindTagHTML(elId, ctxLabel);
-      valEl.textContent = field.sample.replace(/^"|"$/g, '');
+      valEl.textContent = sampleValue.replace(/^"|"$/g, '');
       if (domEl.classList.contains('c-el-text')) {
         valEl.style.color = '';
         valEl.style.fontFamily = '';
@@ -13235,7 +13556,7 @@ function applyBindingToCanvas(elId, propKey, field, ctxId) {
       const ctxLabel = `${ctxName} · ${dfn}`;
       if (bindTag) bindTag.innerHTML = buildBindTagHTML(elId, ctxLabel);
       const textDiv = [...domEl.children].find(ch => !ch.classList.contains('c-el-overlay') && !ch.classList.contains('el-tags') && ch.tagName === 'DIV');
-      if (textDiv) textDiv.textContent = field.sample.replace(/^"|"$/g, '');
+      if (textDiv) textDiv.textContent = sampleValue.replace(/^"|"$/g, '');
     }
 
     if (domEl.classList.contains('c-el-img')) {
@@ -14742,82 +15063,6 @@ function doConfirm2Secondary() {
   if (cb) cb();
 }
 
-/* ── TREE ── */
-function toggleTree() {
-  const tp = document.getElementById('tree-panel');
-  tp.classList.toggle('open');
-  if (tp.classList.contains('open')) renderTree();
-}
-
-function renderTree() {
-  const isItemsList = S.currentPage === 'Items (List)';
-  const isConcept = S.currentPage === 'Product Item';
-  const isRuc = S.currentPage === 'Repeater Usecases';
-  const isRep = S.currentPage === 'Repeater';
-  const isMsb = S.currentPage === 'Multi-State Box';
-  const isDemo = S.currentPage === 'Demo';
-  const isDemo262 = S.currentPage === 'Home Page';
-  const isRefTm = S.currentPage === 'Team Members List';
-  const isRefTmi = S.currentPage === 'Team Member Item';
-  const isRefRi = S.currentPage === 'Role Item';
-  const isRefBi = S.currentPage === 'Book Item';
-  const isRefAi = S.currentPage === 'Author Item';
-  const sections = isItemsList ? ['sec-items'] : isConcept ? ['sec-rel-product','sec-rel-locations'] : isRuc ? ['sec-ruc-articles','sec-ruc-tags'] : isRep ? ['sec-rep-connected','sec-rep-empty','sec-rep-controls'] : isMsb ? ['sec-msb'] : isDemo ? ['sec-demo-team','sec-demo-empty'] : isDemo262 ? ['sec-d262-weather','sec-d262-empty1','sec-home-nested','sec-d262-empty2'] : isRefTm ? ['sec-ref-tm'] : isRefTmi ? ['sec-ref-tmi-info','sec-ref-tmi-role','sec-ref-tmi-members','sec-ref-tmi-members-b'] : isRefRi ? ['sec-ref-ri-info','sec-ref-ri-members','sec-ref-ri-members-b','sec-ref-ri-others'] : isRefBi ? ['sec-ref-bi-info','sec-ref-bi-authors','sec-ref-bi-related','sec-ref-bi-byauthor','sec-ref-bi-all'] : isRefAi ? ['sec-ref-ai-info','sec-ref-ai-books'] : ['sec-hero','sec-weather','sec-articles'];
-  const pageLabel = isItemsList ? 'Items (List)' : isConcept ? 'Product Item' : isRuc ? 'Repeater Usecases' : isRep ? 'Repeater' : isMsb ? 'Multi-State Box' : isDemo ? 'Demo' : isDemo262 ? 'Home Page' : isRefTm ? 'Team Members List' : isRefTmi ? 'Team Member Item' : isRefRi ? 'Role Item' : isRefBi ? 'Book Item' : isRefAi ? 'Author Item' : 'Homepage';
-  const pageIcon = isConcept ? '🛒' : (isRefTm || isRefTmi) ? '👥' : (isRefRi) ? '🏷' : (isRefBi) ? '📖' : (isRefAi) ? '✍️' : '📄';
-
-  const pageIdMap = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown'};
-  const pageId = pageIdMap[pageLabel] || null;
-  const pageCtxIds = pageId ? (S.ctxMap[pageId]||[]) : [];
-  const hasDynamicPage = isConcept || isRefTmi || isRefRi || isRefBi || isRefAi;
-  const pageSel = S.sel === pageId ? 'font-weight:600;color:var(--acc)' : 'color:var(--t3)';
-
-  let h = `<div class="tp-row"><div class="tp-item" style="${pageSel};cursor:pointer" onclick="selEl({stopPropagation:()=>{}},'${pageId}');document.getElementById('tree-panel').classList.remove('open')"><span>${pageIcon}</span> ${pageLabel} ${pageCtxIds.length ? '<span class="tp-dot"></span>' : ''}</div></div>`;
-
-  if (hasDynamicPage) {
-    h += `<div class="tp-row"><div class="tp-indent"></div>
-      <div class="tp-item ctx" onclick="selEl({stopPropagation:()=>{}},'${pageId}');document.getElementById('tree-panel').classList.remove('open')">
-        <span>📑</span> Dynamic Page ${pageCtxIds.length?'<span class="tp-dot"></span>':''}
-      </div></div>`;
-  }
-
-  sections.forEach(sid => {
-    const def = EL_DEFS[sid];
-    const allIds = S.ctxMap[sid]||[];
-    const ownIds = allIds.filter(id => !isPrimaryCtx(id, sid) || !hasDynamicPage);
-    const hasOwn = ownIds.length > 0;
-    h += `<div class="tp-row"><div class="tp-indent"></div>
-      <div class="tp-item ${hasOwn?'ctx':''}" onclick="selEl({stopPropagation:()=>{}},
-      '${sid}');document.getElementById('tree-panel').classList.remove('open')">
-        <span>▭</span> ${def.name} ${hasOwn?'<span class="tp-dot"></span>':''}
-      </div></div>`;
-    ownIds.forEach(id => {
-      const c = findSource(id);
-      if (!c) return;
-      const displayName = getCtxDisplayName(id, sid);
-      h += `<div class="tp-row" style="margin-left:14px"><div class="tp-indent"></div>
-        <div class="tp-item ctx" style="font-family:'DM Mono',monospace;font-size:10px">${c.icon} ${displayName}</div></div>`;
-    });
-    const msbChildren = Object.entries(EL_DEFS).filter(([,d]) => d.section === sid && d.isMultiState);
-    msbChildren.forEach(([msbId, msbDef]) => {
-      const activeView = msbDef.activeView;
-      h += `<div class="tp-row" style="margin-left:14px"><div class="tp-indent"></div>
-        <div class="tp-item" onclick="selEl({stopPropagation:()=>{}},'${msbId}');document.getElementById('tree-panel').classList.remove('open')" style="cursor:pointer">
-          <span>◫</span> ${msbDef.name}
-        </div></div>`;
-      (msbDef.views||[]).forEach(v => {
-        const isActive = v.id === activeView;
-        const disabled = v.enumValues.length === 0;
-        h += `<div class="tp-row" style="margin-left:28px"><div class="tp-indent"></div>
-          <div class="tp-item" style="font-size:10px;color:${disabled ? 'var(--t3)' : isActive ? 'var(--acc)' : 'var(--t3)'};cursor:pointer;${disabled ? 'opacity:.4;text-decoration:line-through' : ''}" onclick="switchMsbView(event,'${v.id}')">
-            ${disabled ? '○' : isActive ? '◉' : '○'} ${v.name}
-          </div></div>`;
-      });
-    });
-  });
-  document.getElementById('tp-body').innerHTML = h;
-}
-
 /* ── MULTI-STATE BOX ── */
 function switchMsbView(e, viewId) {
   e.stopPropagation();
@@ -14831,7 +15076,7 @@ function switchMsbView(e, viewId) {
   if (viewEl) viewEl.classList.add('active');
   refreshMsbCanvasButtons();
   if (S.sel === msbId) renderBody();
-  renderTree();
+
 }
 
 function msbUnassign(e, viewId, val) {
@@ -14851,7 +15096,7 @@ function msbUnassign(e, viewId, val) {
   }
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
 }
 
 function msbShowAssign(e, viewId) {
@@ -14899,7 +15144,7 @@ function msbAssign(e, viewId, val) {
   if (popup) popup.remove();
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
   toast(`✓ "${val}" → ${view.name}`, true);
 }
 
@@ -14981,7 +15226,7 @@ function msbDoMove(val, targetViewId) {
   if (viewEl) { viewEl.style.display = ''; viewEl.classList.add('active'); }
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
   const targetIdx = def.views.indexOf(target) + 1;
   toast(`✓ "${val}" → State ${targetIdx}`, true);
 }
@@ -15036,7 +15281,7 @@ function duplicateMsbView(e, viewId) {
   if (newEl) newEl.classList.add('active');
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
   toast('✓ Duplicated → State ' + (srcIdx + 2), true);
 }
 
@@ -15077,7 +15322,7 @@ function addMsbView(e) {
   if (newViewEl) newViewEl.classList.add('active');
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
   toast('✓ Added State ' + (idx + 1), true);
 }
 
@@ -15110,7 +15355,7 @@ function deleteMsbView(e, viewId) {
   def.views.forEach((v, i) => { v.name = 'State ' + (i + 1); });
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
   toast(`Removed view "${viewName}"`);
 }
 
@@ -15144,7 +15389,7 @@ function msbResetJoins(e) {
   }
   refreshMsbCanvasButtons();
   renderBody();
-  renderTree();
+
   toast('✓ States reset to 1:1', true);
 }
 
@@ -18203,8 +18448,6 @@ function toast(msg, ok) {
 document.addEventListener('click', e => {
   const dd = document.getElementById('dd');
   if (!dd.contains(e.target) && !e.target.closest('.bind-btn')) closeDd();
-  const tp = document.getElementById('tree-panel');
-  if (!tp.contains(e.target) && !e.target.closest('.ctx-tree-btn') && !e.target.closest('.ctx-tree-cta')) tp.classList.remove('open');
   const pp = document.getElementById('pages-panel');
   if (pp && !pp.contains(e.target) && !e.target.closest('.page-sel')) pp.classList.remove('open');
   // close ctx card dropdowns
@@ -18380,12 +18623,26 @@ function applyRepBindingToAll(templateKey, propKey, field, ctxId) {
     [1,2,3,4].forEach(i => siblingIds.push(templateKey + '-' + i));
   }
   const nestedSamples = _findNestedArraySamples(ctx, field.name);
+  // Resolve sample data source — check if parent repeater is bound to a multiReference
+  let repSampleCtxId = ctxId;
+  const firstSib = siblingIds[0];
+  const firstDom = firstSib ? document.getElementById(firstSib) : null;
+  const parentRep = firstDom?.closest('.c-repeater');
+  if (parentRep) {
+    const repB = S.bindings[parentRep.id + '|Items'];
+    if (repB && ctx) {
+      const arrResult = findArrayFieldDeep(ctx.fields, repB.fieldName);
+      if (arrResult && arrResult.field.type === 'multiReference' && arrResult.field.referencedCollection) {
+        repSampleCtxId = arrResult.field.referencedCollection;
+      }
+    }
+  }
   const cacheKey = templateKey + '|' + propKey;
   const savedMap = S._savedRepSamples?.[cacheKey] || {};
   siblingIds.forEach((elId, idx) => {
     const domEl = document.getElementById(elId);
     if (!domEl) return;
-    const row = getRepSampleRow(ctxId, idx);
+    const row = getRepSampleRow(repSampleCtxId, idx);
     const existing = S.bindings[elId + '|' + propKey];
     let realVal = row[field.name];
     if (!realVal && savedMap[elId]) {
@@ -18588,7 +18845,9 @@ function renderDdRepeaterItems(body, elId, srcId) {
     : [];
 
   if (srcId && !fieldName && arrayFields.length === 1) {
-    fieldName = arrayFields[0].name;
+    const af = arrayFields[0];
+    const afFullPath = af._nestedIn ? af._nestedIn.replace(/ › /g, '.') + '.' + af.name : af.name;
+    fieldName = afFullPath;
     S.dd.fieldName = fieldName;
     S.dd.openPanel = null;
   }
@@ -18673,7 +18932,8 @@ function renderDdRepeaterItems(body, elId, srcId) {
         const tagText = isRev ? 'reverse ref' : isMR ? `multi-ref → ${refCtx?.name || ''}` : f.type;
         const nestedLabel = f._nestedIn ? `<span style="font-size:9px;color:var(--t3);font-family:'DM Mono',monospace">${f._nestedIn} › </span>` : '';
         const nestedIndent = f._nestedIn ? ' style="padding-left:20px"' : '';
-        return `<div class="dd-sel-item ${fieldName===f.name?'sel':''}" onclick="ddRepSelField(event,'${f.name}')"${nestedIndent}>
+        const fullPath = f._nestedIn ? f._nestedIn.replace(/ › /g, '.') + '.' + f.name : f.name;
+        return `<div class="dd-sel-item ${fieldName===fullPath?'sel':''}" onclick="ddRepSelField(event,'${fullPath}')"${nestedIndent}>
           <div style="flex:1;min-width:0">
             <div>${isRev ? '↩ ' : ''}${nestedLabel}${f.name}</div>
             <div class="dd-sel-item-sub">${f.description || f.sample}</div>
@@ -18938,6 +19198,8 @@ function closeSfDialog() {
   document.querySelectorAll('.sf-rule-popup').forEach(p => p.classList.remove('open'));
   sfDialogType = null;
   sfTempRules = [];
+  delete S._pendingAutoFilter;
+  delete S._pendingAutoFilterKey;
   renderBody();
 }
 
@@ -18946,11 +19208,27 @@ function applySfDialog() {
   const ctxId = S.ctxSettingsView || '';
   if (sfDialogType === 'sort') S.sortRules[ctxId] = valid;
   else S.filterRules[ctxId] = valid;
+  // Commit pending auto-filter toggle
+  if (sfDialogType === 'filter' && typeof S._pendingAutoFilter !== 'undefined' && S._pendingAutoFilterKey) {
+    const rel = S.ctxRelationships[S._pendingAutoFilterKey];
+    if (rel && rel.active !== S._pendingAutoFilter) {
+      rel.active = S._pendingAutoFilter;
+      syncSiblingRelationships(S._pendingAutoFilterKey, S._pendingAutoFilter);
+      const relCtxId = S._pendingAutoFilterKey.includes('::') ? S._pendingAutoFilterKey.split('::')[1] : S._pendingAutoFilterKey;
+      updateRepeaterForFilter(relCtxId, S._pendingAutoFilter, S._pendingAutoFilterKey);
+      const toastMsg = S._pendingAutoFilter
+        ? resolveRelTokens(S._pendingAutoFilterKey, rel.toastOn || 'Filter restored')
+        : resolveRelTokens(S._pendingAutoFilterKey, rel.toastOff || 'Filter removed');
+      toast(toastMsg, true);
+    }
+    delete S._pendingAutoFilter;
+    delete S._pendingAutoFilterKey;
+  }
   if (S.ctxSettingsView) markInstanceModified(S.ctxSettingsView);
   closeSfDialog();
-  const count = valid.length;
+  const count = valid.length + ((S.ctxRelationships[S._pendingAutoFilterKey]?.active) ? 1 : 0);
   const label = sfDialogType === 'sort' ? 'sort' : 'filter';
-  toast('✓ ' + count + ' ' + label + (count !== 1 ? 's' : '') + ' applied', true);
+  toast('✓ Changes applied', true);
   renderBody();
 }
 
@@ -19011,7 +19289,12 @@ function renderSfBody() {
     const parentCtxName = autoRel && autoRel.linkedTo ? (findSource(autoRel.linkedTo)?.name || autoRel.linkedTo) : '';
     const childCtxName = ctx ? (ctx.name || ctxId) : ctxId;
     const infoTooltip = autoRel ? 'We detected a reference field between ' + childCtxName + ' and ' + parentCtxName + '. This filter was applied automatically so each item only shows its related data.' : '';
-    const autoToggleHtml = autoRel ? '<div class="ctx-filter-row' + (autoRel.active ? '' : ' off') + '" style="margin:0 20px 12px"><div class="ctx-filter-label"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> ' + relLabel + '<span class="ctx-filter-info"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v4"/><circle cx="8" cy="5" r="0.5" fill="currentColor" stroke="none"/></svg><span class="ctx-filter-info-tip">' + infoTooltip + '</span></span></div><label class="ctx-filter-toggle" onclick="event.stopPropagation()"><input type="checkbox" ' + (autoRel.active ? 'checked' : '') + ' onchange="onFilterToggle(event,\'' + safeRelKey + '\');renderSfBody()"><span class="ctx-filter-slider"></span></label><div class="ctx-filter-confirm" id="filter-confirm-' + String(autoRelKey).replace(/"/g, '&quot;') + '"><div class="ctx-filter-confirm-msg">' + relConfirmMsg + '</div><div class="ctx-filter-confirm-actions"><button class="btn-keep" type="button" onclick="cancelFilterToggle(event,\'' + safeRelKey + '\')">Keep filter</button><button class="btn-off" type="button" onclick="confirmFilterOff(event,\'' + safeRelKey + '\');renderSfBody()">Turn off</button></div></div></div>' : '';
+    if (typeof S._pendingAutoFilter === 'undefined' || S._pendingAutoFilterKey !== autoRelKey) {
+      S._pendingAutoFilter = autoRel ? autoRel.active : false;
+      S._pendingAutoFilterKey = autoRelKey;
+    }
+    const pendingActive = S._pendingAutoFilter;
+    const autoToggleHtml = autoRel ? '<div class="ctx-filter-row' + (pendingActive ? '' : ' off') + '" style="margin:0 20px 12px"><div class="ctx-filter-label"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> ' + relLabel + '<span class="ctx-filter-info"><svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><path d="M8 7v4"/><circle cx="8" cy="5" r="0.5" fill="currentColor" stroke="none"/></svg><span class="ctx-filter-info-tip">' + infoTooltip + '</span></span></div><label class="ctx-filter-toggle" onclick="event.stopPropagation()"><input type="checkbox" ' + (pendingActive ? 'checked' : '') + ' onchange="S._pendingAutoFilter=this.checked;renderSfBody()"><span class="ctx-filter-slider"></span></label></div>' : '';
     if (sfTempRules.length === 0) {
       body.innerHTML = autoToggleHtml + '<div style="padding:20px;text-align:center;color:#999;font-size:13px">No filter rules added yet</div>'
         + '<div class="sf-add" onclick="sfAddRule()">+ Add new filter</div>';
