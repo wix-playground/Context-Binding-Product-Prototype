@@ -36,6 +36,8 @@ Each use case follows this structure:
 | A15 | I want to add a context to a section when the same collection already exists on the page (shadowing) | `Shadowing` `Section override` `Scope rules` | 🔶 |
 | A16 | I want to use data in the header/footer (global section) | `Global context` `Site-level scope` | ⬜ |
 | A17 | I want to extend an app's data with my own custom fields | `Data extension` `Context augmentation` | ⬜ |
+| A18 | I want a dedicated explorer view to see all contexts on my page — their fields, relationships, and where they're used | `Context explorer` `Field discovery` `Page overview` | ⬜ |
+| A19 | I want to add a data source (context) at the page level (as opposed to section level) | `Add context` `Page scope` `Entry point` | ⬜ |
 
 ---
 
@@ -55,6 +57,8 @@ Each use case follows this structure:
 | B06 | I want to bind a property from an ancestor context (cross-context) | `Cross-context` `Ancestor binding` | 🔶 | CNF |
 | B07 | I want to bind a property to an entire object (not a single field) | `Object binding` `Compound` | ⬜ | High |
 | B08a | I want to understand what happened when a binding breaks (source removed, field deleted) | `Broken connection` `Error state` `Recovery` | ⬜ | High |
+| B08b | I want to understand when a binding breaks because a function or library it depended on changed or was removed | `Broken binding` `Function library` `Error state` `Recovery` | ⬜ | High |
+| B08c | I want to understand "splitting/breaking changes" — when a schema, collection, or library change causes cascading breaks across multiple bindings at once | `Breaking changes` `Schema evolution` `Cascade` `Splitting` | ⬜ | High |
 
 ### Editing Bound Content
 
@@ -98,6 +102,23 @@ Each use case follows this structure:
 | B23 | I want to mark an image as decorative (no alt text needed) | `Image settings` `Decorative` `Accessibility` | 🔶 | NTH |
 | B24 | I want to manage what happens when a bound field is empty | `Empty fields` `Fallback behavior` | ⬜ | High |
 | B25 | I want to bind a background property to data (color, gradient, image) | `Background binding` `Design property` `CSS binding` | ⬜ | High |
+| B26 | I want to control whether an element is rendered (removed from layout entirely) vs just hidden, based on data | `Render property` `Conditional render` `Boolean binding` | ⬜ | High |
+
+### Accessibility & Rich Content
+
+| # | User Intent | Tags | Status | Pri |
+|---|------------|------|--------|-----|
+| B27 | I want to bind accessibility properties to data (aria-label, role) | `Accessibility` `ARIA` `Data binding` | ⬜ | High |
+| B28 | I want to bind a rich text field to an element | `Rich text` `Content binding` | ⬜ | High |
+| B29 | I want to bind a rich content field to an element | `Rich content` `Content binding` | ⬜ | High |
+
+### Link Binding & Configuration
+
+| # | User Intent | Tags | Status | Pri |
+|---|------------|------|--------|-----|
+| B30 | I want to configure link target (current tab / new tab) for a bound URL | `Link target` `URL config` `Bound link` | ⬜ | High |
+| B31 | I want to configure link type for a bound URL (page / web / anchor / email / phone) | `Link type` `URL config` `Bound link` | ⬜ | High |
+| B32 | I want to configure SEO rel attributes for bound links (nofollow, noopener) | `SEO` `Link rel` `Bound link` | ⬜ | High |
 
 ---
 
@@ -216,6 +237,8 @@ Each use case follows this structure:
 | G11 | I want a filter dropdown where options update based on other active filters | `UoU` `Conditional filtering` `Dependent inputs` | ⬜ |
 | G12 | I want to use an Input component as a filter for the list | `Input role` `Filter mode` `Context controller` | ⬜ |
 | G13 | I want to use an Input component as a sort control for the list | `Input role` `Sort mode` `Context controller` | ⬜ |
+
+> **Design Constraint (TBD — Requires R&D Sign-Off):** Context-level filters set by the site builder define the **maximum dataset boundary**. UoU runtime filters (search, sort, visitor controls) can only **narrow** the results — never widen them beyond the context filter. The runtime query pipeline must enforce context-level filters as a hard constraint; UoU filters are intersected with (applied on top of) the context filter, never replace it. *Requires explicit R&D approval.*
 
 ---
 
@@ -338,6 +361,21 @@ Each use case follows this structure:
 |---|------------|------|--------|
 | P02 | I want to add a new field to my collection from the context panel | `CMS` `Add field` `Schema editing` | ⬜ |
 | P03 | I want to see which collections are connected to which pages/sections | `CMS` `Usage overview` `Site map` | ⬜ |
+| P04 | I want to understand what happens when a CMS field I was binding to gets deleted | `CMS` `Broken binding` `Field deleted` `Error state` | ⬜ |
+| P05 | I want to understand what happens when a CMS collection connected to my page gets deleted | `CMS` `Broken context` `Collection deleted` `Error state` | ⬜ |
+
+---
+
+## Q — Onboarding & Opt-in
+
+> First-time user experiences: discovering context binding, installing CMS, and opting in to a data-driven workflow.
+
+| # | User Intent | Tags | Status |
+|---|------------|------|--------|
+| Q01 | I want to understand what context binding is and how it differs from static content, before I start | `Onboarding` `Education` `First use` | ⬜ |
+| Q02 | I want to install and connect my CMS for the first time so I can start using data-driven design | `CMS installation` `Onboarding` `First use` | ⬜ |
+| Q03 | I want a guided setup experience when I add my very first context to a page | `Guided setup` `First use` `Empty state` | ⬜ |
+| Q04 | I want to opt in to context binding on a page that was previously fully static — without disrupting my existing design | `Opt-in` `Migration` `Static to dynamic` | ⬜ |
 
 ---
 
@@ -345,8 +383,8 @@ Each use case follows this structure:
 
 | Area | Total | ✅ Done | 🔶 Partial | ⬜ Not Started |
 |------|-------|---------|------------|----------------|
-| **A** — Data Sources | 17 | 6 | 5 | 6 |
-| **B** — Binding | 26 | 14 | 4 | 8 |
+| **A** — Data Sources | 19 | 6 | 5 | 8 |
+| **B** — Binding | 35 | 14 | 4 | 17 |
 | **C** — Repeater & List Renderers | 23 | 8 | 2 | 13 |
 | **D** — Configuration | 11 | 3 | 3 | 5 |
 | **E** — References | 8 | 8 | 0 | 0 |
@@ -360,8 +398,9 @@ Each use case follows this structure:
 | **M** — Design Variants | 4 | 0 | 0 | 4 |
 | **N** — Write Mode & Forms | 7 | 0 | 0 | 7 |
 | **O** — Custom Components & Dev | 5 | 0 | 0 | 5 |
-| **P** — CMS-Specific | 2 | 0 | 0 | 2 |
-| **TOTAL** | **168** | **63** | **19** | **86** |
+| **P** — CMS-Specific | 4 | 0 | 0 | 4 |
+| **Q** — Onboarding & Opt-in | 4 | 0 | 0 | 4 |
+| **TOTAL** | **185** | **63** | **19** | **103** |
 
 ---
 
@@ -373,17 +412,19 @@ Each use case follows this structure:
 
 ### Key Takeaway
 
-**63 out of 168 use cases are prototyped (~38%), with 19 partially done.**
+**63 out of 185 use cases are prototyped (~34%), with 19 partially done.**
 
 Entire untouched areas:
+- **G — UoU Interactions** (13 use cases, 2 partial) — search, sort controls, pagination, infinite scroll, empty states, loading, conditional filtering
 - **N — Write Mode & Forms** (7 use cases) — data collection, form submission, input validation, update records
+- **Q — Onboarding & Opt-in** (4 use cases) — first-time experience, CMS installation, guided setup, static-to-dynamic migration
 - **O — Custom Components & Dev** (5 use cases) — custom components with binding, Velo contexts, AI wiring
 - **M — Design Variants** (4 use cases) — conditional styling, variant switching, layout states
-- **P — CMS-Specific** (2 use cases) — inline field creation, usage overview
+- **P — CMS-Specific** (4 use cases) — field creation, usage overview, broken bindings from CMS changes
 
 Critical areas with significant remaining work:
-- **G — UoU Interactions** (0/13 done, 2 partial) — search, sort, pagination, infinite scroll, empty states, loading, conditional filtering
-- **C — Repeater & List Renderers** (4/21 done) — Gallery, Table, Accordion, Tabs, Slideshow, Maps, nested repeaters, presets
+- **B — Binding** (14/35 done) — accessibility, rich text/content, link config, breaking/splitting changes, render property, formatters
+- **C — Repeater & List Renderers** (8/23 done) — Gallery, Table, Accordion, Tabs, Slideshow, Maps, nested repeaters, presets
 - **J — Scope & Lifecycle** (1/10) — promote, lightbox, missing context guidance, system contexts
 - **I — Dynamic Pages** (5/10) — URL binding, page variants, app dynamic pages
 - **F — Functions & Actions** (4/11) — event handlers, action chaining, OOTB libraries, conflict resolution
