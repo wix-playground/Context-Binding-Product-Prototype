@@ -8120,7 +8120,9 @@ function renderSettingsRepeaterOnRepeater(def) {
         </div>
         <div class="rp-cat-body">
           <div style="padding:10px 12px;background:var(--sur2);border:1px solid var(--b1);border-radius:8px;margin-bottom:10px">
-            <div style="font-size:11px;color:var(--t2);line-height:1.6">This repeater shows a list that lives <b>inside</b> each item (like tags on an article). It's not its own data source, so there's nothing to paginate, filter, or sort here — the parent controls all of that. You can still limit how many are shown.</div>
+            <div style="font-size:11px;color:var(--t2);line-height:1.6">This repeater is bound to a nested array, so it shows items as they come from the parent — no sort or filter available here.</div>
+            <div style="font-size:11px;color:var(--t2);line-height:1.6;margin-top:6px">Need to sort or filter this list? <b>Add a separate context</b> for the referenced collection — that gives you full control.</div>
+            <div style="margin-top:8px"><span style="font-size:11px;color:var(--acc);cursor:pointer;font-weight:500" onclick="toast('In the full product, this would open the Add Context flow for the referenced collection.')">+ Add context for full control</span></div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">
             <span style="font-size:11px;color:var(--t2);display:flex;align-items:center;gap:4px">Show limited number of items <span style="font-size:10px;color:var(--t3);cursor:help" title="Limit how many items from this nested list are shown on each parent item.">ⓘ</span></span>
@@ -8206,7 +8208,7 @@ function renderSettingsRepeaterOnRepeater(def) {
     </div>
     <div class="rp-cat-body">
       <div class="prop-wrap">
-        <div class="prop-key" style="display:flex;align-items:center;gap:4px">"Items" <span style="font-size:10px;color:var(--t3);cursor:help" title="The repeater's only data property. Connect it to any available array to populate items with dynamic content. Inner elements can then bind to fields within each item.">ⓘ</span></div>
+        <div class="prop-key" style="display:flex;align-items:center;gap:4px">Items <span style="font-size:10px;color:var(--t3);cursor:help" title="The repeater's only data property. Connect it to any available array to populate items with dynamic content. Inner elements can then bind to fields within each item.">ⓘ</span></div>
         <div class="prop-row ${b?'bound':''} ${isActiveDd?'active-bind':''}">
           <div class="prop-main">
             <div class="prop-val">
@@ -8667,7 +8669,9 @@ function renderSettings() {
           </div>
           <div class="rp-cat-body">
             <div style="padding:10px 12px;background:var(--sur2);border:1px solid var(--b1);border-radius:8px;margin-bottom:10px">
-              <div style="font-size:11px;color:var(--t2);line-height:1.6">This repeater shows a list that lives <b>inside</b> each item (like tags on an article). It's not its own data source, so there's nothing to paginate, filter, or sort here — the parent controls all of that. You can still limit how many are shown.</div>
+              <div style="font-size:11px;color:var(--t2);line-height:1.6">This repeater is bound to a nested array, so it shows items as they come from the parent — no sort or filter available here.</div>
+            <div style="font-size:11px;color:var(--t2);line-height:1.6;margin-top:6px">Need to sort or filter this list? <b>Add a separate context</b> for the referenced collection — that gives you full control.</div>
+            <div style="margin-top:8px"><span style="font-size:11px;color:var(--acc);cursor:pointer;font-weight:500" onclick="toast('In the full product, this would open the Add Context flow for the referenced collection.')">+ Add context for full control</span></div>
             </div>
             <div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0">
               <span style="font-size:11px;color:var(--t2);display:flex;align-items:center;gap:4px">Show limited number of items <span style="font-size:10px;color:var(--t3);cursor:help" title="Limit how many items from this nested list are shown on each parent item.">ⓘ</span></span>
@@ -8732,7 +8736,7 @@ function renderSettings() {
       </div>
       <div class="rp-cat-body">
         <div class="prop-wrap">
-          <div class="prop-key" style="display:flex;align-items:center;gap:4px">"Items" <span style="font-size:10px;color:var(--t3);cursor:help" title="The repeater's only data property. Connect it to any available array to populate items with dynamic content. Inner elements can then bind to fields within each item.">ⓘ</span></div>
+          <div class="prop-key" style="display:flex;align-items:center;gap:4px">Items <span style="font-size:10px;color:var(--t3);cursor:help" title="The repeater's only data property. Connect it to any available array to populate items with dynamic content. Inner elements can then bind to fields within each item.">ⓘ</span></div>
           <div class="prop-row ${b?'bound':''} ${isActiveDd?'active-bind':''}">
             <div class="prop-main">
               <div class="prop-val">
@@ -9550,6 +9554,7 @@ function doUnbindRepeater(elId) {
     Object.keys(EL_DEFS).forEach(id => {
       if (id !== elId && EL_DEFS[id].repTemplate === def.repTemplate && EL_DEFS[id].isRepeater) allRepIds.push(id);
     });
+    allRepIds.sort();
   }
 
   const parentCtxId = S.bindings[elId + '|Items']?.ctxId || null;
@@ -10287,6 +10292,25 @@ function syncRepVisualItems(repeaterId) {
   const ctx = findSource(b.ctxId);
   const isNested = !!repEl.parentElement?.closest('.c-repeater');
   let targetCount = isNested ? baseCount : (ctx?.itemCount || baseCount);
+  // For nested repeaters bound to a sub-array, resolve count from parent item's data
+  if (isNested && b) {
+    const outerItem = repEl.parentElement?.closest('.rep-item');
+    const outerRep = outerItem?.parentElement?.closest('.c-repeater');
+    if (outerRep && outerItem) {
+      const outerB = S.bindings[outerRep.id + '|Items'];
+      if (outerB) {
+        const outerContainer = getRepContainer(outerRep) || outerRep.querySelector('[style*="flex-direction:column"]');
+        const outerItems = outerContainer ? outerContainer.querySelectorAll(':scope > .rep-item:not(.rep-visual-clone)') : [];
+        const outerIdx = Array.from(outerItems).indexOf(outerItem);
+        const outerRow = (REP_SAMPLE_DATA[outerB.ctxId] || [])[outerIdx >= 0 ? outerIdx : 0];
+        if (outerRow) {
+          const leaf = b.fieldName.includes('.') ? b.fieldName.split('.').pop() : b.fieldName;
+          const arr = outerRow[leaf] || outerRow[b.fieldName];
+          if (Array.isArray(arr)) targetCount = arr.length;
+        }
+      }
+    }
+  }
   const pagKey = getRepPagKey(repeaterId);
   const pag = S.repPagination?.[pagKey];
   if (pag?.showLimit && pag.limit < targetCount) targetCount = pag.limit;
@@ -10983,7 +11007,7 @@ function renderCtxList() {
     <div style="border-bottom:1px solid var(--b1)">
       <div style="display:flex;align-items:center;gap:6px;padding:11px 14px 0;cursor:pointer" onclick="S.openCats.attachedCtx=!S.openCats.attachedCtx;renderBody()">
         <span style="font-size:10px;color:var(--t3);transition:transform .15s;display:inline-block;transform:rotate(${attOpenSec?'90':'0'}deg)">›</span>
-        <span class="ps-lbl" style="padding:0;flex:1;font-size:11px">Local Contexts${userCtxs.length ? ' (' + userCtxs.length + ')' : ''} <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">Data sources directly connected to this container. Their fields are available for binding to any element inside.</span></span></span>
+        <span class="ps-lbl" style="padding:0;flex:1;font-size:10px">Local Contexts${userCtxs.length ? ' (' + userCtxs.length + ')' : ''} <span class="cfg-info" style="position:relative;top:-1px">?<span class="cfg-info-tip">Data sources directly connected to this container. Their fields are available for binding to any element inside.</span></span></span>
       </div>
       ${attOpenSec ? `<div style="padding:0 0 4px">
         ${userCtxs.map(renderCtxCard).join('')}
@@ -13422,6 +13446,55 @@ function confirmBind(e) {
     while (ancestor) {
       ancestor = ancestor.parentElement ? ancestor.parentElement.closest('.c-repeater') : null;
       if (ancestor && EL_DEFS[ancestor.id]?.isRepeater) syncRepVisualItems(ancestor.id);
+    }
+    // For nested repeaters: populate ALL sibling inner repeater items by DOM traversal
+    // Runs AFTER syncRepVisualItems to avoid being overwritten
+    const clickedDom = document.getElementById(elId);
+    const clickedInnerRep = clickedDom?.closest('.c-repeater');
+    const clickedOuterRep = clickedInnerRep?.parentElement?.closest('.rep-item')?.parentElement?.closest('.c-repeater');
+    const innerRepDef = clickedInnerRep ? EL_DEFS[clickedInnerRep.id] : null;
+    const innerRepTemplate = innerRepDef?.repTemplate;
+    const outerB = clickedOuterRep ? S.bindings[clickedOuterRep.id + '|Items'] : null;
+    if (clickedOuterRep && outerB && innerRepTemplate) {
+      const ctxName = resolveCtxName(srcId);
+      const dfn = displayFieldName(elId, {fieldName: field.name});
+      const ctxLabel = `${ctxName} · ${dfn}`;
+      const outerContainer = getRepContainer(clickedOuterRep) || clickedOuterRep.querySelector('[style*="flex-direction:column"]');
+      const outerItems = outerContainer ? Array.from(outerContainer.querySelectorAll(':scope > .rep-item:not(.rep-visual-clone)')) : [];
+      const siblingRepIds = Object.keys(EL_DEFS).filter(id => EL_DEFS[id].repTemplate === innerRepTemplate && EL_DEFS[id].isRepeater);
+      siblingRepIds.forEach(repId => {
+        const innerRep = document.getElementById(repId);
+        if (!innerRep) return;
+        const innerB = S.bindings[repId + '|Items'];
+        if (!innerB) return;
+        const outerItem = innerRep.parentElement?.closest('.rep-item');
+        if (!outerItem) return;
+        const outerIdx = outerItems.indexOf(outerItem);
+        const outerRow = (REP_SAMPLE_DATA[outerB.ctxId] || [])[outerIdx >= 0 ? outerIdx : 0];
+        if (!outerRow) return;
+        const leaf = innerB.fieldName.includes('.') ? innerB.fieldName.split('.').pop() : innerB.fieldName;
+        const arr = outerRow[leaf] || outerRow[innerB.fieldName];
+        if (!Array.isArray(arr)) return;
+        const innerContainer = getRepContainer(innerRep) || innerRep.querySelector('[style*="flex-direction:column"]') || innerRep.querySelector('[style*="flex-wrap"]');
+        if (!innerContainer) return;
+        const repItems = Array.from(innerContainer.querySelectorAll(':scope > .rep-item'));
+        repItems.forEach((repItem, itemIdx) => {
+          if (itemIdx >= arr.length) return;
+          const item = arr[itemIdx];
+          const fLeaf = field.name.includes('.') ? field.name.split('.').pop() : field.name;
+          const val = typeof item === 'object' ? (item[fLeaf] || item[field.name]) : (typeof item === 'string' ? item : null);
+          if (val == null) return;
+          const directCEls = repItem.querySelectorAll(':scope > .c-el, :scope > div > .c-el');
+          directCEls.forEach(cel => {
+            if (cel.closest('.c-repeater') !== innerRep) return;
+            const valDiv = Array.from(cel.children).reverse().find(ch => ch.tagName === 'DIV' && !ch.classList.contains('c-el-overlay') && !ch.classList.contains('el-tags') && !ch.classList.contains('bound-dot'));
+            if (valDiv) valDiv.textContent = String(val);
+            cel.classList.add('bound');
+            const bt = cel.querySelector('.el-bind-tag');
+            if (bt) bt.innerHTML = buildBindTagHTML(cel.id || '', ctxLabel);
+          });
+        });
+      });
     }
   }
   if (def?.type === 'Image' && propKey === 'Source' && field.type === 'image') {
@@ -18504,9 +18577,9 @@ const ARTICLE_IMAGES = [
 ];
 const REP_SAMPLE_DATA = {
   'cms-articles': [
-    {title:"The Future of AI in Design", author:"Sarah Chen", category:"Tech", readTime:"5 min", publishedAt:"Jan 15, 2025", thumbnail:ARTICLE_IMAGES[0], authors:["Sarah Chen","Mark Rivera"]},
-    {title:"Building Better Products", author:"Mark Rivera", category:"Product", readTime:"8 min", publishedAt:"Feb 3, 2025", thumbnail:ARTICLE_IMAGES[1], authors:["Mark Rivera","Jane Doe","Emma Wilson"]},
-    {title:"Design Systems at Scale", author:"Jane Doe", category:"Design", readTime:"6 min", publishedAt:"Mar 22, 2025", thumbnail:ARTICLE_IMAGES[2], authors:["Jane Doe"]},
+    {title:"The Future of AI in Design", author:"Sarah Chen", category:"Tech", readTime:"5 min", publishedAt:"Jan 15, 2025", thumbnail:ARTICLE_IMAGES[0], authors:[{name:"Sarah Chen",bio:"Tech writer & AI researcher"},{name:"Mark Rivera",bio:"Product strategist"}]},
+    {title:"Building Better Products", author:"Mark Rivera", category:"Product", readTime:"8 min", publishedAt:"Feb 3, 2025", thumbnail:ARTICLE_IMAGES[1], authors:[{name:"Mark Rivera",bio:"Product strategist"},{name:"Jane Doe",bio:"Design systems lead"},{name:"Emma Wilson",bio:"UX prototyping expert"}]},
+    {title:"Design Systems at Scale", author:"Jane Doe", category:"Design", readTime:"6 min", publishedAt:"Mar 22, 2025", thumbnail:ARTICLE_IMAGES[2], authors:[{name:"Jane Doe",bio:"Design systems lead"}]},
     {title:"Why Accessibility Matters", author:"Lena Park", category:"Design", readTime:"4 min", publishedAt:"Apr 10, 2025", thumbnail:ARTICLE_IMAGES[3]},
     {title:"Scaling Microservices", author:"David Kim", category:"Tech", readTime:"7 min", publishedAt:"May 1, 2025", thumbnail:ARTICLE_IMAGES[4]},
     {title:"The Art of Prototyping", author:"Emma Wilson", category:"Product", readTime:"3 min", publishedAt:"May 18, 2025", thumbnail:ARTICLE_IMAGES[5]},
@@ -18639,12 +18712,42 @@ function applyRepBindingToAll(templateKey, propKey, field, ctxId) {
   }
   const cacheKey = templateKey + '|' + propKey;
   const savedMap = S._savedRepSamples?.[cacheKey] || {};
+  // Helper to resolve nested array data per element (elements span multiple outer items)
+  function _resolveNestedVal(elId, fieldObj) {
+    const domEl = document.getElementById(elId);
+    if (!domEl) return null;
+    const innerRepEl = domEl.closest('.c-repeater');
+    const outerItemEl = innerRepEl?.parentElement?.closest('.rep-item');
+    const outerRepEl = outerItemEl?.parentElement?.closest('.c-repeater');
+    if (!outerRepEl || !innerRepEl) return null;
+    const outerB = S.bindings[outerRepEl.id + '|Items'];
+    const innerB = S.bindings[innerRepEl.id + '|Items'];
+    if (!outerB || !innerB) return null;
+    const outerContainer = getRepContainer(outerRepEl) || outerRepEl.querySelector('[style*="flex-direction:column"]');
+    const outerItems = outerContainer ? outerContainer.querySelectorAll(':scope > .rep-item:not(.rep-visual-clone)') : [];
+    const outerIdx = Array.from(outerItems).indexOf(outerItemEl);
+    const outerRow = (REP_SAMPLE_DATA[outerB.ctxId] || [])[outerIdx >= 0 ? outerIdx : 0];
+    if (!outerRow) return null;
+    const leaf = innerB.fieldName.includes('.') ? innerB.fieldName.split('.').pop() : innerB.fieldName;
+    const arr = outerRow[leaf] || outerRow[innerB.fieldName];
+    if (!Array.isArray(arr)) return null;
+    // Find index within THIS inner repeater
+    const innerContainer = getRepContainer(innerRepEl) || innerRepEl.querySelector('[style*="flex-direction:column"]');
+    const innerItems = innerContainer ? innerContainer.querySelectorAll(':scope > .rep-item:not(.rep-visual-clone)') : [];
+    const repItem = domEl.closest('.rep-item');
+    const innerIdx = Array.from(innerItems).indexOf(repItem);
+    const item = arr[innerIdx >= 0 ? innerIdx : 0];
+    if (item === undefined) return null;
+    const fLeaf = fieldObj.name.includes('.') ? fieldObj.name.split('.').pop() : fieldObj.name;
+    return typeof item === 'object' ? (item[fLeaf] || item[fieldObj.name]) : (typeof item === 'string' ? item : null);
+  }
   siblingIds.forEach((elId, idx) => {
     const domEl = document.getElementById(elId);
     if (!domEl) return;
-    const row = getRepSampleRow(repSampleCtxId, idx);
+    const nestedVal = _resolveNestedVal(elId, field);
+    const row = nestedVal !== null ? {} : getRepSampleRow(repSampleCtxId, idx);
+    let realVal = nestedVal !== null ? nestedVal : row[field.name];
     const existing = S.bindings[elId + '|' + propKey];
-    let realVal = row[field.name];
     if (!realVal && savedMap[elId]) {
       realVal = savedMap[elId];
     }
