@@ -661,6 +661,8 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .rp{width:var(--panel);background:var(--sur);border-left:1px solid var(--b1);display:none;flex-direction:column;overflow:hidden;position:fixed;right:0;top:var(--top);bottom:0;z-index:1000;box-shadow:-4px 0 12px rgba(0,0,0,.15)}
 .rp.open{display:flex}
 #rp-inner{display:flex;flex-direction:column;flex:1;min-height:0}
+.ctx-floating-layer{position:fixed;top:calc(var(--top) + 72px);right:calc(var(--panel) + 20px);z-index:2147483647;pointer-events:none;isolation:isolate}
+.ctx-floating-shell{position:relative;z-index:2147483647;width:288px;max-height:calc(100vh - var(--top) - 92px);background:#fff;border:1px solid #eceaf1;border-radius:14px;box-shadow:0 18px 48px rgba(24,20,32,.18),0 3px 10px rgba(24,20,32,.08);overflow:hidden;pointer-events:auto}
 
 .rp-head{padding:12px 14px 10px;border-bottom:1px solid var(--b1)}
 .rp-el-name{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:700;font-size:15px}
@@ -1330,55 +1332,71 @@ body.product-mode #modal.has-spec{outline-offset:2px}
   cursor:pointer;color:var(--t3);background:transparent;transition:.15s;flex-shrink:0;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:9px;font-weight:700;line-height:1}
 .ctx-code-btn:hover{color:var(--yel);border-color:color-mix(in srgb, var(--yel) 40%, transparent);background:color-mix(in srgb, var(--yel) 8%, transparent)}
 
-.ctx-settings-panel{animation:ctxSlideIn .18s ease}
+.ctx-settings-panel{animation:ctxSlideIn .18s ease;background:#fff;display:flex;flex-direction:column;height:100%;max-height:inherit;min-height:0}
 @keyframes ctxSlideIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.ctx-back{display:flex;align-items:center;gap:6px;padding:10px 14px 8px;cursor:pointer;color:var(--t2);font-size:12px;
-  border-bottom:1px solid var(--b1);transition:.12s;user-select:none}
-.ctx-back:hover{color:var(--t1);background:var(--sur2)}
-.ctx-back-arrow{font-size:14px;line-height:1}
+.ctx-settings-head{padding:14px 12px 10px;border-bottom:1px solid #eceaf1;display:flex;flex-direction:column;gap:10px;flex-shrink:0;background:#fff}
+.ctx-settings-topbar{display:flex;align-items:center;gap:8px}
+.ctx-settings-head{position:relative}
+.ctx-settings-title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:700;font-size:13px;color:#1f1b24;flex:1;min-width:0}
+.ctx-settings-close{width:24px;height:24px;border:none;background:transparent;color:#221f28;cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;transition:.15s}
+.ctx-settings-close:hover{background:#f4f2f8}
+.ctx-settings-meta{display:flex;flex-direction:column;gap:6px}
+.ctx-settings-meta-row{display:flex;align-items:center;gap:6px;font-size:11px;color:#1f1b24;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.ctx-settings-meta-row strong{font-weight:600}
+.ctx-settings-meta-label{color:#3f3847;flex:0 0 auto}
+.ctx-settings-meta-value{display:flex;align-items:center;gap:6px;min-width:0;flex:0 1 auto}
+.ctx-settings-meta-value-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctx-settings-meta-main{display:flex;align-items:center;gap:6px;min-width:0;flex:1}
+.ctx-settings-head-actions{position:relative;display:flex;align-items:center;margin-left:auto}
+.ctx-settings-meta-action{font-size:12px;color:#1f1b24;cursor:pointer;line-height:1;flex-shrink:0;width:20px;height:20px;border:none;background:transparent;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.ctx-settings-meta-action:hover{color:#ff4db8}
+.ctx-settings-open-src{font-size:12px;color:#1f1b24;cursor:pointer;line-height:1;display:inline-flex;align-items:center;gap:4px;flex-shrink:0}
+.ctx-settings-open-src:hover{color:#ff4db8}
+.ctx-settings-dropdown{position:absolute;top:calc(100% + 6px);right:0;display:none;min-width:132px;background:#fff;border:1px solid #eceaf1;border-radius:10px;box-shadow:0 12px 30px rgba(24,20,32,.14);padding:6px 0;z-index:2}
+.ctx-settings-dropdown.open{display:block}
+.ctx-settings-dropdown-item{padding:8px 12px;font-size:12px;color:#2b2531;cursor:pointer;transition:.12s}
+.ctx-settings-dropdown-item:hover{background:#f6f4f7}
+.ctx-settings-dropdown-item.danger{color:#e84393}
+.ctx-settings-dropdown-item.danger:hover{background:#fff0fa}
+.ctx-settings-tabs{display:flex;align-items:center;gap:6px;padding-top:2px}
+.ctx-settings-tab{font-size:11px;color:#6f6a78;padding:6px 10px;border-radius:7px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1;user-select:none}
+.ctx-settings-tab.active{background:#f0eef2;color:#3f3847;font-weight:500}
+.ctx-settings-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
 
-.ctx-settings-head{padding:12px 14px 10px;border-bottom:1px solid var(--b1);display:flex;flex-direction:column;gap:6px}
-.ctx-settings-head-row1{display:flex;align-items:center;gap:8px}
-.ctx-settings-head-row2{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.ctx-settings-icon{font-size:18px}
-.ctx-settings-title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:700;font-size:14px;flex:1;min-width:0}
-.ctx-settings-badge{font-size:9px;padding:1px 5px;border-radius:3px;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:500}
-.ctx-settings-open-src{font-size:11px;color:var(--acc);cursor:pointer;padding:3px 7px;border-radius:5px;border:1px solid var(--acc-b);background:var(--acc-d);transition:.15s;white-space:nowrap;display:flex;align-items:center;gap:4px}
-.ctx-settings-open-src:hover{background:color-mix(in srgb, var(--acc) 15%, transparent);border-color:var(--acc)}
-
-.ctx-settings-section{padding:12px 14px;border-bottom:1px solid var(--b1)}
+.ctx-settings-section{padding:12px;border-bottom:1px solid #eceaf1}
 .ctx-settings-section:last-child{border-bottom:none}
-.ctx-settings-section-lbl{font-size:10px;letter-spacing:.7px;text-transform:uppercase;color:var(--t3);font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-bottom:10px}
+.ctx-settings-section-lbl{font-size:10px;letter-spacing:.2px;color:#6f6a78;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;margin-bottom:12px;font-weight:600}
 
-.ctx-cfg-row{margin-bottom:6px}
+.ctx-cfg-row{margin-bottom:12px}
 .ctx-cfg-row:last-child{margin-bottom:0}
-.ctx-cfg-lbl{font-size:10px;color:var(--t3);font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-bottom:3px}
+.ctx-cfg-lbl{font-size:11px;color:#2b2531;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;margin-bottom:6px;display:flex;align-items:center;gap:6px;font-weight:500}
 .ctx-cfg-row-nested{position:relative;margin-bottom:4px}
 .ctx-cfg-row-nested::before{content:'';position:absolute;left:0;top:0;bottom:4px;width:1px;background:var(--b2)}
 .ctx-cfg-row-nested-inner{padding-left:14px;position:relative}
 .ctx-cfg-row-nested-inner::before{content:'';position:absolute;left:0;top:13px;width:10px;height:1px;background:var(--b2)}
 .ctx-cfg-nested-prefix{font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:9px;color:var(--b3);margin-right:3px;letter-spacing:-.5px}
 .ctx-cfg-nested-badge{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;padding:1px 5px;border-radius:4px;background:var(--sur3);color:var(--t3);border:1px solid var(--b2);margin-left:4px;vertical-align:middle}
-.ctx-cfg-right{display:flex;align-items:center;gap:6px}
-.cfg-prop-row{display:flex;align-items:stretch;border:1px solid var(--b2);border-radius:7px;overflow:hidden;transition:border-color .15s;background:var(--sur2);flex:1;min-width:0}
-.cfg-prop-row:hover{border-color:var(--b3)}
-.cfg-prop-row.bound{border-color:var(--grn-b);background:var(--grn-d)}
-.cfg-prop-row .cfg-main{flex:1;min-width:0;padding:5px 10px 6px}
-.cfg-prop-row .cfg-val{display:flex;align-items:center;gap:5px;min-height:18px}
-.cfg-prop-row .cfg-static{border:none;outline:none;background:transparent;font-size:12px;color:var(--t1);width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.ctx-cfg-right{display:flex;align-items:center;gap:8px}
+.cfg-prop-row{display:flex;align-items:stretch;border:1px solid transparent;border-radius:8px;overflow:hidden;transition:border-color .15s, background .15s;background:#f6f4f7;flex:1;min-width:0}
+.cfg-prop-row:hover{background:#f1eef4}
+.cfg-prop-row:focus-within{border-color:#7693ff;background:#fff}
+.cfg-prop-row.bound{background:#fff0fa;border-color:#ff8bd2}
+.cfg-prop-row .cfg-main{flex:1;min-width:0;padding:0 12px}
+.cfg-prop-row .cfg-val{display:flex;align-items:center;gap:6px;min-height:30px}
+.cfg-prop-row .cfg-static{border:none;outline:none;background:transparent;font-size:11px;color:#1f1b24;width:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;padding:0;height:30px}
 .cfg-prop-row .cfg-bound-detail{display:none;flex-direction:column;align-items:flex-start;gap:3px;flex:1}
-.cfg-prop-row .cfg-bound-ctx{font-size:10px;color:var(--t3);letter-spacing:.3px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
-.cfg-prop-row .cfg-bound-field{font-size:11px;padding:2px 7px;display:inline-flex;align-items:center;gap:4px;width:fit-content;background:#fce4ec;color:#e84393;border-radius:10px;font-weight:600}
+.cfg-prop-row .cfg-bound-ctx{font-size:10px;color:#7a7382;letter-spacing:.1px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.cfg-prop-row .cfg-bound-field{font-size:11px;padding:2px 6px;display:inline-flex;align-items:center;gap:4px;width:fit-content;background:#ffe8f8;color:#eb3fa9;border-radius:3px;font-weight:500}
 .cfg-prop-row.bound .cfg-bound-detail{display:flex}
 .cfg-prop-row.bound .cfg-static,.cfg-prop-row.bound .cfg-select,.cfg-prop-row.bound .cfg-toggle-wrap,.cfg-prop-row.bound .sf-inline-entry{display:none}
-.cfg-select{background:transparent;border:none;outline:none;color:var(--t1);font-size:12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;cursor:pointer;width:100%}
-.cfg-toggle-wrap{display:flex;gap:2px}
-.cfg-toggle-wrap .seg-b{padding:4px 10px}
-.cfg-info{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1px solid var(--b2);color:var(--t3);font-size:9px;font-weight:600;cursor:default;position:relative;flex-shrink:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1}
-.cfg-info:hover{border-color:var(--acc);color:var(--acc)}
+.cfg-select{background:transparent;border:none;outline:none;color:#1f1b24;font-size:11px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;cursor:pointer;width:100%;height:30px;padding:0}
+.cfg-toggle-wrap{display:flex;gap:4px;padding:4px 0}
+.cfg-toggle-wrap .seg-b{padding:4px 10px;border-radius:6px;background:#fff}
+.cfg-info{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;border:1px solid #d8d2dd;color:#86808f;font-size:9px;font-weight:600;cursor:default;position:relative;flex-shrink:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1}
+.cfg-info:hover{border-color:#7693ff;color:#4f67d8}
 .cfg-info:hover .cfg-info-tip{opacity:1;visibility:visible}
 .cfg-info-tip{position:fixed;background:#1a1a1a;color:#ddd;border-radius:8px;padding:8px 12px;width:200px;font-size:11px;line-height:1.5;font-weight:400;z-index:9999;pointer-events:none;box-shadow:0 6px 20px #00000050;opacity:0;visibility:hidden;transition:opacity .15s;text-transform:none;letter-spacing:normal}
 .cfg-reset{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;color:var(--t3);font-size:10px;cursor:pointer;opacity:0;transition:opacity .15s;flex-shrink:0}
@@ -1387,13 +1405,17 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .cfg-empty-state{text-align:center;padding:16px 12px;color:var(--t3);font-size:12px;line-height:1.6}
 .cfg-empty-icon{font-size:24px;margin-bottom:6px;opacity:.5}
 .cfg-empty-msg{font-size:11px;color:var(--t3)}
-.sf-inline-entry{display:flex;align-items:center;justify-content:space-between;cursor:pointer;flex:1;min-width:0;font-size:12px;color:var(--t1);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;transition:color .12s}
-.sf-inline-entry:hover{color:var(--acc)}
+.sf-inline-entry{display:flex;align-items:center;justify-content:space-between;cursor:pointer;flex:1;min-width:0;font-size:11px;color:#1f1b24;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;transition:color .12s;min-height:30px}
+.sf-inline-entry:hover{color:#4f67d8}
 .sf-inline-entry.disabled{cursor:default;opacity:.45;pointer-events:none}
 .sf-inline-desc{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sf-inline-arrow{color:var(--t3);font-size:11px;flex-shrink:0;margin-left:4px}
+.sf-inline-arrow{color:#7a7382;font-size:11px;flex-shrink:0;margin-left:4px}
 .cfg-prop-row.disabled{opacity:.4;pointer-events:none}
 .cfg-disabled-wrap{opacity:.4;pointer-events:none}
+.ctx-bind-btn{width:20px;height:20px;border:none;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#1f1b24;transition:.15s;flex-shrink:0;border-radius:6px;padding:0}
+.ctx-bind-btn:hover{background:#fff0fa;color:#eb3fa9}
+.ctx-bind-btn.bound{color:#eb3fa9}
+.ctx-bind-btn svg{width:14px;height:14px;pointer-events:none}
 
 /* Repeater notice banner */
 .rep-notice{padding:6px 12px;margin:6px 12px 0;background:#fff3cd;color:#856404;font-size:11px;border-radius:6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.5;display:none}
@@ -4923,6 +4945,8 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
   </div>
 </div>
 
+<div class="ctx-floating-layer" id="ctx-floating-layer"></div>
+
 <!-- BINDING DROPDOWN -->
 <div class="dd" id="dd">
   <div class="dd-head">
@@ -5894,6 +5918,14 @@ const CTX_DEFS = [
         nestedLabel:'Allergens', nestedPath:'items → dishes → allergens',
         options:['Name A→Z','Name Z→A','Default order'], default:'Name A→Z',
         description:'How allergens are sorted within each dish. Applied client-side after data is fetched.' },
+      { key:'filterDishes', label:'Dishes filter', input:'select', nested:true, depth:2, nestedType:'filter',
+        nestedLabel:'Dishes', nestedPath:'items → dishes',
+        options:['All dishes','Vegetarian only','Under $15','No allergens'], default:'All dishes',
+        description:'Show only dishes matching this condition. Runs client-side — all data is still fetched from the CMS.' },
+      { key:'limitDishes', label:'Dishes per category', input:'select', nested:true, depth:2, nestedType:'limit',
+        nestedLabel:'Dishes', nestedPath:'items → dishes',
+        options:['All','Top 1','Top 2','Top 3'], default:'All',
+        description:'Maximum number of dishes shown per category. Truncates display only — all data remains fetched.' },
     ]},
 ];
 
@@ -6768,6 +6800,10 @@ const S = {
   },
   removedInherited: {},  // {sectionId: [ctxId, ...]} — tracks inherited contexts removed by user
   cfgValues: {},
+  cfgAccordion: {},
+  ctxSettingsTab: 'configuration',
+  itemsTabAccordion: {},
+  itemsTabModal: null,
   ctxRelationships: {
     'stores-locations': {linkedTo: 'stores-current-item', label: 'Filtered by current product', active: true},
     'repeater-ref-tmf::cms-team-members-filtered': {isStatic: true, label: 'Filtered by: role (Ref → Roles) = UX Designer', active: true, confirmMsg: 'Team Members will no longer be filtered by role. All team members will be shown instead.', toastOn: 'Filter restored — showing filtered team members', toastOff: 'Filter removed — showing all team members'},
@@ -7031,6 +7067,7 @@ const S = {
   dd: {open:false, elId:null, propKey:null, paramName:null, step:'source', srcId:null, fieldName:null},
   modal: {target:null, selId:null},
   ctxSettingsView: null,
+  ctxSettingsMenuOpen: null,
   productMode: false,
   specPageOpen: false,
   specPageId: null,
@@ -7108,6 +7145,7 @@ function getFnLibName(ctxId) {
 function pillNavCtx(targetId, ctxId) {
   S.sel = targetId;
   S.ctxSettingsView = isFnLibCtx(ctxId) ? null : (ctxId || null);
+  S.ctxSettingsTab = 'configuration';
   S.inspectorOpen = true;
   updateSelectionVisual(targetId);
   S.tab = 'settings';
@@ -7205,6 +7243,9 @@ function updateInspectorToggle() {
   const toggle = document.getElementById('inspector-toggle');
   toggle.innerHTML = S.inspectorOpen ? ACTION_BAR_ICONS.chevronRight : ACTION_BAR_ICONS.chevronLeft;
   toggle.style.right = S.inspectorOpen ? 'calc(var(--panel) + 12px)' : '12px';
+  const hideForFloatingCtx = S.inspectorOpen && S.tab === 'settings' && !!S.ctxSettingsView;
+  toggle.style.opacity = hideForFloatingCtx ? '0' : '1';
+  toggle.style.pointerEvents = hideForFloatingCtx ? 'none' : 'auto';
 }
 
 function renderActionBar() {
@@ -7660,6 +7701,7 @@ function refreshPageBars() {
 /* ── RIGHT PANEL ── */
 function toggleInspector() {
   S.inspectorOpen = !S.inspectorOpen;
+  if (!S.inspectorOpen) S.ctxSettingsView = null;
   renderRP();
   renderActionBar();
 }
@@ -7700,7 +7742,7 @@ function renderRP() {
   renderBody();
 }
 
-function switchTab(t) { S.tab = t; S.ctxSettingsView = null; renderRP(); }
+function switchTab(t) { S.tab = t; S.ctxSettingsView = null; S.ctxSettingsMenuOpen = null; renderRP(); }
 
 function selElSettings(e, id) {
   e.stopPropagation();
@@ -7728,9 +7770,21 @@ function toggleCat(cat) {
 function renderBody() {
   const body = document.getElementById('rp-body');
   if (!body) return;
-  if (S.tab==='design')     { body.innerHTML = renderDesign(); return; }
-  if (S.tab==='animations') { body.innerHTML = renderAnims(); return; }
-  if (S.tab==='settings')   { body.innerHTML = renderSettings(); return; }
+  if (S.tab==='design')     { body.innerHTML = renderDesign(); renderCtxFloatingPanel(); return; }
+  if (S.tab==='animations') { body.innerHTML = renderAnims(); renderCtxFloatingPanel(); return; }
+  if (S.tab==='settings')   { body.innerHTML = renderSettings(); renderCtxFloatingPanel(); return; }
+}
+
+function renderCtxFloatingPanel() {
+  const layer = document.getElementById('ctx-floating-layer');
+  if (!layer) return;
+  if (!S.inspectorOpen || S.tab !== 'settings' || !S.ctxSettingsView) {
+    layer.innerHTML = '';
+    updateInspectorToggle();
+    return;
+  }
+  layer.innerHTML = `<div class="ctx-floating-shell">${renderCtxSettings(S.ctxSettingsView)}</div>`;
+  updateInspectorToggle();
 }
 
 /* ── DESIGN TAB ── */
@@ -8141,7 +8195,6 @@ function renderSettingsRepeaterOnRepeater(def) {
   const isPromoted = repCtxIds.some(id => (S.ctxMap[sectionId] || []).includes(id));
 
   const ctxCount = repCtxIds.length;
-  if (S.ctxSettingsView) return renderCtxSettings(S.ctxSettingsView);
   const ctxContent = renderCtxList();
 
   let ctxSummaryHtml = '';
@@ -8712,7 +8765,6 @@ function renderSettings() {
     return renderSettingsRepeaterOnRepeater(def);
   }
   if (def.isRepeater) {
-    if (S.ctxSettingsView) return renderCtxSettings(S.ctxSettingsView);
     const bkey = S.sel + '|Items';
     const b = S.bindings[bkey];
     const ctx = b ? findSource(b.ctxId) : null;
@@ -8999,11 +9051,10 @@ function renderSettings() {
         </div>`;
     } else {
       dataHtml = `
-        <div style="display:flex;align-items:center;gap:6px;padding:8px 10px;margin-top:4px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px">
-          <span style="font-size:14px">⚠️</span>
-          <div style="font-size:10px;color:#856404;line-height:1.4">
-            Repeater is <b>not connected to data</b>. Connect the repeater's "Items" property to an array to populate items with dynamic content.
-          </div>
+        <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;margin-top:4px;background:#fff3cd;border:1px solid #ffc107;border-radius:8px">
+          <span style="font-size:14px;flex-shrink:0">⚠️</span>
+          <div style="font-size:10px;color:#856404;line-height:1.4;flex:1">This repeater is <b>not showing data yet</b>. Connect it to a list to display real items.</div>
+          <span style="flex-shrink:0;padding:4px 10px;background:#856404;color:#fff;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap" onclick="openDd(event,'${elId}','Items')">Connect →</span>
         </div>`;
     }
     const repItemEvents = ['onBlur','onClick','onDblClick','onFocus','onMouseIn','onMouseOut','onViewportEnter','onViewportLeave'].map(k => ({k, t:'function'}));
@@ -9065,10 +9116,6 @@ function renderSettings() {
 
 function renderSettingsWithCategories(def, propsHtml, visHtml) {
   const showCtx = def.isContainer || def.isPage;
-
-  if (showCtx && S.ctxSettingsView) {
-    return renderCtxSettings(S.ctxSettingsView);
-  }
 
   let html = '';
 
@@ -9796,8 +9843,8 @@ function doUnbindRepeater(elId) {
     firstContainer.querySelectorAll('.rep-unconnected-warn').forEach(el => el.remove());
     const warn = document.createElement('div');
     warn.className = 'rep-unconnected-warn';
-    warn.style.cssText = 'display:flex;align-items:center;gap:6px;padding:6px 10px;background:#fff3cd;border:1px solid #ffc107;border-radius:6px;font-size:10px;color:#856404;line-height:1.4;width:100%';
-    warn.innerHTML = '<span style="font-size:12px;flex-shrink:0">⚠️</span> Repeater is <b>not connected to data</b>. Connect "Items" to an array.';
+    warn.style.cssText = 'display:flex;flex-direction:column;gap:6px;padding:8px 10px;background:#fff3cd;border:1px solid #ffc107;border-radius:6px;font-size:10px;color:#856404;line-height:1.4;width:100%;box-sizing:border-box';
+    warn.innerHTML = '<div style="display:flex;align-items:flex-start;gap:6px"><span style="font-size:12px;flex-shrink:0">⚠️</span><span>This repeater is <b>not showing data yet</b>. Connect it to a list to display real items.</span></div><button style="align-self:flex-start;padding:4px 12px;background:#856404;color:#fff;border:none;border-radius:5px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit" onclick="event.stopPropagation();openRepItemsConnect(this,\''+allRepIds[0]+'\')">Connect to list →</button>';
     firstContainer.prepend(warn);
   }
 
@@ -9864,7 +9911,6 @@ function updateFnCanvasPreview(elId, propKey) {
 
 /* ── CONTEXT TAB ── */
 function renderCtxTab() {
-  if (S.ctxSettingsView) return renderCtxSettings(S.ctxSettingsView);
   return renderCtxList();
 }
 
@@ -11112,6 +11158,7 @@ function renderCtxList() {
 function openCtxSettings(e, ctxId) {
   if (e) e.stopPropagation();
   document.querySelectorAll('.ctx-card-dropdown.open').forEach(d => d.classList.remove('open'));
+  S.ctxSettingsMenuOpen = null;
   S.ctxSettingsView = ctxId;
   renderBody();
 }
@@ -11200,7 +11247,13 @@ function openCodeTab() {
 }
 
 function closeCtxSettings() {
+  S.ctxSettingsMenuOpen = null;
   S.ctxSettingsView = null;
+  renderBody();
+}
+
+function switchCtxSettingsTab(tab) {
+  S.ctxSettingsTab = tab;
   renderBody();
 }
 
@@ -11209,57 +11262,290 @@ function renderCtxSettings(ctxId) {
   if (!ctx) { S.ctxSettingsView = null; return renderCtxList(); }
   const displayName = getCtxDisplayName(ctxId, S.sel);
   const configs = ctx.config || [];
-  const badgeClass = ctx.type === 'list' ? 'tb-list' : 'tb-obj';
+  const activeCtxTab = S.ctxSettingsTab || 'configuration';
+  const sourceActionLabel = ctx.source === 'CMS'
+    ? 'Open Collection'
+    : ctx.group === 'Apps' || ctx.source === 'Wix Stores' || ctx.source === 'Wix Bookings'
+    ? 'Open in Dashboard'
+    : 'Open Source';
 
   return `
     <div class="ctx-settings-panel">
-      <div class="ctx-back" onclick="closeCtxSettings()">
-        <span class="ctx-back-arrow">←</span>
-        <span>Back to settings</span>
-      </div>
-      <div class="ctx-settings-head">
-        <div class="ctx-settings-head-row1">
-          <span class="ctx-settings-icon">${ctx.icon}</span>
-          <div class="ctx-settings-title">${displayName}</div>
-          <span class="ctx-settings-badge ${badgeClass}">${ctx.type}</span>
-        </div>
-        <div class="ctx-settings-head-row2">
-          <div class="ctx-card-src" style="margin:0">from ${ctx.source}</div>
-          <span class="ctx-settings-open-src" onclick="openCtxSource(event,'${ctxId}')">${ctx.customCode ? '<span style="font-family:\'DM Mono\',monospace;font-size:10px;font-weight:700">&lt;/&gt;</span>' : '📂'} ${ctx.source === 'CMS' ? 'Open Collection' : ctx.group === 'Apps' || ctx.source === 'Wix Stores' || ctx.source === 'Wix Bookings' ? 'Open in Dashboard' : 'Open Source'}</span>
-        </div>
-      </div>
-      <div class="ctx-settings-section">
-        <div class="ctx-cfg-row">
-          <div class="ctx-cfg-lbl">Instance Name <span class="cfg-info">?<span class="cfg-info-tip">A custom display name for this specific instance. Useful when you have multiple instances of the same data source — rename to tell them apart.</span></span></div>
-          <div class="ctx-cfg-right">
-            <div class="cfg-prop-row">
-              <div class="cfg-main">
-                <div class="cfg-val">
-                  <input class="cfg-static" value="${displayName}" style="width:100%"
-                    onblur="renameCtxFromSettings('${ctxId}', this.value)"
-                    onkeydown="if(event.key==='Enter')this.blur()">
-                </div>
+        <div class="ctx-settings-head">
+          <div class="ctx-settings-topbar">
+            <div class="ctx-settings-title">${displayName} details</div>
+            <button class="ctx-settings-close" onclick="closeCtxSettings()" title="Close">×</button>
+          </div>
+          <div class="ctx-settings-meta">
+          <div class="ctx-settings-meta-row">
+            <div class="ctx-settings-meta-main">
+              <span class="ctx-settings-meta-label">Context name:</span>
+              <span class="ctx-settings-meta-value">
+                <strong class="ctx-settings-meta-value-text">${ctx.name}</strong>
+              </span>
+            </div>
+            <div class="ctx-settings-head-actions">
+              <button class="ctx-settings-meta-action" onclick="toggleCtxSettingsMenu(event,'${ctxId}')" title="More actions">…</button>
+              <div class="ctx-settings-dropdown ${S.ctxSettingsMenuOpen === ctxId ? 'open' : ''}" id="ctx-settings-menu-${ctxId}">
+                <div class="ctx-settings-dropdown-item" onclick="renameCtxFromSettingsMenu(event,'${ctxId}')">Rename</div>
+                <div class="ctx-settings-dropdown-item danger" onclick="removeCtxFromSettingsMenu(event,'${ctxId}')">Remove</div>
               </div>
             </div>
           </div>
+          <div class="ctx-settings-meta-row">
+            <span class="ctx-settings-meta-label">Source:</span>
+            <span class="ctx-settings-meta-value">
+              <strong class="ctx-settings-meta-value-text">${ctx.source}</strong>
+              <span class="ctx-settings-open-src" onclick="openCtxSource(event,'${ctxId}')" title="${sourceActionLabel}">
+                ${ctx.customCode ? '<span style="font-family:\'DM Mono\',monospace;font-size:10px;font-weight:700">&lt;/&gt;</span>' : '↗'}
+              </span>
+            </span>
+          </div>
+        </div>
+        <div class="ctx-settings-tabs">
+          <div class="ctx-settings-tab ${activeCtxTab!=='items'&&activeCtxTab!=='index'?'active':''}" onclick="switchCtxSettingsTab('configuration')">Configuration</div>
+          ${ctx.type==='list' ? `<div class="ctx-settings-tab ${activeCtxTab==='items'?'active':''}" onclick="switchCtxSettingsTab('items')">Items</div>` : ''}
+          <div class="ctx-settings-tab ${activeCtxTab==='index'?'active':''}" onclick="switchCtxSettingsTab('index')">Index</div>
         </div>
       </div>
-      ${ctx.type === 'list' ? renderListSettings(ctxId, ctx, configs) : (configs.length > 0 ? `<div class="ctx-settings-section">
-        <div class="ctx-settings-section-lbl">General Settings</div>
-        ${configs.map(cfg => renderCfgRow(cfg, ctxId)).join('')}
-      </div>` : `<div class="ctx-settings-section">
-        <div class="cfg-empty-state">
-          <div class="cfg-empty-icon">⚙️</div>
-          <div class="cfg-empty-msg">This context has no configurable properties.<br>All settings are managed by the app.</div>
+      <div class="ctx-settings-scroll">
+        ${activeCtxTab === 'items' ? renderItemsTabContent(ctxId, ctx, configs) : `
+        <div class="ctx-settings-section">
+          <div class="ctx-cfg-row" style="margin-bottom:${configs.filter(c=>!c.nested).length > 0 ? '12px' : '0'}">
+            <div class="ctx-cfg-lbl">Instance name <span class="cfg-info">i<span class="cfg-info-tip">A custom display name for this specific instance. Useful when you have multiple instances of the same data source.</span></span></div>
+            <div class="ctx-cfg-right">
+              <div class="cfg-prop-row"><div class="cfg-main"><div class="cfg-val">
+                <input class="cfg-static" id="ctx-settings-instance-input" value="${displayName}" style="width:100%"
+                  onblur="renameCtxFromSettings('${ctxId}', this.value)"
+                  onkeydown="if(event.key==='Enter')this.blur()">
+              </div></div></div>
+            </div>
+          </div>
         </div>
-      </div>`)}
+        ${ctx.type === 'list' ? renderListSettings(ctxId, ctx, configs) : (configs.length > 0 ? `<div class="ctx-settings-section">
+          <div class="ctx-settings-section-lbl">General Settings</div>
+          ${configs.map(cfg => renderCfgRow(cfg, ctxId)).join('')}
+        </div>` : `<div class="ctx-settings-section">
+          <div class="cfg-empty-state">
+            <div class="cfg-empty-icon">⚙️</div>
+            <div class="cfg-empty-msg">This context has no configurable properties.<br>All settings are managed by the app.</div>
+          </div>
+        </div>`)}
+        `}
+      </div>
     </div>`;
 }
 
+function renderItemsTabContent(ctxId, ctx, configs) {
+  const TYPE_ORDER = {sort:0, filter:1, limit:2};
+  const nestedCfgs = configs
+    .filter(c => c.nested)
+    .sort((a,b) => (a.depth||1)-(b.depth||1) || (TYPE_ORDER[a.nestedType||'sort']||0)-(TYPE_ORDER[b.nestedType||'sort']||0));
+  const byDepth = {};
+  nestedCfgs.forEach(c => { const d = c.depth||1; if (!byDepth[d]) byDepth[d]=[]; byDepth[d].push(c); });
+  const depths = Object.keys(byDepth).map(Number).sort();
+
+  const sampleData = (typeof REP_SAMPLE_DATA !== 'undefined' && REP_SAMPLE_DATA[ctxId]) || [];
+
+  // ── Single-level context: flat list + page size / random order ──
+  if (depths.length === 0) {
+    const labelField = ctx.fields?.find(f => f.type === 'string' && !['id','slug'].includes(f.name));
+    const itemCount = ctx.itemCount || sampleData.length || 0;
+    const rows = sampleData.length > 0
+      ? sampleData.map((item, idx) => {
+          const label = labelField ? (item[labelField.name] || 'Item '+(idx+1)) : ('Item '+(idx+1));
+          return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
+            <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
+            <div style="flex:1;font-size:12px;font-weight:500;color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${label}</div>
+            <span style="font-size:11px;color:var(--t3);cursor:pointer;padding:4px" title="Edit">✏️</span>
+          </div>`;
+        }).join('')
+      : `<div style="padding:20px;text-align:center;font-size:12px;color:var(--t3)">No items yet</div>`;
+    return `
+      <div style="display:flex;align-items:center;gap:4px;padding:8px 12px;border-bottom:1px solid var(--b1);background:var(--sur2)">
+        <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1">Items <span style="font-size:10px;font-weight:400;color:var(--t3)">${itemCount > 0 ? itemCount+' total' : ''}</span></span>
+      </div>
+      <div>${rows}</div>
+      <div class="ctx-settings-section">${renderPageSizeAndRandomRows(ctxId, ctx)}</div>
+    `;
+  }
+
+  // ── Multi-array: accordion per level ──
+  if (!S.itemsTabAccordion) S.itemsTabAccordion = {};
+  if (!S.itemsTabAccordion[ctxId]) S.itemsTabAccordion[ctxId] = {};
+  depths.forEach((d, i) => { if (S.itemsTabAccordion[ctxId][d] === undefined) S.itemsTabAccordion[ctxId][d] = (i === 0); });
+
+  // Build sample items per level from the nested structure
+  const l1Items = sampleData;
+  const l2Items = [];
+  sampleData.forEach(cat => {
+    (cat.dishes || []).forEach(dish => l2Items.push({...dish, _breadcrumb: cat.categoryName, _breadcrumbIcon: cat.categoryIcon||''}));
+  });
+  const allergenMap = {};
+  sampleData.forEach(cat => {
+    (cat.dishes || []).forEach(dish => {
+      (dish.allergens || []).forEach(a => {
+        if (!allergenMap[a.allergenName]) allergenMap[a.allergenName] = {...a, _count: 0};
+        allergenMap[a.allergenName]._count++;
+      });
+    });
+  });
+  const l3Items = Object.values(allergenMap);
+  const levelItems = {1: l1Items, 2: l2Items, 3: l3Items};
+
+  function renderLevelItem(item, depth) {
+    if (depth === 1) {
+      const dishCount = (item.dishes||[]).length;
+      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
+        <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
+        <span style="font-size:17px;flex-shrink:0;line-height:1">${item.categoryIcon||'📄'}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:500;color:var(--t1)">${item.categoryName}</div>
+          <div style="font-size:10px;color:var(--t3)">${dishCount} dish${dishCount!==1?'es':''}${item.description?' · '+item.description:''}</div>
+        </div>
+        <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
+      </div>`;
+    } else if (depth === 2) {
+      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
+        <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:500;color:var(--t1)">${item.name}</div>
+          <div style="font-size:10px;color:var(--t3)">${item.price}${item._breadcrumb?' · '+item._breadcrumbIcon+' '+item._breadcrumb:''}</div>
+        </div>
+        <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
+      </div>`;
+    } else {
+      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
+        <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
+        <span style="font-size:17px;flex-shrink:0;line-height:1">${item.allergenIcon||'⚠️'}</span>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:500;color:var(--t1)">${item.allergenName}</div>
+          <div style="font-size:10px;color:var(--t3)">${item._count} dish${item._count!==1?'es':''}</div>
+        </div>
+        <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
+      </div>`;
+    }
+  }
+
+  function renderConfigChips(depth) {
+    const cfgsAtDepth = byDepth[depth] || [];
+    if (!cfgsAtDepth.length) return '';
+    return cfgsAtDepth.map(cfg => {
+      const val = S.cfgValues?.[ctxId]?.[cfg.key] ?? cfg.default ?? '';
+      const isDefault = !cfg.default || val === cfg.default;
+      const typeIcon = {sort:'↕', filter:'▽', limit:'#'}[cfg.nestedType||'sort']||'↕';
+      const bg = isDefault ? 'var(--sur)' : '#e8f0fe';
+      const border = isDefault ? 'var(--b2)' : '#a8c7fa';
+      const color = isDefault ? 'var(--t2)' : '#1558d6';
+      return `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:10px;background:${bg};border:1px solid ${border};font-size:10px;color:${color};cursor:pointer;flex-shrink:0;white-space:nowrap"
+        onclick="event.stopPropagation();openItemsLevelModal('${ctxId}',${depth})"
+        title="${cfg.label}: ${val}">${typeIcon} ${val}</span>`;
+    }).join('');
+  }
+
+  function renderLevelAccordion(depth) {
+    const label = byDepth[depth]?.[0]?.nestedLabel || ('Level '+depth);
+    const items = levelItems[depth] || [];
+    const isOpen = !!S.itemsTabAccordion[ctxId][depth];
+    const chips = renderConfigChips(depth);
+    const arrow = isOpen ? '▾' : '▸';
+    return `<div style="border-bottom:1px solid var(--b1)">
+      <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;background:var(--sur2);user-select:none"
+        onclick="toggleItemsAccordion('${ctxId}',${depth})">
+        <span style="font-size:11px;color:var(--t3);flex-shrink:0">${arrow}</span>
+        <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1">${label}
+          <span style="font-size:10px;font-weight:400;color:var(--t3);margin-left:4px">${items.length}</span>
+        </span>
+        <div style="display:flex;align-items:center;gap:4px">${chips}</div>
+      </div>
+      ${isOpen ? `<div>${items.map(item => renderLevelItem(item, depth)).join('')}</div>` : ''}
+    </div>`;
+  }
+
+  // Config modal (if open)
+  const modalHtml = (S.itemsTabModal?.ctxId === ctxId)
+    ? renderItemsLevelModal(ctxId, byDepth)
+    : '';
+
+  return `<div style="position:relative">${modalHtml}${depths.map(d => renderLevelAccordion(d)).join('')}</div>`;
+}
+
+function renderItemsLevelModal(ctxId, byDepth) {
+  const depth = S.itemsTabModal.depth;
+  const cfgsAtDepth = byDepth[depth] || [];
+  const label = cfgsAtDepth[0]?.nestedLabel || ('Level '+depth);
+  const rows = cfgsAtDepth.map(cfg => {
+    const val = S.cfgValues?.[ctxId]?.[cfg.key] ?? cfg.default ?? '';
+    const typeLabel = {sort:'Sort', filter:'Filter', limit:'Limit'}[cfg.nestedType||'sort']||'Sort';
+    const opts = (cfg.options||[]).map(o => `<option value="${o.replace(/"/g,'&quot;')}"${o===val?' selected':''}>${o}</option>`).join('');
+    const infoTip = cfg.description ? `<span class="cfg-info" style="margin-left:4px">?<span class="cfg-info-tip">${cfg.description}</span></span>` : '';
+    return `<div style="margin-bottom:10px">
+      <div style="font-size:11px;color:var(--t2);margin-bottom:4px;font-weight:500">${typeLabel}${infoTip}</div>
+      <select style="width:100%;padding:5px 8px;border-radius:6px;border:1px solid var(--b2);background:var(--sur);color:var(--t1);font-size:12px;cursor:pointer"
+        onchange="if(!S.cfgValues)S.cfgValues={};if(!S.cfgValues['${ctxId}'])S.cfgValues['${ctxId}']={};S.cfgValues['${ctxId}']['${cfg.key}']=this.value;markInstanceModified('${ctxId}');renderBody()">
+        ${opts}
+      </select>
+    </div>`;
+  }).join('');
+  return `<div style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;border-radius:4px" onclick="closeItemsLevelModal()">
+    <div style="background:var(--sur);border-radius:10px;padding:16px;width:210px;box-shadow:0 8px 28px rgba(0,0,0,.22)" onclick="event.stopPropagation()">
+      <div style="display:flex;align-items:center;margin-bottom:14px">
+        <div style="font-size:13px;font-weight:600;color:var(--t1);flex:1">Configure ${label}</div>
+        <span style="font-size:18px;cursor:pointer;color:var(--t3);line-height:1;padding:0 4px" onclick="closeItemsLevelModal()">×</span>
+      </div>
+      ${rows}
+    </div>
+  </div>`;
+}
+
+function toggleItemsAccordion(ctxId, depth) {
+  if (!S.itemsTabAccordion) S.itemsTabAccordion = {};
+  if (!S.itemsTabAccordion[ctxId]) S.itemsTabAccordion[ctxId] = {};
+  S.itemsTabAccordion[ctxId][depth] = !S.itemsTabAccordion[ctxId][depth];
+  renderBody();
+}
+
+function openItemsLevelModal(ctxId, depth) {
+  S.itemsTabModal = { ctxId, depth: Number(depth) };
+  renderBody();
+}
+
+function closeItemsLevelModal() {
+  S.itemsTabModal = null;
+  renderBody();
+}
+
+function renderPageSizeAndRandomRows(ctxId, ctx) {
+  const randomVal = S.cfgValues?.[ctxId]?.hasOwnProperty?.('randomSort') ? S.cfgValues[ctxId]['randomSort'] : 'Off';
+  const isRandomOn = randomVal === 'On';
+  const randomNote = isRandomOn ? `<div style="margin:6px 0 2px 8px;padding:10px 14px;background:#e8f0fe;border-radius:8px;font-size:12px;color:#1a3c7a;line-height:1.55">Your items will be displayed in a random order. The order will stay the same until the site cache resets.</div>` : '';
+  return `<div class="ctx-cfg-row" style="padding-left:8px">
+    <div class="ctx-cfg-lbl">Items per load <span class="cfg-info">?<span class="cfg-info-tip">Max items loaded per batch</span></span></div>
+    <div class="ctx-cfg-right"><div class="cfg-prop-row"><div class="cfg-main"><div class="cfg-val">
+      <input class="cfg-static" type="number" min="1" value="${S.cfgValues?.[ctxId]?.pageSize || '36'}" style="width:52px;text-align:center"
+        onchange="if(!S.cfgValues)S.cfgValues={};if(!S.cfgValues['${ctxId}'])S.cfgValues['${ctxId}']={};S.cfgValues['${ctxId}'].pageSize=this.value;markInstanceModified('${ctxId}')">
+    </div></div></div></div>
+  </div>
+  <div class="ctx-cfg-row" style="padding-left:8px">
+    <div class="ctx-cfg-lbl">Random order <span class="cfg-info">?<span class="cfg-info-tip">Shuffle the order of items on each page load</span></span></div>
+    <div class="ctx-cfg-right"><div class="cfg-prop-row"><div class="cfg-main"><div class="cfg-val">
+      <div class="cfg-toggle-wrap">
+        <div class="seg-b ${randomVal==='Off'?'on':''}" onclick="toggleCfgOption(this,'${ctxId}','randomSort','Off');markInstanceModified('${ctxId}')">Off</div>
+        <div class="seg-b ${randomVal==='On'?'on':''}" onclick="toggleCfgOption(this,'${ctxId}','randomSort','On');markInstanceModified('${ctxId}')">On</div>
+      </div>
+    </div></div></div></div>
+  </div>${randomNote}`;
+}
+
 function renderListSettings(ctxId, ctx, configs) {
-  // Detect nested-array sort configs upfront so sort row label can reflect them
-  const nestedSortCfgs = configs.filter(c => c.nested);
-  const hasNestedSorts = nestedSortCfgs.length > 0;
+  // Detect nested-array configs upfront. Sort by depth ASC, then type priority: sort→filter→limit
+  const TYPE_ORDER = {sort:0, filter:1, limit:2};
+  const nestedCfgs = configs
+    .filter(c => c.nested)
+    .sort((a,b) => (a.depth||1)-(b.depth||1) || (TYPE_ORDER[a.nestedType||'sort']||0)-(TYPE_ORDER[b.nestedType||'sort']||0));
+  const hasNestedCfgs    = nestedCfgs.length > 0;
+  const hasNestedFilters = nestedCfgs.some(c => c.nestedType === 'filter');
+  const hasNestedLimits  = nestedCfgs.some(c => c.nestedType === 'limit');
 
   const randomVal = S.cfgValues?.[ctxId]?.hasOwnProperty?.('randomSort') ? S.cfgValues[ctxId]['randomSort'] : 'Off';
   const isRandomOn = randomVal === 'On';
@@ -11281,8 +11567,8 @@ function renderListSettings(ctxId, ctx, configs) {
   const autoFilterActive = autoRel && autoRel.active;
   const autoFilterParent = autoRel?.linkedTo ? findSource(autoRel.linkedTo) : null;
 
-  const bindSvg = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-    <circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/>
+  const bindSvg = `<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M6 3.5a2 2 0 1 1 2 2v6.5a2.5 2.5 0 1 1-1-2v-4.5a2 2 0 0 1-1-2z"/>
   </svg>`;
 
   const manualFilterCount = (S.filterRules[ctxId]||[]).length;
@@ -11306,18 +11592,22 @@ function renderListSettings(ctxId, ctx, configs) {
           </div>
         </div>
       </div>
-      <div class="bind-btn ${filterBound?'bound':''}" onclick="openCfgBind(event,'${ctxId}','_filter')" title="Connect filter to data">${bindSvg}</div>
+      <div class="ctx-bind-btn ${filterBound?'bound':''}" onclick="openCfgBind(event,'${ctxId}','_filter')" title="Connect filter to data">${bindSvg}</div>
     </div>
   </div>`;
 
   const sortDesc = isRandomOn ? 'Random' : ((S.sortRules[ctxId]||[]).length > 0 ? (S.sortRules[ctxId]||[]).length + ' sort rule' + ((S.sortRules[ctxId]||[]).length > 1 ? 's' : '') : 'No sorting');
-  const sortLabel = hasNestedSorts ? 'Sort order' : 'Sort';
-  const sortTip = hasNestedSorts
-    ? 'Controls the order of items at each level. Top-level sort runs server-side; nested array sorts run client-side after fetch.'
+  const hasMixed = hasNestedFilters || hasNestedLimits;
+  const sortLabel = hasNestedCfgs ? (hasMixed ? 'Item config' : 'Sort order') : 'Sort';
+  const sortTip = hasNestedCfgs
+    ? 'Top-level sort runs server-side. Sort, filter, and limit for nested arrays run client-side after fetch.'
     : 'Controls the order items appear in the list';
+  const perLevelNote = hasNestedCfgs
+    ? `— ${[hasMixed&&'sort','filter','limit'].filter(Boolean).join(', ')|| 'sort'} per level ↓`
+    : '';
 
   const sortRow = `<div class="ctx-cfg-row">
-    <div class="ctx-cfg-lbl">${sortLabel} <span class="cfg-info">?<span class="cfg-info-tip">${sortTip}</span></span>${hasNestedSorts ? `<span style="font-size:9px;color:var(--t3);font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-left:4px;letter-spacing:0">— per level ↓</span>` : ''}</div>
+    <div class="ctx-cfg-lbl">${sortLabel} <span class="cfg-info">?<span class="cfg-info-tip">${sortTip}</span></span>${hasNestedCfgs ? `<span style="font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;margin-left:4px;letter-spacing:0">${perLevelNote}</span>` : ''}</div>
     <div class="ctx-cfg-right">
       <div class="cfg-prop-row ${sortBound?'bound':''}">
         <div class="cfg-main">
@@ -11333,7 +11623,7 @@ function renderListSettings(ctxId, ctx, configs) {
           </div>
         </div>
       </div>
-      <div class="bind-btn ${sortBound?'bound':''}" onclick="openCfgBind(event,'${ctxId}','_sort')" title="Connect sort to data">${bindSvg}</div>
+      <div class="ctx-bind-btn ${sortBound?'bound':''}" onclick="openCfgBind(event,'${ctxId}','_sort')" title="Connect sort to data">${bindSvg}</div>
     </div>
   </div>`;
 
@@ -11359,23 +11649,135 @@ function renderListSettings(ctxId, ctx, configs) {
   const pageSizeCfg = {key:'pageSize', label:'Page size', input:'number', default:'36', description:'Max items loaded per page in the repeater'};
   const pageSizeRow = renderCfgRow(pageSizeCfg, ctxId);
 
-  // Render nested sort rows (already detected above as nestedSortCfgs / hasNestedSorts)
-  const nestedSortRows = nestedSortCfgs.map(cfg => renderNestedSortRow(cfg, ctxId)).join('');
-
   const configsToShow = (autoRel ? configs.filter(c => c.key !== 'filterByArticle') : configs)
-    .filter(c => !c.nested); // strip nested from general settings — they live in the sort block
+    .filter(c => !c.nested);
   const hasOtherCfgs = configsToShow.length > 0;
 
-  const nestedSortNote = hasNestedSorts ? `<div style="margin:4px 0 2px 0;padding:8px 10px;background:color-mix(in srgb,var(--acc) 6%,transparent);border:1px solid color-mix(in srgb,var(--acc) 20%,transparent);border-radius:7px;font-size:11px;color:var(--t2);line-height:1.5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
-    <span style="font-weight:600;color:var(--acc)">Nested arrays</span> — sorted client-side after fetch. Order within the database is unaffected.
-  </div>` : '';
+  // ── ACCORDION MODE (multi-array contexts) ──────────────────────────────────
+  if (hasNestedCfgs) {
+    // Group nested configs by depth
+    const byDepth = {};
+    nestedCfgs.forEach(cfg => {
+      const d = cfg.depth || 2;
+      if (!byDepth[d]) byDepth[d] = [];
+      byDepth[d].push(cfg);
+    });
+    const depths = Object.keys(byDepth).map(Number).sort();
 
+    // Accordion open state — default: L1 open, rest closed
+    if (!S.cfgAccordion) S.cfgAccordion = {};
+    if (!S.cfgAccordion[ctxId]) S.cfgAccordion[ctxId] = {1: true};
+    const acc = S.cfgAccordion[ctxId];
+
+    // Helper: one-line summary for a level
+    function levelSummary(depth) {
+      if (depth === 1) {
+        const parts = [];
+        const sortCount = (S.sortRules[ctxId]||[]).length;
+        parts.push(isRandomOn ? 'Random' : sortCount > 0 ? sortCount + ' sort rule' + (sortCount>1?'s':'') : 'Default order');
+        if (totalFilterCount > 0) parts.push(totalFilterCount + ' filter' + (totalFilterCount>1?'s':''));
+        return parts.join(' · ');
+      }
+      const cfgs = byDepth[depth] || [];
+      const parts = cfgs.map(cfg => {
+        const val = S.cfgValues?.[ctxId]?.[cfg.key] || cfg.default || (cfg.options?.[0] || '');
+        const isDefault = val === (cfg.default || cfg.options?.[0] || '');
+        return isDefault ? null : val;
+      }).filter(Boolean);
+      return parts.length ? parts.join(' · ') : 'Default';
+    }
+
+    function levelHasCustom(depth) {
+      if (depth === 1) return isRandomOn || (S.sortRules[ctxId]||[]).length > 0 || totalFilterCount > 0;
+      return (byDepth[depth]||[]).some(cfg => {
+        const val = S.cfgValues?.[ctxId]?.[cfg.key] || cfg.default || (cfg.options?.[0]||'');
+        return val !== (cfg.default || cfg.options?.[0]||'');
+      });
+    }
+
+    // Build each accordion section
+    function accordionSection(depth) {
+      const isOpen = !!acc[depth];
+      const hasCustom = levelHasCustom(depth);
+      const label = depth === 1
+        ? (byDepth[1]?.[0]?.nestedLabel || 'Items')
+        : (byDepth[depth]?.[0]?.nestedLabel || ('Level ' + depth));
+      const summary = levelSummary(depth);
+      const levelBadge = `<span style="font-size:9px;font-family:'DM Mono',monospace;background:${hasCustom?'var(--acc-d)':'var(--sur3)'};color:${hasCustom?'var(--acc)':'var(--t3)'};border:1px solid ${hasCustom?'color-mix(in srgb,var(--acc) 30%,transparent)':'var(--b2)'};padding:1px 6px;border-radius:10px;font-weight:600;flex-shrink:0">L${depth}</span>`;
+
+      const headerStyle = `display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;border-radius:${isOpen?'6px 6px 0 0':'6px'};background:${hasCustom?'color-mix(in srgb,var(--acc) 6%,transparent)':'var(--sur2)'};user-select:none`;
+
+      let body = '';
+      if (depth === 1) {
+        // L1 body: sort + filter (random order & items per load live in Items tab footer)
+        body = `<div style="padding:6px 8px;display:flex;flex-direction:column;gap:2px">
+          ${filterRow}
+          ${sortRow}
+        </div>`;
+      } else {
+        const rowsHtml = (byDepth[depth]||[]).map(cfg => {
+          const type = cfg.nestedType || 'sort';
+          const currentVal = S.cfgValues?.[ctxId]?.[cfg.key] || cfg.default || (cfg.options?.[0]||'');
+          const isDefault = !cfg.default || currentVal === cfg.default;
+          const typeBadgeStyle = type==='filter'
+            ? 'background:#fef3c7;color:#92400e;border-color:#fde68a'
+            : type==='limit'
+            ? 'background:#d1fae5;color:#065f46;border-color:#a7f3d0'
+            : 'background:var(--sur3);color:var(--t3);border-color:var(--b2)';
+          const resetBtn = `<span class="cfg-reset ${!isDefault?'visible':''}" onclick="resetCfgOption(event,'${ctxId}','${cfg.key}','${(cfg.default||'').replace(/'/g,"\\'")}')">↺</span>`;
+          return `<div class="ctx-cfg-row" style="margin-bottom:2px">
+            <div class="ctx-cfg-lbl" style="gap:5px">
+              ${cfg.label || cfg.nestedLabel}
+              <span style="font-size:9px;font-family:'DM Mono',monospace;padding:1px 5px;border-radius:4px;border:1px solid;${typeBadgeStyle}">${type}</span>
+              ${cfg.description ? `<span class="cfg-info">?<span class="cfg-info-tip">${cfg.description}</span></span>` : ''}
+            </div>
+            <div class="ctx-cfg-right">
+              ${resetBtn}
+              <div class="cfg-prop-row"><div class="cfg-main"><div class="cfg-val">
+                <select class="cfg-select" onchange="onCfgSelect(this,'${ctxId}','${cfg.key}');markInstanceModified('${ctxId}')">
+                  ${cfg.options.map(o=>`<option ${o===currentVal?'selected':''}>${o}</option>`).join('')}
+                </select>
+              </div></div></div>
+            </div>
+          </div>`;
+        }).join('');
+        const hasClientSide = (byDepth[depth]||[]).some(c => c.nestedType === 'filter' || c.nestedType === 'limit');
+        body = `<div style="padding:6px 8px;display:flex;flex-direction:column;gap:2px">
+          ${rowsHtml}
+          ${hasClientSide ? `<div style="margin-top:4px;padding:6px 8px;background:color-mix(in srgb,var(--acc) 5%,transparent);border:1px solid color-mix(in srgb,var(--acc) 15%,transparent);border-radius:5px;font-size:10px;color:var(--t2)">ℹ Filter and limit run client-side — all data is fetched first</div>` : ''}
+        </div>`;
+      }
+
+      return `<div style="border:1px solid ${hasCustom?'color-mix(in srgb,var(--acc) 35%,transparent)':'var(--b1)'};border-radius:6px;margin-bottom:6px;overflow:hidden">
+        <div style="${headerStyle}" onclick="toggleCfgAccordion('${ctxId}',${depth})">
+          ${levelBadge}
+          <span style="flex:1;font-size:12px;font-weight:600;color:var(--t1)">${label}</span>
+          <span style="font-size:11px;color:${hasCustom?'var(--acc)':'var(--t3)'};font-style:${hasCustom?'normal':'italic'};max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${summary}</span>
+          <span style="font-size:10px;color:var(--t3);margin-left:6px;transition:transform .15s;display:inline-block;transform:rotate(${isOpen?'90':'0'}deg)">›</span>
+        </div>
+        ${isOpen ? `<div style="border-top:1px solid var(--b1)">${body}</div>` : ''}
+      </div>`;
+    }
+
+    // L1 section (always first) + deeper levels
+    const allDepths = [1, ...depths.filter(d => d > 1)];
+    const sectionsHtml = allDepths.map(d => accordionSection(d)).join('');
+
+    return `<div class="ctx-settings-section">
+      <div class="ctx-settings-section-lbl">Item config</div>
+      ${sectionsHtml}
+    </div>
+    ${hasOtherCfgs ? `<div class="ctx-settings-section">
+      <div class="ctx-settings-section-lbl">General Settings</div>
+      ${configsToShow.map(cfg => renderCfgRow(cfg, ctxId)).join('')}
+    </div>` : ''}`;
+  }
+
+  // ── FLAT MODE (single-level contexts) ─────────────────────────────────────
   return `<div class="ctx-settings-section">
     <div class="ctx-settings-section-lbl">List Configuration</div>
     ${filterRow}
     ${sortRow}
-    ${hasNestedSorts ? nestedSortRows : ''}
-    ${hasNestedSorts ? nestedSortNote : ''}
     ${randomRow}
     ${pageSizeRow}
   </div>
@@ -11385,21 +11787,37 @@ function renderListSettings(ctxId, ctx, configs) {
   </div>` : ''}`;
 }
 
-function renderNestedSortRow(cfg, ctxId) {
-  const depth = cfg.depth || 2;
-  // depth 1 = root (no indent, no arrow), depth 2 = one level in, depth 3 = two levels in
+function toggleCfgAccordion(ctxId, depth) {
+  if (!S.cfgAccordion) S.cfgAccordion = {};
+  if (!S.cfgAccordion[ctxId]) S.cfgAccordion[ctxId] = {1: true};
+  S.cfgAccordion[ctxId][depth] = !S.cfgAccordion[ctxId][depth];
+  renderBody();
+}
+
+function renderNestedCfgRow(cfg, ctxId) {
+  const depth  = cfg.depth || 2;
+  const type   = cfg.nestedType || 'sort';
   const indent = Math.max(0, depth - 1) * 14;
-  const prefix = depth >= 2 ? ('↳ '.repeat(depth - 1)) : '';
+  const prefix = depth >= 2 ? '↳ '.repeat(depth - 1) : '';
   const isNested = depth >= 2;
+
   const currentVal = S.cfgValues?.[ctxId]?.[cfg.key] || cfg.default || (cfg.options ? cfg.options[0] : '');
-  const isDefault = !cfg.default || currentVal === cfg.default;
-  const infoIcon = cfg.description ? `<span class="cfg-info">?<span class="cfg-info-tip">${cfg.description}</span></span>` : '';
-  const resetBtn = `<span class="cfg-reset ${!isDefault ? 'visible' : ''}" onclick="resetCfgOption(event,'${ctxId}','${cfg.key}','${(cfg.default||'').replace(/'/g,"\\'")}')" title="Reset to default">↺</span>`;
-  const pathBadge = cfg.nestedPath ? `<span class="ctx-cfg-nested-badge">${cfg.nestedPath}</span>` : '';
+  const isDefault  = !cfg.default || currentVal === cfg.default;
+  const infoIcon   = cfg.description ? `<span class="cfg-info">?<span class="cfg-info-tip">${cfg.description}</span></span>` : '';
+  const resetBtn   = `<span class="cfg-reset ${!isDefault ? 'visible' : ''}" onclick="resetCfgOption(event,'${ctxId}','${cfg.key}','${(cfg.default||'').replace(/'/g,"\\'")}')">↺</span>`;
+
+  // Type badge: sort=neutral, filter=amber, limit=teal
+  const typeBadgeStyle = type==='filter'
+    ? 'background:#fef3c7;color:#92400e;border-color:#fde68a'
+    : type==='limit'
+    ? 'background:#d1fae5;color:#065f46;border-color:#a7f3d0'
+    : 'background:var(--sur3);color:var(--t3);border-color:var(--b2)';
+  const typeBadge = `<span style="font-size:9px;font-family:'DM Mono',monospace;padding:1px 5px;border-radius:4px;border:1px solid;margin-left:5px;${typeBadgeStyle}">${type}</span>`;
 
   const totalIndent = indent + (isNested ? 12 : 0);
+
   const inner = `<div style="padding-left:${totalIndent}px">
-    <div class="ctx-cfg-lbl">${prefix ? `<span class="ctx-cfg-nested-prefix">${prefix}</span>` : ''}${cfg.nestedLabel || cfg.label} ${infoIcon}${pathBadge}</div>
+    <div class="ctx-cfg-lbl">${prefix ? `<span class="ctx-cfg-nested-prefix">${prefix}</span>` : ''}${cfg.nestedLabel || cfg.label}${typeBadge} ${infoIcon}</div>
     <div class="ctx-cfg-right">
       ${resetBtn}
       <div class="cfg-prop-row">
@@ -11423,9 +11841,9 @@ function renderCfgRow(cfg, ctxId) {
   const isBound = !!b;
   const srcCtx = isBound ? findSource(b.ctxId) : null;
 
-  const bindBtn = `<div class="bind-btn ${isBound?'bound':''}" onclick="openCfgBind(event,'${ctxId}','${cfg.key}')" title="Connect to data">
-    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-      <circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/>
+  const bindBtn = `<div class="ctx-bind-btn ${isBound?'bound':''}" onclick="openCfgBind(event,'${ctxId}','${cfg.key}')" title="Connect to data">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 3.5a2 2 0 1 1 2 2v6.5a2.5 2.5 0 1 1-1-2v-4.5a2 2 0 0 1-1-2z"/>
     </svg>
   </div>`;
 
@@ -13188,6 +13606,10 @@ document.addEventListener('contextmenu', function(e) {
 
 document.addEventListener('click', function() {
   document.getElementById('canvas-ctx-menu').classList.remove('open');
+  if (S.ctxSettingsMenuOpen) {
+    S.ctxSettingsMenuOpen = null;
+    renderBody();
+  }
 });
 
 function deleteSelectedElement() {
@@ -13241,6 +13663,15 @@ function removeContextMenuTarget() {
 }
 
 /* ── DROPDOWN ── */
+function openRepItemsConnect(btn, repId) {
+  // Called from the canvas "Connect to list" banner button.
+  // Bypasses selectEl/renderBody so the button element stays in the DOM
+  // long enough for openDd to read its position.
+  S.sel = repId;
+  updateSelectionVisual(repId);
+  openDd({ stopPropagation: function(){}, currentTarget: btn }, repId, 'Items');
+}
+
 function openDd(e, elId, propKey) {
   e.stopPropagation();
   const existingBinding = S.bindings[elId + '|' + propKey];
@@ -13255,6 +13686,15 @@ function openDd(e, elId, propKey) {
       if (repeaterId) {
         const repBinding = S.bindings[repeaterId + '|Items'];
         if (repBinding) preSrc = repBinding.ctxId;
+      }
+    }
+    // Nested repeater binding its own Items: inherit context from parent repeater
+    if (!preSrc && def?.isRepeater && propKey === 'Items') {
+      const repDom = document.getElementById(elId);
+      const parentRep = repDom?.parentElement?.closest('.c-repeater');
+      if (parentRep) {
+        const parentBinding = S.bindings[parentRep.id + '|Items'];
+        if (parentBinding) preSrc = parentBinding.ctxId;
       }
     }
   }
@@ -15202,6 +15642,30 @@ function renameCtxFromSettings(ctxId, newName) {
   S.ctxAliases[sectionId][ctxId] = trimmed;
   renderBody();
   toast('✓ Renamed to "' + trimmed + '"', true);
+}
+
+function toggleCtxSettingsMenu(e, ctxId) {
+  if (e) e.stopPropagation();
+  S.ctxSettingsMenuOpen = S.ctxSettingsMenuOpen === ctxId ? null : ctxId;
+  renderBody();
+}
+
+function renameCtxFromSettingsMenu(e, ctxId) {
+  if (e) e.stopPropagation();
+  S.ctxSettingsMenuOpen = null;
+  renderBody();
+  requestAnimationFrame(() => {
+    const input = document.getElementById('ctx-settings-instance-input');
+    if (!input) return;
+    input.focus();
+    input.select();
+  });
+}
+
+function removeCtxFromSettingsMenu(e, ctxId) {
+  if (e) e.stopPropagation();
+  S.ctxSettingsMenuOpen = null;
+  confirmRemoveCtx({stopPropagation(){}}, ctxId, S.sel);
 }
 
 function countBoundElsForCtx(ctxId, sectionId) {
@@ -17837,6 +18301,358 @@ const PRODUCT_SPECS = {
           <div class="spec-flow-step">Connect · Value Panel</div>
         </div>
         <div class="spec-text" style="margin-top:8px">The Context Card is the hub for managing a data source. It connects the Add Context flow to the Configuration Panel and provides the fields that appear in the Connect · Value Panel when binding element properties.</div>`
+      }
+    ]
+  },
+
+  'repeater-multi-array': {
+    title: 'Repeater Multi-Array \u2014 Concept 1',
+    component: 'Nested Repeater (3-level arrays)',
+    status: 'in-progress',
+    owner: 'Context Binding Team',
+    lastUpdated: 'Apr 2026',
+    version: '1.0',
+    sections: [
+      {
+        title: '\u{1F4CC} Overview',
+        type: 'html',
+        content: `<div class="spec-text" style="line-height:1.8">A <b>multi-array repeater</b> is a pattern where a single CMS context contains multiple levels of embedded arrays \u2014 e.g., categories \u2192 dishes \u2192 allergens. Each level is displayed by a separate, nested Repeater component on the canvas, all sharing one context.</div>
+        <div class="spec-note" style="margin-top:12px"><span class="spec-note-icon">\u{1F4A1}</span><div><b>Concept 1 approach:</b> All per-level array configuration (sort, filter, limit) lives in a <b>single context configuration panel</b> under a unified "Item config" section, with visual depth hierarchy using indentation and type badges. No separate panels per repeater level.</div></div>
+        <table class="spec-table" style="margin-top:16px">
+          <tr><th style="width:160px">Concept</th><th>Description</th></tr>
+          <tr><td><b>Single context</b></td><td>All three repeater depths share the same <span class="spec-code">ctxId</span>. No separate contexts for L2 or L3 \u2014 nested arrays are fields within the same context object.</td></tr>
+          <tr><td><b>One fetch, all levels</b></td><td>A single context fetch brings all data for all three levels. L2 and L3 operations run <b>client-side</b> on already-fetched data.</td></tr>
+          <tr><td><b>L1 = server-side</b></td><td>L1 sort, filter, and page size are CMS query parameters \u2014 they run before data reaches the client.</td></tr>
+          <tr><td><b>L2/L3 = client-side</b></td><td>L2 and L3 sort, filter, and limit operate on array values already present in the fetched items.</td></tr>
+        </table>`
+      },
+      {
+        title: '\u{1F3D7}\uFE0F Data Model',
+        type: 'html',
+        content: `<div class="spec-text">A 3-level nested repeater maps to a single context with two levels of embedded array fields:</div>
+        <div style="background:var(--sur2);border:1px solid var(--b1);border-radius:8px;padding:14px 18px;font-family:'DM Mono',monospace;font-size:12px;line-height:2.2;margin:12px 0">
+          <div style="color:var(--acc);font-weight:700">context: cms-restaurant-menu</div>
+          <div style="color:var(--grn);padding-left:20px">\u21B3 items[] \u2192 <b>L1 Repeater</b> (categories)</div>
+          <div style="color:#d97706;padding-left:40px">\u21B3 dishes[] \u2192 <b>L2 Repeater</b> (dishes per category)</div>
+          <div style="color:#b45309;padding-left:60px">\u21B3 allergens[] \u2192 <b>L3 Repeater</b> (allergens per dish)</div>
+        </div>
+        <div class="spec-note"><span class="spec-note-icon">\u26A0\uFE0F</span><div><b>Alternative architecture (out of scope here):</b> Separate CMS collections with relationship fields. More flexible for large data sets but requires users to manage cross-collection relationships. This spec covers <b>embedded arrays only</b>.</div></div>`
+      },
+      {
+        title: '\u{1F4CA} Capabilities Matrix',
+        type: 'html',
+        content: `<div class="spec-text">Which operations are supported at each nesting level, and at what priority.</div>
+        <table class="spec-table" style="margin-top:12px">
+          <tr><th>Operation</th><th>L1 (root array)</th><th>L2 (nested array)</th><th>L3 (2nd-level nested)</th></tr>
+          <tr><td><b>Sort</b></td><td><span class="spec-status implemented">P0</span> Server-side. Any sortable field.</td><td><span class="spec-status implemented">P0</span> Client-side. Per L1 item, independently.</td><td><span class="spec-status implemented">P0</span> Client-side. Per L2 item, independently.</td></tr>
+          <tr><td><b>Filter</b></td><td><span class="spec-status implemented">P0</span> Server-side. Reduces DB rows fetched.</td><td><span class="spec-status in-progress">P1</span> Client-side. Hides items within each L1 group.</td><td><span class="spec-status planned">Skip</span> L3 arrays typically &lt;5 items. Low value. Defer.</td></tr>
+          <tr><td><b>Limit (show top N)</b></td><td><span class="spec-status implemented">P0</span> Page size \u2014 server-side.</td><td><span class="spec-status in-progress">P1</span> Client-side display cap per L1 group.</td><td><span class="spec-status planned">Skip</span> Same reasoning as L3 filter. Defer.</td></tr>
+          <tr><td><b>Random order</b></td><td><span class="spec-status planned">P2</span> Server-side random. Featured items use case.</td><td><span class="spec-status planned">Skip</span> Client-side shuffle: complexity &gt; value.</td><td><span class="spec-status planned">Skip</span></td></tr>
+          <tr><td><b>Pagination</b></td><td><span class="spec-status implemented">P0</span> Server-side. Load more / infinite scroll.</td><td><span class="spec-status planned">Skip</span> Paging within a group = fragmented UX.</td><td><span class="spec-status planned">Skip</span></td></tr>
+        </table>
+        <div class="spec-note" style="margin-top:12px"><span class="spec-note-icon">\u{1F511}</span><div><b>L1 limit vs L2 limit:</b> L1 is a <i>page size</i> (items fetched per batch from DB). L2 is a <i>display cap</i> per group (items shown per L1 item). Different UX concepts \u2014 label them distinctly.</div></div>`
+      },
+      {
+        title: '\u{1F39B} Config Panel Design',
+        type: 'html',
+        content: `<div class="spec-text">All per-level configuration lives in a single context panel under an "Item config" section. Each row = one operation on one array level, grouped by depth and tagged by type.</div>
+        <div style="background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:14px 16px;margin:14px 0">
+          <div style="font-size:10px;font-weight:600;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px">Item config \u2014 sort, filter, limit per level \u2193</div>
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px;margin-bottom:5px;font-size:12px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);width:30px"></span><span style="flex:1;color:var(--t1)">Categories</span><span style="background:var(--sur3);color:var(--t3);border:1px solid var(--b2);padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600">sort</span><select style="background:var(--sur2);border:1px solid var(--b2);border-radius:4px;padding:2px 6px;font-size:11px;color:var(--t2)"><option>Default order</option></select></div>
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px;margin-bottom:5px;font-size:12px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);width:30px">\u21B3</span><span style="flex:1;color:var(--t1)">Dishes</span><span style="background:var(--sur3);color:var(--t3);border:1px solid var(--b2);padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600">sort</span><select style="background:var(--sur2);border:1px solid var(--b2);border-radius:4px;padding:2px 6px;font-size:11px;color:var(--t2)"><option>Name A\u2192Z</option></select></div>
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px;margin-bottom:5px;font-size:12px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);width:30px">\u21B3</span><span style="flex:1;color:var(--t1)">Dishes</span><span style="background:#fef3c7;color:#92400e;border:1px solid #fde68a;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600">filter</span><select style="background:var(--sur2);border:1px solid var(--b2);border-radius:4px;padding:2px 6px;font-size:11px;color:var(--t2)"><option>All dishes</option></select></div>
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px;margin-bottom:5px;font-size:12px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);width:30px">\u21B3</span><span style="flex:1;color:var(--t1)">Dishes</span><span style="background:#d1fae5;color:#065f46;border:1px solid #a7f3d0;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600">limit</span><select style="background:var(--sur2);border:1px solid var(--b2);border-radius:4px;padding:2px 6px;font-size:11px;color:var(--t2)"><option>All</option></select></div>
+          <div style="display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px;margin-bottom:5px;font-size:12px"><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--t3);width:30px">\u21B3\u21B3</span><span style="flex:1;color:var(--t1)">Allergens</span><span style="background:var(--sur3);color:var(--t3);border:1px solid var(--b2);padding:1px 7px;border-radius:10px;font-size:10px;font-weight:600">sort</span><select style="background:var(--sur2);border:1px solid var(--b2);border-radius:4px;padding:2px 6px;font-size:11px;color:var(--t2)"><option>Name A\u2192Z</option></select></div>
+          <div style="margin-top:8px;font-size:11px;color:var(--t3);background:var(--sur2);padding:6px 9px;border-radius:6px">\u2139\uFE0F filter and limit run client-side \u2014 all data is fetched first</div>
+        </div>
+        <table class="spec-table" style="margin-top:14px">
+          <tr><th>Condition</th><th>Section label</th></tr>
+          <tr><td>No nested config</td><td>"Sort"</td></tr>
+          <tr><td>Nested \u2014 sort only</td><td>"Sort order"</td></tr>
+          <tr><td>Nested \u2014 mixed (sort + filter or limit)</td><td>"Item config \u2014 sort, filter, limit per level \u2193"</td></tr>
+        </table>
+        <div class="spec-note" style="margin-top:12px"><span class="spec-note-icon">\u{1F4D0}</span><div><b>Row ordering:</b> Depth ASC first (L1 \u2192 L2 \u2192 L3), then within same depth: sort \u2192 filter \u2192 limit. Users reach the most common operation first at each level.</div></div>`
+      },
+      {
+        title: '\u26A1 User Flows',
+        type: 'flow',
+        steps: [
+          'Flow 1: Open Add Element \u2192 find 3-level preset \u2192 drag to canvas \u2192 pre-bound bindings applied \u2192 sample data renders across all 3 levels',
+          'Flow 2: Select element in repeater \u2192 open context settings \u2192 change "Dishes" sort to "Price low\u2192high" \u2192 canvas updates immediately',
+          'Flow 3: Open context settings \u2192 change "Dishes filter" to "Vegetarian only" \u2192 canvas hides non-vegetarian dishes \u2192 empty categories show empty state',
+          'Flow 4: Set "Dishes limit" to "Top 3" \u2192 each category truncates to 3 \u2192 limit applied after sort (cheapest 3)',
+          'Flow 5: Add Repeater inside existing repeater \u2192 inner repeater prompts to bind \u2192 user selects dishes[] \u2192 L2 config rows appear in context panel',
+        ]
+      },
+      {
+        title: '\u{1F4BC} Use Cases',
+        type: 'table',
+        headers: ['Use Case', 'L1', 'L2', 'L3', 'Notable config'],
+        rows: [
+          ['Restaurant Menu', 'Categories', 'Dishes', 'Allergens', 'Filter dishes by dietary; limit Top 3 per category'],
+          ['Course Catalog', 'Subjects', 'Courses', 'Lessons', 'Filter "Free only"; limit 3 lessons as preview'],
+          ['E-Commerce', 'Categories', 'Products', 'Variants', 'Filter "In stock"; limit 4 per category'],
+          ['Project Management', 'Projects', 'Tasks', 'Subtasks', 'Filter "Open only" or "Assigned to me"'],
+          ['Knowledge Base', 'Topics', 'Articles', 'Related links', 'Filter "Published"; limit 3 links per article'],
+          ['Music / Playlist', 'Genres', 'Playlists', 'Tracks', 'Filter "Public only"; limit 5 tracks per playlist'],
+          ['Event Management', 'Events', 'Sessions', 'Speakers', 'Filter "Upcoming only"'],
+          ['Real Estate', 'Neighborhoods', 'Properties', 'Amenities', 'Filter "Available"; limit 4 per neighborhood'],
+          ['Job Board', 'Departments', 'Job Openings', 'Requirements', 'Filter "Remote only"; limit 4 requirements'],
+          ['Sports League', 'Divisions', 'Teams', 'Players', 'Filter "Active"; limit 5 for starting lineup'],
+        ]
+      },
+      {
+        title: '\u26A0\uFE0F Edge Cases',
+        type: 'table',
+        headers: ['Scenario', 'Expected behavior'],
+        rows: [
+          ['L2 filter removes all items in a group', 'L1 row still renders. Inner repeater shows: "No items match this filter." Do not hide the L1 row.'],
+          ['L3 array is empty for a given L2 item', 'L3 repeater renders nothing. L2 item remains visible. Valid \u2014 e.g., a dish with no allergens.'],
+          ['Limit set to 1', 'Only the first item (after sort) shown per group. Valid for "featured item" layouts. No special handling needed.'],
+          ['Sort field has null/undefined values', 'Null values sort to the end \u2014 consistent with L1 server-side convention.'],
+          ['Filter + limit both applied to L2', 'Execution order: filter first, then limit. "Top 3 vegetarian" = 3 cheapest vegetarian dishes, not: take top 3 then filter.'],
+          ['L1 sort changed \u2014 affects L2?', 'No. L1 sort reorders L1 items; L2 items within each group stay sorted by their own rule.'],
+          ['L2 array has 50+ items', 'Client-side operations still apply but perf degrades. Recommend separate-context architecture for large L2 arrays.'],
+          ['Context has no nested arrays', '"Item config" section does not appear. Standard single-level sort and pagination shown.'],
+          ['Context has L2 but no L3 arrays', 'Only L1 and L2 config rows appear. Rows are additive \u2014 only appear for levels that exist in schema.'],
+          ['User deletes outer repeater', 'All child repeaters and bindings removed with parent. Bindings cleaned up automatically.'],
+        ]
+      },
+      {
+        title: '\u{1F50C} Disconnect & Reconnect — Nested Repeater',
+        type: 'html',
+        content: `<div class="spec-text">When a user disconnects the <span class="spec-code">dishes[]</span> binding from the L2 repeater, a specific UX trap opens up: the inspector looks like the repeater has no data at all, leading the user to try adding a new context — which is the wrong fix.</div>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:16px 0 8px">What happens after disconnect</h4>
+        <table class="spec-table">
+          <tr><th style="width:180px">What breaks</th><th>State</th></tr>
+          <tr><td>L2 repeater <span class="spec-code">Items</span></td><td>Unbound. Renders placeholder items. Shows disconnect/empty overlay.</td></tr>
+          <tr><td>L3 repeater (<span class="spec-code">allergens[]</span>)</td><td>Orphaned. Its source (<span class="spec-code">dishes[]</span>) no longer exists in scope.</td></tr>
+          <tr><td>All L2 element bindings</td><td>Disconnected — name, price, image, description all lose their values.</td></tr>
+          <tr><td>Outer repeater (L1)</td><td>Unaffected. Categories still render correctly.</td></tr>
+          <tr><td>Context itself</td><td>Still attached to the section. <b>All data is still there</b> — only the wiring is broken.</td></tr>
+        </table>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:18px 0 8px">The UX trap</h4>
+        <div class="spec-note" style="margin:0 0 12px"><span class="spec-note-icon">\u26A0\uFE0F</span><div>The inspector for an unbound nested repeater looks identical to one with no context at all. Both show an empty Context section with "+ Add Context". The user's instinct is to add the context — but the context is already there. Adding <b>Restaurant Menu</b> a second time attaches a redundant top-level list context to the inner repeater, which is almost always wrong.</div></div>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:18px 0 8px">Solution — 3 layers</h4>
+
+        <div style="font-size:12px;font-weight:600;color:var(--t2);margin-bottom:6px">1 · Inspector: always show inherited scope</div>
+        <div class="spec-text" style="margin-bottom:10px">The Context section of a nested repeater must never look empty. Even when the repeater doesn't <i>own</i> a context, it should surface what's available via inheritance:</div>
+        <div style="background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:12px 14px;margin-bottom:14px;pointer-events:none">
+          <div style="font-size:10px;font-weight:600;color:var(--t3);letter-spacing:.4px;text-transform:uppercase;margin-bottom:8px">\u203A Context (inherited)</div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--sur2);border:1px solid var(--b1);border-radius:6px">
+            <span style="font-size:14px">\u{1F37D}</span>
+            <div style="flex:1">
+              <div style="font-size:12px;font-weight:600;color:var(--t1)">Restaurant Menu</div>
+              <div style="font-size:10px;color:var(--t3)">via parent repeater</div>
+            </div>
+            <span style="font-size:10px;color:var(--acc);font-weight:500">manage \u2192</span>
+          </div>
+          <div style="font-size:11px;color:var(--t3);padding:6px 2px 0;font-style:italic">Items is not connected \u2014 <span style="color:var(--acc);cursor:pointer">Reconnect \u2192</span></div>
+        </div>
+
+        <div style="font-size:12px;font-weight:600;color:var(--t2);margin-bottom:6px">2 · Canvas overlay: scope-aware CTA</div>
+        <div class="spec-text" style="margin-bottom:10px">The empty-state overlay on the L2 repeater should skip the "add a context" frame entirely and go straight to rebinding. If the system remembers the previous binding, offer a one-click reconnect:</div>
+        <table class="spec-table">
+          <tr><th style="width:200px">System knows previous binding?</th><th>Overlay CTA</th></tr>
+          <tr><td>Yes \u2014 was bound to <span class="spec-code">dishes[]</span></td><td>"Reconnect to <b>dishes</b> \u2192" — one click, skips field picker</td></tr>
+          <tr><td>No \u2014 memory lost (e.g., undo past save)</td><td>"Connect to an array field from <b>Restaurant Menu</b> \u2192" — opens field picker pre-scoped to parent context's array fields</td></tr>
+        </table>
+
+        <div style="font-size:12px;font-weight:600;color:var(--t2);margin:14px 0 6px">3 · Guard against adding a redundant context</div>
+        <div class="spec-text" style="margin-bottom:10px">If the user opens the Add Context modal and selects a context that is already in scope from a parent, intercept before adding:</div>
+        <div style="background:var(--sur2);border:1px solid #fde68a;border-radius:8px;padding:12px 14px;margin-bottom:4px;font-size:13px">
+          <div style="font-weight:600;margin-bottom:4px">\u26A0\uFE0F Restaurant Menu is already available</div>
+          <div style="color:var(--t2);font-size:12px;margin-bottom:10px">This context is provided by the parent section. To reconnect this repeater, bind <b>Items \u2192 dishes</b> instead.</div>
+          <div style="display:flex;gap:8px">
+            <button style="padding:5px 14px;border-radius:6px;border:none;background:var(--acc);color:#fff;font-size:12px;font-weight:600;cursor:pointer">Bind Items</button>
+            <button style="padding:5px 14px;border-radius:6px;border:1px solid var(--b2);background:transparent;color:var(--t2);font-size:12px;cursor:pointer">Add anyway</button>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--t3);padding:4px 2px;font-style:italic">"Add anyway" escape hatch remains — valid for advanced cases like two separate configs of the same context type on the same canvas.</div>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:18px 0 8px">Reconnect flow (happy path)</h4>
+        <div class="spec-flow-steps">
+          <div class="spec-flow-step-row"><div class="spec-step-num">1</div><div class="spec-step-text">User disconnects <span class="spec-code">dishes[]</span> from L2 repeater. Canvas shows placeholder items with "Reconnect to dishes \u2192" overlay.</div></div>
+          <div class="spec-flow-step-row"><div class="spec-step-num">2</div><div class="spec-step-text">User clicks the overlay CTA. System auto-binds <span class="spec-code">Items \u2192 dishes[]</span>. No modal, no field picker.</div></div>
+          <div class="spec-flow-step-row"><div class="spec-step-num">3</div><div class="spec-step-text">L2 repeater restores: dishes render, allergens reconnect, all inner bindings restore to their previous fields.</div></div>
+          <div class="spec-flow-step-row"><div class="spec-step-num">4</div><div class="spec-step-text">Inspector Context section shows "Restaurant Menu — via parent repeater" again with <span class="spec-code">Items</span> bound chip restored.</div></div>
+        </div>
+
+        <div class="spec-note" style="margin-top:14px"><span class="spec-note-icon">\u{1F4CC}</span><div><b>Key principle:</b> For a nested repeater, "the data is already there" — disconnect only breaks the wiring, not the source. The system should communicate this clearly and make the reconnect path feel like repairing, not starting over.</div></div>`
+      },
+      {
+        title: '\u{1F3AF} Design Decisions',
+        type: 'table',
+        headers: ['Decision', 'Rationale'],
+        rows: [
+          ['Unified config panel (not per-repeater)', 'With 3 levels, navigating 3 separate panels to configure sort alone is fragmented. Unified panel has \u22647 rows \u2014 clearly worth the single longer view.'],
+          ['Amber = filter, teal = limit', 'Filter reduces items \u2014 amber is warning-adjacent. Limit caps items \u2014 teal is a neutral constraint. Sort stays default gray. Semantically motivated, not decorative.'],
+          ['Skip L3 filter and limit', 'L3 arrays are typically 0\u20135 items. Cognitive overhead far outweighs benefit. Revisit if user research says otherwise.'],
+          ['L2 limit = display cap, not page size', 'Paginating within a nested group is a UX anti-pattern. A display cap is a presentation decision, not a data-fetching one.'],
+          ['Sort \u2192 filter \u2192 limit ordering', 'Ordered by frequency of use. Most users configure sort; fewer configure filter; fewest configure limit.'],
+          ['Filter runs before limit', '"Top 3 vegetarian" should give the 3 cheapest vegetarian dishes, not take top 3 then filter. Filter-then-limit matches user intent.'],
+        ]
+      },
+      {
+        title: '\u{1F6AB} Out of Scope',
+        type: 'list',
+        items: [
+          '<b>Separate-context nested repeaters</b> \u2014 where L2/L3 are their own CMS collections with relationship fields. Different architecture, different spec.',
+          '<b>L3 filter and limit</b> \u2014 deferred indefinitely (see design decisions).',
+          '<b>L2 random order</b> \u2014 deferred (low value, client-side shuffle).',
+          '<b>L2 pagination</b> \u2014 anti-pattern for embedded arrays.',
+          '<b>More than 3 nesting levels</b> \u2014 pathological edge case; not a real-world use case.',
+          '<b>Dynamic filter conditions</b> \u2014 e.g., filter based on user session data or visitor input. Future dynamic binding spec.',
+          '<b>"+N more" expand affordance</b> after limit \u2014 valid future enhancement, not in this spec.',
+          '<b>Performance optimization for large L2 arrays</b> \u2014 requires the separate-context model.',
+        ]
+      },
+      {
+        title: '\u{1F3B9} Config Tab \u2014 Level Accordion (Concept B)',
+        type: 'html',
+        content: `<div class="spec-text">Each array level is a collapsed row in the Configuration tab showing a one-line summary of its active rules. Expanding reveals the sort, filter, and limit controls for that level only. Clean by default, no modal needed for common tasks.</div>
+
+        <div style="background:var(--sur);border:1px solid var(--b1);border-radius:8px;padding:14px 16px;margin:14px 0">
+          <div style="font-size:10px;font-weight:600;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px">Item config</div>
+
+          <div style="border:1px solid var(--b1);border-radius:6px;margin-bottom:6px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--sur2);cursor:pointer">
+              <span style="font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;width:16px">L1</span>
+              <span style="flex:1;font-size:12px;font-weight:600;color:var(--t1)">Categories</span>
+              <span style="font-size:11px;color:var(--t3);font-style:italic">Default order</span>
+              <span style="font-size:10px;color:var(--t3)">›</span>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--acc);border-radius:6px;margin-bottom:6px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--acc-d);cursor:pointer">
+              <span style="font-size:9px;color:var(--acc);font-family:'DM Mono',monospace;width:16px">L2</span>
+              <span style="flex:1;font-size:12px;font-weight:600;color:var(--t1)">Dishes</span>
+              <span style="font-size:11px;color:var(--acc);font-style:italic">Price \u2191 \u00B7 Vegetarian \u00B7 Top 3</span>
+              <span style="font-size:10px;color:var(--t3)">\u2193</span>
+            </div>
+            <div style="padding:10px 12px;border-top:1px solid var(--b1);background:var(--sur);display:flex;flex-direction:column;gap:8px">
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;color:var(--t3);width:46px">Sort</span><select style="flex:1;background:var(--sur2);border:1px solid var(--b2);border-radius:5px;padding:3px 7px;font-size:11px;color:var(--t1)"><option>Price low\u2192high</option></select></div>
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;color:var(--t3);width:46px">Filter</span><select style="flex:1;background:var(--sur2);border:1px solid var(--b2);border-radius:5px;padding:3px 7px;font-size:11px;color:var(--t1)"><option>Vegetarian only</option></select></div>
+              <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;color:var(--t3);width:46px">Limit</span><select style="flex:1;background:var(--sur2);border:1px solid var(--b2);border-radius:5px;padding:3px 7px;font-size:11px;color:var(--t1)"><option>Top 3</option></select></div>
+              <div style="font-size:10px;color:var(--t3);background:var(--sur2);padding:5px 8px;border-radius:4px">\u2139\uFE0F Filter and limit run client-side \u2014 all data is fetched first</div>
+            </div>
+          </div>
+
+          <div style="border:1px solid var(--b1);border-radius:6px;overflow:hidden">
+            <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--sur2);cursor:pointer">
+              <span style="font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;width:16px">L3</span>
+              <span style="flex:1;font-size:12px;font-weight:600;color:var(--t1)">Allergens</span>
+              <span style="font-size:11px;color:var(--t3);font-style:italic">Name A\u2192Z</span>
+              <span style="font-size:10px;color:var(--t3)">›</span>
+            </div>
+          </div>
+        </div>
+
+        <table class="spec-table" style="margin-top:14px">
+          <tr><th style="width:180px">State</th><th>Behavior</th></tr>
+          <tr><td><b>Collapsed (default)</b></td><td>Shows level badge (L1/L2/L3) + array label + one-line summary. Muted text = defaults active. Accent text + accent border = custom rules active.</td></tr>
+          <tr><td><b>Expanded</b></td><td>Reveals sort, filter, and limit controls for that level only. Client-side note shown if filter or limit present.</td></tr>
+          <tr><td><b>L1 on first open</b></td><td>Always expanded by default \u2014 L1 has the most impactful settings (server-side) and is configured most often.</td></tr>
+          <tr><td><b>Single-level context</b></td><td>No accordion \u2014 standard flat controls shown directly. Accordion only appears when the context has nested arrays.</td></tr>
+        </table>`
+      },
+      {
+        title: '\u{1F4CB} Items Tab \u2014 Drill-Down Browser',
+        type: 'html',
+        content: `<div class="spec-text">The Items tab can no longer be a flat list when the context has nested arrays. It becomes a <b>drill-down browser</b>: start at L1, tap any row to navigate into its nested items. Sort and Filter controls in the header are always level-aware \u2014 they apply to whichever level is currently in view.</div>
+
+        <div class="spec-note" style="margin:12px 0 16px"><span class="spec-note-icon">\u{1F4A1}</span><div><b>Key shift:</b> List-level configuration \u2014 random order, items per load, sort, filter, limit \u2014 moves <b>out of the Configuration tab and into the Items tab</b> where the user sees the actual data being affected. The Configuration tab keeps only field mapping and context identity settings.</div></div>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:0 0 8px">L1 view</h4>
+        <div style="background:var(--sur);border:1px solid var(--b1);border-radius:8px;overflow:hidden;margin-bottom:16px;max-width:300px">
+          <div style="padding:9px 12px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:8px">
+            <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1">Items</span>
+            <span style="font-size:11px;color:var(--t2);cursor:pointer">A\u2193 Sort</span>
+            <span style="font-size:11px;color:var(--t2);cursor:pointer;margin-left:8px">\u25BD Filter</span>
+            <span style="font-size:9px;background:var(--sur2);border:1px solid var(--b2);border-radius:8px;padding:1px 7px;color:var(--t3);margin-left:6px">L1</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1);cursor:pointer">
+            <span style="color:var(--t3);font-size:11px">\u2807</span><span style="font-size:15px">🥗</span>
+            <span style="flex:1;font-size:12px;font-weight:500;color:var(--t1)">Starters</span>
+            <span style="font-size:10px;color:var(--t3)">3 dishes</span><span style="font-size:12px;color:var(--t3);margin-left:6px">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1);cursor:pointer">
+            <span style="color:var(--t3);font-size:11px">\u2807</span><span style="font-size:15px">🍽</span>
+            <span style="flex:1;font-size:12px;font-weight:500;color:var(--t1)">Mains</span>
+            <span style="font-size:10px;color:var(--t3)">4 dishes</span><span style="font-size:12px;color:var(--t3);margin-left:6px">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer">
+            <span style="color:var(--t3);font-size:11px">\u2807</span><span style="font-size:15px">🍰</span>
+            <span style="flex:1;font-size:12px;font-weight:500;color:var(--t1)">Desserts</span>
+            <span style="font-size:10px;color:var(--t3)">2 dishes</span><span style="font-size:12px;color:var(--t3);margin-left:6px">›</span>
+          </div>
+          <div style="padding:9px 12px;border-top:1px solid var(--b1);display:flex;align-items:center;gap:10px;background:var(--sur2)">
+            <span style="font-size:11px;color:var(--t3)">Per load</span>
+            <input style="width:32px;border:1px solid var(--b2);border-radius:4px;padding:2px 5px;font-size:11px;text-align:center;background:var(--sur)" value="4" readonly>
+            <div style="display:flex;align-items:center;gap:5px;margin-left:auto">
+              <span style="font-size:11px;color:var(--t3)">Random order</span>
+              <div style="width:26px;height:14px;background:#ccc;border-radius:7px;position:relative;flex-shrink:0"><div style="width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;box-shadow:0 1px 2px #0003"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:0 0 8px">L2 view \u2014 inside "Starters"</h4>
+        <div style="background:var(--sur);border:1px solid var(--b1);border-radius:8px;overflow:hidden;margin-bottom:16px;max-width:300px">
+          <div style="padding:9px 12px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+            <span style="font-size:12px;color:var(--acc);cursor:pointer">\u2039 Starters</span>
+            <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1;margin-left:4px">/ Dishes</span>
+            <span style="font-size:11px;color:var(--t2);cursor:pointer">A\u2193 Sort</span>
+            <span style="font-size:11px;color:var(--t2);cursor:pointer;margin-left:8px">\u25BD Filter</span>
+            <span style="font-size:9px;background:var(--sur2);border:1px solid var(--b2);border-radius:8px;padding:1px 7px;color:var(--t3);margin-left:6px">L2</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1);cursor:pointer">
+            <span style="color:var(--t3);font-size:11px">\u2807</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:var(--t1)">Bruschetta al Pomodoro</div><div style="font-size:10px;color:var(--t3)">$8.50 \u00B7 2 allergens</div></div>
+            <span style="font-size:12px;color:var(--t3)">›</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer">
+            <span style="color:var(--t3);font-size:11px">\u2807</span>
+            <div style="flex:1"><div style="font-size:12px;font-weight:500;color:var(--t1)">Soup du Jour</div><div style="font-size:10px;color:var(--t3)">$9.00 \u00B7 1 allergen</div></div>
+            <span style="font-size:12px;color:var(--t3)">›</span>
+          </div>
+          <div style="padding:9px 12px;border-top:1px solid var(--b1);display:flex;align-items:center;gap:6px;background:var(--sur2)">
+            <span style="font-size:11px;color:var(--t3)">Limit</span>
+            <select style="border:1px solid var(--b2);border-radius:4px;padding:2px 6px;font-size:11px;background:var(--sur);color:var(--t1)"><option>All</option></select>
+            <span style="font-size:10px;color:var(--t3);font-style:italic;margin-left:2px">client-side</span>
+          </div>
+        </div>
+
+        <h4 style="font-size:13px;font-weight:600;color:var(--t1);margin:0 0 8px">L3 view \u2014 inside "Bruschetta"</h4>
+        <div style="background:var(--sur);border:1px solid var(--b1);border-radius:8px;overflow:hidden;margin-bottom:16px;max-width:300px">
+          <div style="padding:9px 12px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+            <span style="font-size:12px;color:var(--acc);cursor:pointer">\u2039 Bruschetta</span>
+            <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1;margin-left:4px">/ Allergens</span>
+            <span style="font-size:11px;color:var(--t2);cursor:pointer">A\u2193 Sort</span>
+            <span style="font-size:9px;background:var(--sur2);border:1px solid var(--b2);border-radius:8px;padding:1px 7px;color:var(--t3);margin-left:8px">L3</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
+            <span style="color:var(--t3);font-size:11px">\u2807</span><span style="font-size:15px">🌾</span><span style="font-size:12px;color:var(--t1)">Gluten</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 12px">
+            <span style="color:var(--t3);font-size:11px">\u2807</span><span style="font-size:15px">🥛</span><span style="font-size:12px;color:var(--t1)">Dairy</span>
+          </div>
+        </div>
+
+        <table class="spec-table">
+          <tr><th style="width:180px">Control</th><th>Level</th><th>Lives in</th></tr>
+          <tr><td><b>Sort</b></td><td>All levels</td><td>Items tab header (level-aware). Also editable via accordion in Config tab.</td></tr>
+          <tr><td><b>Filter</b></td><td>L1 (P0), L2 (P1)</td><td>Items tab header at the relevant level. L2 filter also in Config accordion.</td></tr>
+          <tr><td><b>Items per load</b></td><td>L1 only</td><td>Items tab footer at L1 view. Server-side, only meaningful at root.</td></tr>
+          <tr><td><b>Random order</b></td><td>L1 only</td><td>Items tab footer at L1 view. Mutually exclusive with Sort when on.</td></tr>
+          <tr><td><b>Limit (top N)</b></td><td>L2 only (P1)</td><td>Items tab footer when browsing an L2 level. Also in Config accordion.</td></tr>
+          <tr><td><b>Drag to reorder</b></td><td>All levels</td><td>Drag handle (\u2807) in Items tab at each level. Reorders within the current parent's array.</td></tr>
+        </table>
+
+        <div class="spec-note" style="margin-top:12px"><span class="spec-note-icon">\u26A0\uFE0F</span><div><b>Sort in Items tab vs. accordion:</b> Same setting, two entry points. The accordion is the faster path for users who know what they want. The Items tab is the exploratory path \u2014 the user sees the effect of their rule on real data as they change it.</div></div>`
       }
     ]
   }
