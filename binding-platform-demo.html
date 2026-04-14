@@ -1514,6 +1514,7 @@ html.dark .code-lines .hl-op{color:#89dceb}
 html.dark .code-lines .hl-br{color:#cdd6f4}
 html.dark .code-lines .hl-prop{color:#cdd6f4}
 html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
+
 </style>
 </head>
 <body>
@@ -1699,21 +1700,21 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
     <input class="add-el-search" type="text" placeholder="Search components…" oninput="filterAddElements(this.value)">
     <div id="add-el-suggested"></div>
     <div class="add-el-group">Repeaters</div>
-    <div class="add-el-item" onclick="addRepeaterPreset('blank')">
+    <div class="add-el-item" onclick="addRepeaterPreset('blank')" onmousedown="startCustomDrag(event,'repeater-blank')">
       <div class="add-el-item-icon">↻</div>
       <div class="add-el-item-info">
         <div class="add-el-item-name">Blank Repeater</div>
         <div class="add-el-item-desc">Image + text, no data connected</div>
       </div>
     </div>
-    <div class="add-el-item" onclick="addRepeaterPreset('articles')">
+    <div class="add-el-item" onclick="addRepeaterPreset('articles')" onmousedown="startCustomDrag(event,'repeater-articles')">
       <div class="add-el-item-icon" style="background:#e8f0fe;border-color:#c2d7f7;color:#3b78e7;font-size:13px;font-weight:600">📰</div>
       <div class="add-el-item-info">
         <div class="add-el-item-name">Articles</div>
         <div class="add-el-item-desc">Pre-connected to Articles collection</div>
       </div>
     </div>
-    <div class="add-el-item" onclick="addRepeaterPreset('team')">
+    <div class="add-el-item" onclick="addRepeaterPreset('team')" onmousedown="startCustomDrag(event,'repeater-team')">
       <div class="add-el-item-icon" style="background:#f3eee8;border-color:#e0d5c8;font-size:13px">👥</div>
       <div class="add-el-item-info">
         <div class="add-el-item-name">Team Members</div>
@@ -1721,21 +1722,21 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
       </div>
     </div>
     <div class="add-el-group" style="margin-top:8px">Elements</div>
-    <div class="add-el-item" onclick="addBasicElement('text')">
+    <div class="add-el-item" onclick="addBasicElement('text')" onmousedown="startCustomDrag(event,'text')">
       <div class="add-el-item-icon" style="font-size:14px;font-weight:700;font-family:serif">T</div>
       <div class="add-el-item-info">
         <div class="add-el-item-name">Text</div>
         <div class="add-el-item-desc">A text element, not connected</div>
       </div>
     </div>
-    <div class="add-el-item" onclick="addBasicElement('image')">
+    <div class="add-el-item" onclick="addBasicElement('image')" onmousedown="startCustomDrag(event,'image')">
       <div class="add-el-item-icon" style="font-size:13px">🖼</div>
       <div class="add-el-item-info">
         <div class="add-el-item-name">Image</div>
         <div class="add-el-item-desc">An image element, not connected</div>
       </div>
     </div>
-    <div class="add-el-item" onclick="addBasicElement('section')">
+    <div class="add-el-item" onclick="addBasicElement('section')" onmousedown="startCustomDrag(event,'section')">
       <div class="add-el-item-icon" style="font-size:12px">▭</div>
       <div class="add-el-item-info">
         <div class="add-el-item-name">Section</div>
@@ -7658,20 +7659,7 @@ function selElSettings(e, id) {
 
 function repNoticeAction(e, repeaterId) {
   e.stopPropagation();
-  const def = EL_DEFS[repeaterId];
-  if (!def) return;
-  const sectionId = def.section;
-  const repCtxs = S.ctxMap[repeaterId] || [];
-  const sectionCtxs = S.ctxMap[sectionId] || [];
-  const parentPage = EL_DEFS[sectionId]?.parentPage;
-  const pageCtxs = parentPage ? (S.ctxMap[parentPage] || []) : [];
-  const hasCtx = repCtxs.length > 0 || sectionCtxs.length > 0 || pageCtxs.length > 0;
-  if (!hasCtx) {
-    openModal(repeaterId);
-  } else {
-    selElSettings(e, repeaterId);
-    setTimeout(() => openDd(e, repeaterId, 'Items'), 80);
-  }
+  openRepCtxPicker(repeaterId);
 }
 
 function toggleCat(cat) {
@@ -8501,54 +8489,91 @@ function openRepCtxPicker(repId) {
   const def = EL_DEFS[repId];
   if (!def) return;
 
-  const sectionId = def.section;
-  const parentPage = EL_DEFS[sectionId]?.parentPage;
-  const parentCtxIds = [
-    ...(S.ctxMap[sectionId] || []),
-    ...(parentPage ? (S.ctxMap[parentPage] || []) : [])
-  ].filter((v, i, a) => a.indexOf(v) === i);
-  const parentCtxs = parentCtxIds.map(id => findSource(id)).filter(c => c && c.group !== 'System');
-
-  if (parentCtxs.length === 0) {
-    connectRepCtxNew(repId);
-    return;
-  }
-
   const modal = document.getElementById('rep-ctx-picker-modal');
   const body = document.getElementById('rep-ctx-picker-body');
   modal.dataset.repId = repId;
 
-  const parentItems = parentCtxs.map(ctx => {
-    const scope = (S.ctxMap[sectionId] || []).includes(ctx.id) ? 'section' : 'page';
-    const arrays = (ctx.fields || []).filter(f => f.type === 'array');
-    const arrayHint = arrays.length > 0 ? arrays.map(a => a.name).join(', ') : '';
-    return `<div class="rep-ctx-pick-item" onclick="connectRepCtxFromParent('${repId}','${ctx.id}')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--b2);border-radius:8px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--acc)';this.style.background='var(--acc-d)'" onmouseout="this.style.borderColor='var(--b2)';this.style.background='transparent'">
+  const sectionId = def.section;
+  const parentPage = EL_DEFS[sectionId]?.parentPage;
+  const parentCtxIds = new Set([
+    ...(S.ctxMap[sectionId] || []),
+    ...(parentPage ? (S.ctxMap[parentPage] || []) : [])
+  ]);
+
+  // Build deduplicated list of CMS list collections (skip filtered/derived variants)
+  const skipSuffixes = ['-filtered', '-by-role', '-other', '-filtered'];
+  const seen = new Set();
+  const allListCtxs = CTX_DEFS.filter(c => {
+    if (c.type !== 'list' || c.group !== 'CMS') return false;
+    if (skipSuffixes.some(s => c.id.endsWith(s))) return false;
+    if (seen.has(c.name)) return false;
+    seen.add(c.name);
+    return true;
+  });
+
+  const renderItem = (ctx) => {
+    const isParent = parentCtxIds.has(ctx.id);
+    const count = ctx.itemCount != null ? ctx.itemCount + ' items' : '';
+    const badge = isParent
+      ? `<span style="font-size:9px;background:var(--acc-d);color:var(--acc);padding:2px 6px;border-radius:4px;font-weight:600">On page</span>`
+      : '';
+    return `<div onclick="connectRepToSource('${repId}','${ctx.id}')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--b2);border-radius:8px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--acc)';this.style.background='var(--acc-d)'" onmouseout="this.style.borderColor='var(--b2)';this.style.background='transparent'">
       <div style="width:32px;height:32px;border-radius:8px;background:var(--acc-d);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">${ctx.icon || '📦'}</div>
       <div style="flex:1;min-width:0">
-        <div style="font-size:12px;font-weight:600;color:var(--t1)">${resolveCtxName(ctx.id)}</div>
-        <div style="font-size:10px;color:var(--t3);margin-top:1px">From ${scope}${arrayHint ? ' · Arrays: ' + arrayHint : ''}</div>
+        <div style="font-size:12px;font-weight:600;color:var(--t1);display:flex;align-items:center;gap:6px">${ctx.name}${badge}</div>
+        <div style="font-size:10px;color:var(--t3);margin-top:1px">CMS Collection${count ? ' · ' + count : ''}</div>
       </div>
-      <div style="font-size:10px;color:var(--acc);font-weight:600">Use →</div>
+      <div style="font-size:10px;color:var(--acc);font-weight:600;flex-shrink:0">Connect →</div>
     </div>`;
-  }).join('');
+  };
 
   body.innerHTML = `
-    <div style="margin-bottom:14px">
-      <div style="font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Available contexts</div>
-      <div style="display:flex;flex-direction:column;gap:6px">${parentItems}</div>
-    </div>
-    <div style="border-top:1px solid var(--b2);padding-top:14px">
-      <div style="font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Or add new</div>
-      <div onclick="closeRepCtxPicker();connectRepCtxNew('${repId}')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:2px dashed var(--b2);border-radius:8px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--acc)'" onmouseout="this.style.borderColor='var(--b2)'">
-        <div style="width:32px;height:32px;border-radius:8px;background:var(--b1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;color:var(--t3)">＋</div>
-        <div style="flex:1">
-          <div style="font-size:12px;font-weight:600;color:var(--t2)">Add new context</div>
-          <div style="font-size:10px;color:var(--t3);margin-top:1px">Create a new data source on this repeater</div>
-        </div>
-      </div>
+    <div style="font-size:11px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">Choose a data source</div>
+    <div style="display:flex;flex-direction:column;gap:6px;max-height:400px;overflow-y:auto">
+      ${allListCtxs.map(renderItem).join('')}
     </div>`;
 
   modal.classList.add('open');
+}
+
+function connectRepToSource(repId, ctxId) {
+  closeRepCtxPicker();
+  const def = EL_DEFS[repId];
+  if (!def) return;
+  const ctx = findSource(ctxId);
+  if (!ctx) return;
+  const sectionId = def.section;
+  const parentPage = EL_DEFS[sectionId]?.parentPage;
+
+  // Add context to section if not already accessible
+  const alreadyOnParent = (S.ctxMap[sectionId] || []).includes(ctxId) ||
+    (parentPage && (S.ctxMap[parentPage] || []).includes(ctxId));
+  if (!alreadyOnParent) {
+    if (!S.ctxMap[sectionId]) S.ctxMap[sectionId] = [];
+    S.ctxMap[sectionId].push(ctxId);
+    const secEl = document.getElementById(sectionId);
+    if (secEl) secEl.classList.add('has-ctx');
+  }
+
+  const arrays = (ctx.fields || []).filter(f => f.type === 'array');
+  const firstArray = arrays.length > 0 ? arrays[0].name : 'items';
+
+  def.repCtxId = ctxId;
+  def.repArrayField = firstArray;
+  const repEl = document.getElementById(repId);
+  if (repEl) repEl.classList.add('bound');
+  const countEl = document.getElementById('rep-count-' + repId.replace('repeater-', ''));
+  S.bindings[repId + '|Items'] = { ctxId, fieldName: firstArray, sample: '[{...}]' };
+  if (countEl) countEl.textContent = formatRepCountLabel(repId, ctxId, firstArray);
+  syncRepVisualItems(repId);
+  const notice = repEl?.querySelector('.rep-notice');
+  if (notice) notice.style.display = 'none';
+  renderBody();
+  if (!hasInnerBindings(repId)) {
+    silentAutoBindElements(repId, ctxId, firstArray);
+  } else {
+    toast(`Connected to ${resolveCtxName(ctx.id)}`);
+  }
 }
 
 function closeRepCtxPicker() {
@@ -8574,8 +8599,12 @@ function connectRepCtxFromParent(repId, ctxId) {
   syncRepVisualItems(repId);
   const notice = repEl?.querySelector('.rep-notice');
   if (notice) notice.style.display = 'none';
-  toast(`Connected to ${resolveCtxName(ctx.id)} (from parent)`);
   renderBody();
+  if (!hasInnerBindings(repId)) {
+    silentAutoBindElements(repId, ctxId, firstArray);
+  } else {
+    toast(`Connected to ${resolveCtxName(ctx.id)} (from parent)`);
+  }
 }
 
 function connectRepCtxNew(repId) {
@@ -8592,8 +8621,12 @@ function connectRepCtxNew(repId) {
     syncRepVisualItems(repId);
     const notice = repEl?.querySelector('.rep-notice');
     if (notice) notice.style.display = 'none';
-    toast('Connected to Articles (on repeater)');
     renderBody();
+    if (!hasInnerBindings(repId)) {
+      silentAutoBindElements(repId, 'cms-articles', 'items');
+    } else {
+      toast('Connected to Articles (on repeater)');
+    }
   }, false, 'blue');
 }
 
@@ -9541,7 +9574,9 @@ function unbind(elId, propKey, e) {
 
 function getRepContainer(repEl) {
   return repEl.querySelector(':scope > [style*="flex-wrap:wrap"]') ||
+         repEl.querySelector(':scope > [style*="flex-wrap: wrap"]') ||
          repEl.querySelector(':scope > [style*="flex-direction:column"]') ||
+         repEl.querySelector(':scope > [style*="flex-direction: column"]') ||
          repEl.querySelector(':scope > .rep-grid');
 }
 
@@ -10066,7 +10101,11 @@ function autoBindRepeater(repeaterId, ctxId, fieldName) {
     }
   }
   doRepItemsBind(repeaterId, 'Items', ctxId, fieldName);
-  toast('✓ Repeater connected to ' + resolveCtxName(ctx.id) + ' · ' + fieldName, true);
+  if (!hasInnerBindings(repeaterId)) {
+    silentAutoBindElements(repeaterId, ctxId, fieldName);
+  } else {
+    toast('✓ Repeater connected to ' + resolveCtxName(ctx.id) + ' · ' + fieldName, true);
+  }
 }
 
 function getRepStaleBindings(sectionId, newCtxId) {
@@ -12022,7 +12061,8 @@ function addComponentToCanvas(type) {
 /* ── ADD BASIC ELEMENTS (Text / Image / Section) ── */
 let _basicElCounter = 0;
 
-function addBasicElement(type, insertAfterEl) {
+function addBasicElement(type, insertAfterEl, targetSection) {
+  if (window._suppressNextClick) return;
   _basicElCounter++;
   const ts = _basicElCounter;
   const canvasInner = getActiveCanvasInner();
@@ -12053,7 +12093,7 @@ function addBasicElement(type, insertAfterEl) {
     return sec;
   }
 
-  const parentSection = findTargetSectionForAdd(canvasInner);
+  const parentSection = targetSection || findTargetSectionForAdd(canvasInner);
   if (!parentSection) { toast('⚠ No section found on this page'); return; }
   const sBody = parentSection.querySelector('.s-body') || parentSection;
 
@@ -12116,6 +12156,7 @@ function closePanelIfOpen() {
 }
 
 let _customDrag = null;
+let _customDragTargetSection = null;
 
 function startCustomDrag(e, type) {
   if (e.button !== 0) return;
@@ -12128,7 +12169,7 @@ function startCustomDrag(e, type) {
     if (!dragging && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
       dragging = true;
       _customDrag = type;
-      const labels = {text: 'T Text', image: '🖼 Image', section: '▭ Section'};
+      const labels = {text: 'T Text', image: '🖼 Image', section: '▭ Section', 'repeater-blank': '↻ Repeater', 'repeater-articles': '📰 Articles', 'repeater-team': '👥 Team Members'};
       ghost = document.createElement('div');
       ghost.className = 'add-el-drag-ghost';
       ghost.textContent = labels[type] || type;
@@ -12139,7 +12180,11 @@ function startCustomDrag(e, type) {
     if (dragging && ghost) {
       ghost.style.left = ev.clientX + 12 + 'px';
       ghost.style.top = ev.clientY + 'px';
-      showDropIndicator(ev.clientY);
+      if (type === 'section') {
+        showDropIndicator(ev.clientY);
+      } else if (type === 'text' || type === 'image' || type.startsWith('repeater-')) {
+        showSectionDropTarget(ev.clientX, ev.clientY);
+      }
     }
   }
 
@@ -12148,31 +12193,39 @@ function startCustomDrag(e, type) {
     document.removeEventListener('mouseup', onUp);
     if (ghost) { ghost.remove(); ghost = null; }
     document.querySelectorAll('.canvas-drop-indicator').forEach(el => el.remove());
+    clearSectionDropTargets();
 
     if (dragging) {
       _customDrag = null;
       window._suppressNextClick = true;
       setTimeout(() => { window._suppressNextClick = false; }, 100);
       const canvasInner = getActiveCanvasInner();
-      if (!canvasInner) return;
+      if (!canvasInner) { _customDragTargetSection = null; return; }
 
       const canvasRect = document.getElementById('canvas').getBoundingClientRect();
-      if (ev.clientX < canvasRect.left || ev.clientX > canvasRect.right) return;
-
-      const sections = [...canvasInner.querySelectorAll('.c-section')];
-      let insertAfter = sections[sections.length - 1] || null;
-      for (const sec of sections) {
-        const r = sec.getBoundingClientRect();
-        if (ev.clientY < r.bottom + 7) { insertAfter = sec; break; }
-      }
+      if (ev.clientX < canvasRect.left || ev.clientX > canvasRect.right) { _customDragTargetSection = null; return; }
 
       if (type === 'section') {
+        const sections = [...canvasInner.querySelectorAll('.c-section')];
+        let insertAfter = sections[sections.length - 1] || null;
+        for (const sec of sections) {
+          const r = sec.getBoundingClientRect();
+          if (ev.clientY < r.bottom + 7) { insertAfter = sec; break; }
+        }
         addBasicElement('section', insertAfter);
+      } else if (type.startsWith('repeater-')) {
+        const preset = type.replace('repeater-', '');
+        const targetSec = _customDragTargetSection;
+        _customDragTargetSection = null;
+        addRepeaterPreset(preset, targetSec);
       } else {
-        addBasicElement(type);
+        const targetSec = _customDragTargetSection;
+        _customDragTargetSection = null;
+        addBasicElement(type, null, targetSec);
       }
     }
     _customDrag = null;
+    _customDragTargetSection = null;
   }
 
   document.addEventListener('mousemove', onMove);
@@ -12196,6 +12249,28 @@ function showDropIndicator(y) {
     ind.style.display = 'block';
     closest.parentNode.insertBefore(ind, closest.nextSibling);
   }
+}
+
+function showSectionDropTarget(x, y) {
+  const canvasInner = getActiveCanvasInner();
+  if (!canvasInner) return;
+  const sections = [...canvasInner.querySelectorAll('.c-section')];
+  sections.forEach(s => s.classList.remove('el-drop-target'));
+  let target = null;
+  for (const sec of sections) {
+    const r = sec.getBoundingClientRect();
+    if (y >= r.top && y <= r.bottom && x >= r.left && x <= r.right) {
+      target = sec;
+      break;
+    }
+  }
+  _customDragTargetSection = target;
+  if (target) target.classList.add('el-drop-target');
+}
+
+function clearSectionDropTargets() {
+  document.querySelectorAll('.el-drop-target').forEach(s => s.classList.remove('el-drop-target'));
+  document.querySelectorAll('.el-drop-target-empty').forEach(s => s.classList.remove('el-drop-target-empty'));
 }
 
 function getActiveCanvasInner() {
@@ -12520,10 +12595,11 @@ function findTargetSection() {
   return sections.length > 0 ? sections[sections.length - 1].id : null;
 }
 
-function addRepeaterPreset(preset) {
-  const sectionId = findTargetSection();
-  if (!sectionId) { toast('Select a section first'); return; }
-  const sectionEl = document.getElementById(sectionId);
+function addRepeaterPreset(preset, forceSectionEl) {
+  if (!forceSectionEl && window._suppressNextClick) return;
+  const sectionEl = forceSectionEl || document.getElementById(findTargetSection());
+  if (!sectionEl) { toast('Select a section first'); return; }
+  const sectionId = sectionEl.id;
   if (!sectionEl) return;
   const sBody = sectionEl.querySelector('.s-body') || sectionEl;
 
@@ -12554,7 +12630,7 @@ function addBlankRepeater(sBody, sectionId, repId, itemIds, ts) {
   const itemHTML = (idx) => `
     <div class="rep-item" id="${itemIds[idx]}" onclick="selEl(event,'${itemIds[idx]}')" style="display:flex;gap:16px;padding:16px;border-radius:8px;border:1px solid var(--b1);cursor:pointer;position:relative;align-items:center">
       <div class="c-el-overlay"></div>
-      <div class="c-el" id="${imgIds[idx]}" onclick="selEl(event,'${imgIds[idx]}')" style="cursor:pointer;width:64px;height:64px;border-radius:8px;background:var(--sur2);border:1px solid var(--b1);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+      <div class="c-el c-el-img" id="${imgIds[idx]}" onclick="selEl(event,'${imgIds[idx]}')" style="cursor:pointer;width:64px;height:64px;border-radius:8px;background:var(--sur2);border:1px solid var(--b1);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
         <div class="c-el-overlay" style="border-radius:8px"></div>
         <div class="el-tags"><div class="el-type-tag">Image</div><div class="el-bind-tag"></div></div>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--b2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
@@ -12614,7 +12690,7 @@ function addTeamRepeater(sBody, sectionId, repId, itemIds, ts) {
   const itemHTML = (idx) => `
     <div class="rep-item" id="${itemIds[idx]}" onclick="selEl(event,'${itemIds[idx]}')" style="flex:1;padding:24px 16px;border-radius:16px;background:#f9f6f1;cursor:pointer;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;min-width:0">
       <div class="c-el-overlay"></div>
-      <div class="c-el" id="${photoIds[idx]}" onclick="selEl(event,'${photoIds[idx]}')" style="cursor:pointer;width:80px;height:80px;border-radius:50%;background:var(--sur2);border:2px solid var(--b1);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <div class="c-el c-el-img" id="${photoIds[idx]}" onclick="selEl(event,'${photoIds[idx]}')" style="cursor:pointer;width:80px;height:80px;border-radius:50%;background:var(--sur2);border:2px solid var(--b1);overflow:hidden;display:flex;align-items:center;justify-content:center;flex-shrink:0">
         <div class="c-el-overlay" style="border-radius:50%"></div>
         <div class="el-tags"><div class="el-type-tag">Image</div><div class="el-bind-tag"></div></div>
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--b2)" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"/></svg>
@@ -12699,7 +12775,7 @@ function addArticlesRepeater(sBody, sectionId, repId, itemIds, ts) {
     return `
     <div class="rep-item" id="${itemIds[idx]}" onclick="selEl(event,'${itemIds[idx]}')" style="display:flex;gap:16px;padding:16px;border-radius:8px;border:1px solid var(--b1);cursor:pointer;position:relative;align-items:flex-start">
       <div class="c-el-overlay"></div>
-      <div class="c-el bound" id="${thumbIds[idx]}" onclick="selEl(event,'${thumbIds[idx]}')" style="cursor:pointer;width:80px;height:60px;border-radius:6px;background:var(--sur2);border:1px solid var(--b1);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
+      <div class="c-el c-el-img bound" id="${thumbIds[idx]}" onclick="selEl(event,'${thumbIds[idx]}')" style="cursor:pointer;width:80px;height:60px;border-radius:6px;background:var(--sur2);border:1px solid var(--b1);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center">
         <div class="c-el-overlay" style="border-radius:6px"></div>
         <div class="el-tags"><div class="el-type-tag">Image</div><div class="el-bind-tag"></div></div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--b2)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
@@ -12814,10 +12890,41 @@ document.addEventListener('click', function() {
   document.getElementById('canvas-ctx-menu').classList.remove('open');
 });
 
+function deleteSelectedElement() {
+  if (!S.sel) return;
+  const id = S.sel;
+  const def = EL_DEFS[id];
+  if (!def || def.isPage) return;
+
+  // If this element is part of a repeater template, delete all siblings with the same repTemplate
+  const idsToDelete = def.repTemplate
+    ? Object.keys(EL_DEFS).filter(k => EL_DEFS[k].repTemplate === def.repTemplate)
+    : [id];
+
+  idsToDelete.forEach(elId => {
+    const domEl = document.getElementById(elId);
+    if (domEl) domEl.remove();
+    delete EL_DEFS[elId];
+    Object.keys(S.bindings).forEach(k => { if (k.startsWith(elId + '|')) delete S.bindings[k]; });
+    Object.keys(S.staticValues).forEach(k => { if (k.startsWith(elId + '|')) delete S.staticValues[k]; });
+  });
+
+  S.sel = null;
+  updateSelectionVisual(null);
+  renderActionBar();
+  reinitElementDrag();
+  toast('Element deleted');
+}
+
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     if (S.specPageOpen) { closeSpecPage(); return; }
     if (S.productMode) { toggleProductMode(); return; }
+  }
+  if ((e.key === 'Delete' || e.key === 'Backspace') && S.sel) {
+    const active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.contentEditable === 'true')) return;
+    deleteSelectedElement();
   }
 });
 
@@ -18601,12 +18708,12 @@ const REP_SAMPLE_DATA = {
     {storeName:"Beachside Store", address:"789 Ocean Dr, Miami", phone:"(305) 555-0300", openHours:"10am–7pm"}
   ],
   'cms-article-authors': [
-    {name:"Sarah Chen", bio:"Tech writer & AI researcher", role:"Lead Author", avatar:"[img url]"},
-    {name:"Mark Rivera", bio:"Product strategist", role:"Co-Author", avatar:"[img url]"},
-    {name:"Jane Doe", bio:"Design systems lead", role:"Lead Author", avatar:"[img url]"},
-    {name:"Lena Park", bio:"Accessibility advocate", role:"Contributor", avatar:"[img url]"},
-    {name:"David Kim", bio:"Backend architect", role:"Lead Author", avatar:"[img url]"},
-    {name:"Emma Wilson", bio:"UX prototyping expert", role:"Co-Author", avatar:"[img url]"},
+    {name:"Sarah Chen", bio:"Tech writer & AI researcher", role:"Lead Author", avatar:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face"},
+    {name:"Mark Rivera", bio:"Product strategist", role:"Co-Author", avatar:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"},
+    {name:"Jane Doe", bio:"Design systems lead", role:"Lead Author", avatar:"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop&crop=face"},
+    {name:"Lena Park", bio:"Accessibility advocate", role:"Contributor", avatar:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop&crop=face"},
+    {name:"David Kim", bio:"Backend architect", role:"Lead Author", avatar:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face"},
+    {name:"Emma Wilson", bio:"UX prototyping expert", role:"Co-Author", avatar:"https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&h=200&fit=crop&crop=face"},
   ],
   'custom-featured-articles': [
     {title:"The Future of AI in Design", author:"Sarah Chen", category:"Tech", readTime:"5 min", relevanceScore:"92", trendingLabel:"🔥 Trending", isFeatured:"true"},
@@ -18617,17 +18724,17 @@ const REP_SAMPLE_DATA = {
   ],
   'cms-empty-collection': [],
   'cms-my-team': [
-    {name:"Riley Carter", role:"Content Crafter", tagline:"Weaving words into wonders", image:"[img url]"},
-    {name:"Maya Ramirez", role:"Analytics Ace", tagline:"Decoding the data jungle", image:"[img url]"},
-    {name:"Ali Torel", role:"Social Superstar", tagline:"Ruling the social realm", image:"[img url]"}
+    {name:"Riley Carter", role:"Content Crafter", tagline:"Weaving words into wonders", image:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face"},
+    {name:"Maya Ramirez", role:"Analytics Ace", tagline:"Decoding the data jungle", image:"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop&crop=face"},
+    {name:"Ali Torel", role:"Social Superstar", tagline:"Ruling the social realm", image:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"}
   ],
   'cms-team-members': [
-    {name:"Riley Carter", role:"🎨 UX Designer", email:"riley@studio.com"},
-    {name:"Maya Ramirez", role:"🎨 UX Designer", email:"maya@studio.com"},
-    {name:"Ali Torel", role:"💻 Developer", email:"ali@studio.com"},
-    {name:"Jordan Lee", role:"💻 Developer", email:"jordan@studio.com"},
-    {name:"Sam Nakamura", role:"📊 PM", email:"sam@studio.com"},
-    {name:"Morgan Blake", role:"🎨 UX Designer", email:"morgan@studio.com"}
+    {name:"Riley Carter", role:"🎨 UX Designer", email:"riley@studio.com", image:"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face"},
+    {name:"Maya Ramirez", role:"🎨 UX Designer", email:"maya@studio.com", image:"https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&h=200&fit=crop&crop=face"},
+    {name:"Ali Torel", role:"💻 Developer", email:"ali@studio.com", image:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"},
+    {name:"Jordan Lee", role:"💻 Developer", email:"jordan@studio.com", image:"https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face"},
+    {name:"Sam Nakamura", role:"📊 PM", email:"sam@studio.com", image:"https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&h=200&fit=crop&crop=face"},
+    {name:"Morgan Blake", role:"🎨 UX Designer", email:"morgan@studio.com", image:"https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop&crop=face"}
   ],
   'cms-team-members-filtered': [
     {name:"Riley Carter", role:"🎨 UX Designer", email:"riley@studio.com"},
@@ -19151,7 +19258,11 @@ function ddBindRepeater(e, ctxId, fieldName) {
 
   doRepItemsBind(elId, 'Items', ctxId, fieldName);
   closeDd();
-  toast(`✓ Repeater → ${resolveCtxName(ctx.id)} · ${fieldName}`, true);
+  if (!hasInnerBindings(elId)) {
+    silentAutoBindElements(elId, ctxId, fieldName);
+  } else {
+    toast(`✓ Repeater → ${resolveCtxName(ctx.id)} · ${fieldName}`, true);
+  }
 }
 
 function renderImgPropRow(elId, propK, isBound, isActiveDd, ctx, b) {
@@ -19735,6 +19846,132 @@ function sfAddRule() {
     setTimeout(function() { openSpecPage(specId); }, 200);
   }, 300);
 })();
+
+// ─── AUTO-BIND (silent) ──────────────────────────────────────────────────────
+
+function hasInnerBindings(repId) {
+  var repDom = document.getElementById(repId);
+  if (!repDom) return false;
+  return Object.keys(EL_DEFS).some(function(childId) {
+    var childDef = EL_DEFS[childId];
+    if (!childDef.repTemplate) return false;
+    var childDom = document.getElementById(childId);
+    if (!childDom || !repDom.contains(childDom)) return false;
+    return Object.keys(S.bindings).some(function(bk) {
+      return bk.startsWith(childId + '|') && !bk.endsWith('|Items');
+    });
+  });
+}
+
+function silentAutoBindElements(repId, ctxId, fieldPath) {
+  var ctx = findSource(ctxId);
+  if (!ctx) return;
+
+  // Get the itemFields for this array field
+  function deepFindField(fields, name) {
+    for (var i = 0; i < fields.length; i++) {
+      if (fields[i].name === name) return fields[i];
+      if (fields[i].itemFields) { var r = deepFindField(fields[i].itemFields, name); if (r) return r; }
+    }
+    return null;
+  }
+  var itemFields = [];
+  if (fieldPath && fieldPath.includes('.')) {
+    var parts = fieldPath.split('.');
+    var cur = ctx.fields;
+    for (var pi = 0; pi < parts.length; pi++) {
+      var pf = cur.find(function(ff){ return ff.name === parts[pi]; });
+      if (!pf) break;
+      if (pi === parts.length - 1) { itemFields = pf.itemFields || []; }
+      else cur = pf.itemFields || pf.refFields || [];
+    }
+  } else {
+    var af = deepFindField(ctx.fields, fieldPath);
+    itemFields = (af && af.itemFields) ? af.itemFields : [];
+  }
+  if (itemFields.length === 0) return;
+
+  // Find one representative per (template × prop) slot inside this repeater
+  var repDom = document.getElementById(repId);
+  if (!repDom) return;
+  var seen = {};
+  var matches = []; // { templateKey, propKey, propType, fieldDef }
+  repDom.querySelectorAll('.c-el[id]').forEach(function(domEl) {
+    var elId = domEl.id;
+    var def = EL_DEFS[elId];
+    if (!def || !def.repTemplate) return;
+    (def.props || []).forEach(function(prop) {
+      if (prop.k === 'Visible' || prop.k === 'Items') return;
+      var key = def.repTemplate + '|' + prop.k;
+      if (seen[key]) return;
+      seen[key] = true;
+
+      // Type-filter + name-score to pick best field
+      var elName = (def.name || '').toLowerCase().replace(/\s+/g, '');
+      var compat = itemFields.filter(function(f) {
+        if (prop.t === 'image')   return f.type === 'image';
+        if (prop.t === 'string')  return ['string','enum','number','dateTime'].indexOf(f.type) >= 0;
+        if (prop.t === 'url')     return f.type === 'url' || f.type === 'string';
+        if (prop.t === 'boolean') return f.type === 'boolean';
+        return false;
+      });
+      if (compat.length === 0) return;
+
+      var ALIASES = {
+        image:['image','photo','thumbnail','avatar','picture','cover','thumb'],
+        photo:['photo','image','avatar','thumbnail'],
+        thumbnail:['thumbnail','image','photo','cover','thumb'],
+        title:['title','name','heading','label','subject'],
+        name:['name','title','fullname','firstname','displayname'],
+        author:['author','creator','by'],
+        role:['role','position','job'],
+        description:['description','desc','bio','summary','excerpt','tagline','about'],
+        category:['category','type','tag','genre'],
+        price:['price','cost','amount','value'],
+        link:['link','url','href','website'],
+      };
+      var aliases = ALIASES[elName] || [elName];
+      function score(f) {
+        var fn = f.name.toLowerCase();
+        if (fn === elName) return 100;
+        if (aliases.indexOf(fn) >= 0) return 80;
+        if (aliases.some(function(a){ return fn.indexOf(a) >= 0 || a.indexOf(fn) >= 0; })) return 50;
+        if (fn.indexOf(elName) >= 0 || elName.indexOf(fn) >= 0) return 30;
+        return 0;
+      }
+      var best = compat.reduce(function(b, f) { return score(f) >= score(b) ? f : b; }, compat[0]);
+      matches.push({ templateKey: def.repTemplate, propKey: prop.k, fieldDef: best });
+    });
+  });
+
+  if (matches.length === 0) return;
+
+  var sampleRows = REP_SAMPLE_DATA[ctxId] || [];
+
+  matches.forEach(function(m) {
+    var fieldDef = m.fieldDef;
+    // Apply to every element that shares this template key, using per-row sample data
+    var sibIds = Object.keys(EL_DEFS)
+      .filter(function(id){ return EL_DEFS[id].repTemplate === m.templateKey; })
+      .sort();
+    sibIds.forEach(function(id, rowIdx) {
+      var row = sampleRows[rowIdx] || {};
+      var realVal = row[fieldDef.name];
+      // Use real row value for canvas update, canonical sample for binding record
+      var fieldForCanvas = (realVal != null && realVal !== '')
+        ? Object.assign({}, fieldDef, { sample: typeof realVal === 'string' ? '"' + realVal + '"' : String(realVal) })
+        : fieldDef;
+      S.bindings[id + '|' + m.propKey] = { ctxId: ctxId, fieldName: fieldDef.name, sample: fieldDef.sample };
+      applyBindingToCanvas(id, m.propKey, fieldForCanvas, ctxId);
+    });
+  });
+
+  refreshElementBindTags();
+  refreshAllPills();
+  renderBody();
+  toast('\u2713 Fields auto-bound', true);
+}
+// ─────────────────────────────────────────────────────────────────────────────
 </script>
 
 <!-- SORT/FILTER DIALOG -->
