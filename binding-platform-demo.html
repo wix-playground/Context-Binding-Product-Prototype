@@ -859,8 +859,8 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-link-line{flex:1;height:0;border-top:1px dashed var(--grn);opacity:.4}
 .ctx-link-icon{display:flex;align-items:center;gap:4px;color:var(--grn);font-size:10px;white-space:nowrap;opacity:.8}
 .ctx-link-icon svg{width:12px;height:12px;stroke:var(--grn);fill:none;stroke-width:2}
-.ctx-rel-indicator{display:flex;align-items:center;gap:5px;margin:4px 0 2px;padding:4px 0;font-size:10px;color:var(--t3);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
-.ctx-rel-indicator svg{opacity:.5;flex-shrink:0}
+.ctx-rel-indicator{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);background:color-mix(in srgb, var(--b1) 55%, transparent);font-size:10px;color:var(--t3);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.ctx-rel-indicator svg{opacity:.6;flex-shrink:0}
 .ctx-rel-indicator strong{font-weight:600;color:var(--t2)}
 .ctx-filter-parent-ref{cursor:pointer;border-bottom:1px dashed var(--t3);transition:.15s}
 .ctx-filter-parent-ref:hover{color:var(--acc);border-bottom-color:var(--acc)}
@@ -901,17 +901,23 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-parent-note-arrow{font-size:10px;color:var(--t3);margin-left:auto;opacity:0;transition:.12s}
 .ctx-parent-note-item:hover .ctx-parent-note-arrow{opacity:1;color:var(--acc)}
 
-.ctx-card{background:var(--sur2);border:1px solid var(--b2);border-radius:8px;padding:8px 10px;position:relative;margin:6px 14px}
-.ctx-card.primary{border-left:3px solid var(--acc);background:color-mix(in srgb, var(--acc) 4%, var(--sur2))}
-.ctx-card.unconfigured{border-left:3px solid var(--yel);border-style:dashed;border-left-style:solid;opacity:.85}
+.ctx-card{background:#fff;border:1px solid #e2e3ea;border-radius:8px;padding:8px;position:relative;margin:8px 14px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-height:60px;box-sizing:border-box}
+.ctx-card.primary{border-left:3px solid var(--acc);background:color-mix(in srgb, var(--acc) 4%, #fff)}
+.ctx-card.unconfigured{border-left:3px solid var(--yel);border-style:dashed;border-left-style:solid}
 .ctx-card.broken{border-left:3px solid var(--red);border-style:dashed;border-left-style:solid}
-.ctx-card-lock{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:10px;color:var(--t3);font-style:italic}
+.ctx-card-head{width:100%;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.ctx-card-meta{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+.ctx-card-lock{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--t3);font-style:italic}
 .ctx-card-lock svg{width:10px;height:10px;fill:none;stroke:var(--t3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.ctx-card-name{font-weight:500;font-size:12px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding-right:60px}
-.ctx-card-src{font-size:10px;color:var(--t3);font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-top:2px}
-.ctx-card-menu{position:absolute;top:7px;right:10px}
-.ctx-card-dots{color:var(--t3);cursor:pointer;font-size:16px;line-height:1;padding:2px 4px;
-  border-radius:4px;letter-spacing:1px}
+.ctx-card-name{font-weight:600;font-size:12px;line-height:1.25;display:flex;align-items:center;gap:4px;flex-wrap:wrap;min-width:0;color:#1e1e1f}
+.ctx-card-bind-indicator{display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;flex-shrink:0}
+.ctx-card-bind-indicator svg{width:14px;height:14px;display:block}
+.ctx-card-bind-indicator.active{color:#e84393}
+.ctx-card-bind-indicator.idle{color:#9aa0af}
+.ctx-card-src{font-size:9px;color:#6f7485;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;line-height:1.2;text-transform:none}
+.ctx-card-menu{position:relative;display:flex;align-items:center;gap:4px;flex-shrink:0}
+.ctx-card-dots{color:#7d8395;cursor:pointer;font-size:15px;line-height:1;padding:1px 4px;
+  border-radius:6px;letter-spacing:1px}
 .ctx-card-dots:hover{color:var(--t1);background:var(--b2)}
 .ctx-card-dropdown{position:absolute;right:0;top:22px;background:var(--sur3);border:1px solid var(--b2);
   border-radius:8px;padding:4px;min-width:150px;z-index:200;display:none;
@@ -931,9 +937,10 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-dd-sep{height:1px;background:var(--b2);margin:3px 0}
 .ctx-rename-input{background:var(--sur2);border:1px solid var(--acc-b);border-radius:5px;
   padding:3px 7px;font-size:12px;color:var(--t1);width:100%;outline:none;font-family:inherit}
-.type-badge{font-size:9px;padding:1px 5px;border-radius:3px;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:500}
+.type-badge{font-size:8px;padding:1px 5px;border-radius:4px;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-weight:500;line-height:1.3}
 .tb-obj{background:var(--acc-d);color:var(--acc)}
 .tb-list{background:#ff6b6b20;color:var(--red)}
+.ctx-card-status-row{width:100%;display:flex;flex-direction:column;gap:6px}
 
 .add-ctx-btn{border:1px dashed var(--b2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--t3);cursor:pointer;transition:.2s;margin-top:2px}
 .add-ctx-btn:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-d)}
@@ -953,7 +960,7 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .sf-entry-arrow{color:var(--t3);font-size:12px}
 
 /* Sort/Filter dialog */
-.sf-dialog-overlay{position:fixed;inset:0;background:#00000050;z-index:1300;display:none;align-items:center;justify-content:center}
+.sf-dialog-overlay{position:fixed;inset:0;background:#00000050;z-index:2147483647;display:none;align-items:center;justify-content:center}
 .sf-dialog-overlay.open{display:flex}
 .sf-dialog{background:#fff;border-radius:12px;width:380px;box-shadow:0 20px 60px #00000025;animation:pop .18s ease;overflow:hidden}
 .sf-dialog-head{padding:16px 20px 0;display:flex;align-items:center;justify-content:space-between}
@@ -987,7 +994,7 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .sf-btn-cancel:hover{background:#f4f4f8}
 .sf-btn-apply{padding:7px 24px;border-radius:20px;border:none;background:#4353ff;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
 .sf-btn-apply:hover{background:#3342dd}
-.sf-edit-overlay{position:fixed;inset:0;background:#00000050;z-index:1400;display:none;align-items:center;justify-content:center}
+.sf-edit-overlay{position:fixed;inset:0;background:#00000050;z-index:2147483647;display:none;align-items:center;justify-content:center}
 .sf-edit-overlay.open{display:flex}
 .sf-edit-dialog{background:#fff;border-radius:12px;width:380px;box-shadow:0 20px 60px #00000025;padding:20px 24px;animation:pop .18s ease}
 .sf-edit-title{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:600;font-size:15px;color:#1a1a2e;margin-bottom:16px}
@@ -1283,7 +1290,7 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-fields-count .count-num{font-weight:600}
 .ctx-fields-count.active{color:#e84393}
 .ctx-fields-count.idle{color:var(--t3)}
-.ctx-fields-list{display:none;margin-top:6px;border-top:1px solid var(--b1);padding-top:6px}
+.ctx-fields-list{display:none;margin-top:0;border-top:1px solid #eff1f5;padding-top:6px;width:100%}
 .ctx-fields-list.open{display:block}
 .ctx-field-row{display:flex;align-items:center;gap:8px;padding:6px 4px;border-radius:5px;transition:.1s}
 .ctx-field-row:hover{background:var(--b1)}
@@ -1325,11 +1332,11 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-fields-open{display:flex;align-items:center;gap:5px;padding:6px 4px;font-size:11px;color:var(--acc);cursor:pointer}
 .ctx-fields-open:hover{text-decoration:underline}
 
-.ctx-gear{width:24px;height:24px;border-radius:5px;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--t3);background:transparent;transition:.15s;flex-shrink:0;font-size:12px;line-height:1}
+.ctx-gear{width:22px;height:22px;border-radius:6px;border:1px solid #d9dce8;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#7d8395;background:transparent;transition:.15s;flex-shrink:0;font-size:11px;line-height:1}
 .ctx-gear:hover{color:var(--acc);border-color:var(--acc-b);background:var(--acc-d)}
-.ctx-code-btn{width:24px;height:24px;border-radius:5px;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;
-  cursor:pointer;color:var(--t3);background:transparent;transition:.15s;flex-shrink:0;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:9px;font-weight:700;line-height:1}
+.ctx-code-btn{width:22px;height:22px;border-radius:6px;border:1px solid #d9dce8;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;color:#7d8395;background:transparent;transition:.15s;flex-shrink:0;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace;font-size:8px;font-weight:700;line-height:1}
 .ctx-code-btn:hover{color:var(--yel);border-color:color-mix(in srgb, var(--yel) 40%, transparent);background:color-mix(in srgb, var(--yel) 8%, transparent)}
 
 .ctx-settings-panel{animation:ctxSlideIn .18s ease;background:#fff;display:flex;flex-direction:column;height:100%;max-height:inherit;min-height:0}
@@ -1365,6 +1372,42 @@ body.product-mode #modal.has-spec{outline-offset:2px}
 .ctx-settings-tab{font-size:11px;color:#6f6a78;padding:6px 10px;border-radius:7px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1;user-select:none}
 .ctx-settings-tab.active{background:#f0eef2;color:#3f3847;font-weight:500}
 .ctx-settings-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden}
+/* Index tab */
+.ctx-idx-wrap{padding:0 0 8px}
+.ctx-idx-header{padding:12px 14px 8px;font-size:9px;font-weight:600;color:#9990aa;text-transform:uppercase;letter-spacing:.6px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.ctx-idx-section{border-top:1px solid #eceaf1}
+.ctx-idx-section-head{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;cursor:pointer;user-select:none;font-size:9px;font-weight:600;color:#9990aa;text-transform:uppercase;letter-spacing:.5px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;transition:background .1s}
+.ctx-idx-section-head:hover{background:#f6f4f8}
+.ctx-idx-section-lbl{display:flex;align-items:center;gap:5px}
+.ctx-idx-section-count{font-weight:500;color:#b0a8c0}
+.ctx-idx-chevron{font-size:11px;color:#b0a8c0;transition:transform .18s;transform:rotate(0deg)}
+.ctx-idx-section-head.open .ctx-idx-chevron{transform:rotate(90deg)}
+.ctx-idx-section-body{display:none;padding:0 10px 6px}
+.ctx-idx-section-body.open{display:block}
+.ctx-idx-field-row{display:flex;align-items:center;gap:8px;padding:5px 4px;border-radius:6px;transition:background .1s}
+.ctx-idx-field-row:hover{background:#f0eef4}
+.ctx-idx-open-src{padding:10px 14px 4px;font-size:12px;color:#6b7fcc;cursor:pointer;display:flex;align-items:center;gap:6px;border-top:1px solid #eceaf1;margin-top:4px}
+.ctx-idx-open-src:hover{color:#4353ff}
+/* Items tab — array hierarchy rows */
+.items-arr-row{display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f9f8fc;cursor:pointer;user-select:none;transition:background .12s}
+.items-arr-row:hover{background:#f3f1f7}
+.items-arr-chevron{font-size:10px;color:#8a82a0;flex-shrink:0;width:12px;text-align:center}
+.items-arr-name{font-size:12px;font-weight:600;color:#1f1b24;flex-shrink:0}
+.items-arr-badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;background:#eae8f0;font-size:11px;color:#6b6380;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .12s;border:none;outline:none;font-family:inherit}
+.items-arr-badge:hover{background:#dddae8}
+.items-arr-badge.modified{background:#dbeafe;color:#1d4ed8}
+.items-arr-badge.modified:hover{background:#bfdbfe}
+/* Items badge floating panel */
+.items-badge-fp{position:fixed;z-index:9999;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18),0 2px 6px rgba(0,0,0,.08);border:1px solid #e4e0ed;width:224px;padding:14px 14px 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
+.items-badge-fp-head{display:flex;align-items:center;margin-bottom:12px}
+.items-badge-fp-title{font-size:13px;font-weight:600;color:#1f1b24;flex:1}
+.items-badge-fp-close{width:22px;height:22px;border:none;background:transparent;color:#8a82a0;cursor:pointer;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1;padding:0;transition:.12s;flex-shrink:0}
+.items-badge-fp-close:hover{background:#f0eef5;color:#3f3847}
+.items-badge-fp-row{margin-bottom:10px}
+.items-badge-fp-row:last-child{margin-bottom:0}
+.items-badge-fp-lbl{font-size:11px;color:#5a5270;font-weight:500;margin-bottom:5px}
+.items-badge-fp-select{width:100%;padding:6px 8px;border-radius:7px;border:1px solid #dddaea;background:#f9f8fc;color:#1f1b24;font-size:12px;cursor:pointer;font-family:inherit;outline:none;transition:.12s}
+.items-badge-fp-select:focus{border-color:#7693ff;background:#fff}
 
 .ctx-settings-section{padding:12px;border-bottom:1px solid #eceaf1}
 .ctx-settings-section:last-child{border-bottom:none}
@@ -1569,6 +1612,7 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
         <div class="pp-sub" onclick="selectPage(this,'Author Item')">✍️ Author Item</div>
         <div class="pp-group">Explorations</div>
         <div class="pp-sub" onclick="selectPage(this,'Items Config')">⚡ Items Config</div>
+        <div class="pp-sub" onclick="selectPage(this,'Services')">🧘 Services</div>
         <div class="pp-group">Input Components</div>
         <div class="pp-sub" onclick="selectPage(this,'Dropdown Component')">📋 Dropdown Component</div>
         <div class="pp-group pp-archive-toggle" onclick="toggleArchive()" id="archive-toggle">📦 Archive <span class="pp-archive-chevron">▸</span></div>
@@ -4372,6 +4416,375 @@ html.dark .code-highlight-line{background:#313244;border-left-color:#f9e2af}
       </div>
     </div>
 
+    <!-- SERVICES PAGE -->
+    <div class="items-page" id="services-page">
+      <div class="page-sel-bar" id="psb-services" onclick="selectPageEl(event,'page-services')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Page · Services</div>
+
+      <div class="c-section has-ctx" id="sec-svc-classes" onclick="selEl(event,'sec-svc-classes')" style="margin:16px">
+        <div class="ctx-pill" id="pill-sec-svc-classes"></div>
+        <div style="padding:24px 24px 8px">
+          <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-weight:700;font-size:18px;color:var(--t1);margin-bottom:4px">Yoga Classes</div>
+          <div style="font-size:12px;color:var(--t3);margin-bottom:12px">L1 &rarr; Classes &nbsp;&middot;&nbsp; L2 &rarr; Staff Members &nbsp;&middot;&nbsp; L3 &rarr; Date &amp; Time</div>
+        </div>
+
+        <!-- L1 Repeater: Classes -->
+        <div class="c-repeater bound" id="repeater-svc-classes" onclick="selEl(event,'repeater-svc-classes')" style="margin:0 24px 24px;border-radius:6px">
+          <div class="ctx-pill rep-pill" id="pill-repeater-svc-classes"></div>
+          <div class="c-el-overlay"></div>
+          <div class="rep-header" onclick="selElSettings(event,'repeater-svc-classes')">
+            <span class="rep-icon">↻</span>
+            <span class="rep-label">Repeater</span>
+            <span class="rep-count" id="rep-count-repeater-svc-classes">3 classes</span>
+            <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-classes','Items')" title="Connect to list">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;padding:8px">
+
+            <!-- L1 Item 1: Vinyasa Flow -->
+            <div class="rep-item" id="rep-svc-cl-1" onclick="selEl(event,'rep-svc-cl-1')" style="border-radius:10px;border:1px solid var(--b1);overflow:hidden;position:relative;cursor:pointer">
+              <div class="c-el-overlay" style="border-radius:10px"></div>
+              <div style="display:flex;gap:14px;padding:14px;align-items:flex-start">
+                <div class="c-el bound" id="el-svc-cl-img-1" onclick="selEl(event,'el-svc-cl-img-1')" style="cursor:pointer;width:72px;height:72px;border-radius:8px;background:linear-gradient(135deg,#c4b5fd,#818cf8);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px">
+                  <div class="c-el-overlay" style="border-radius:8px"></div>
+                  <div class="el-tags"><div class="el-type-tag">Image</div><div class="el-bind-tag">🧘 Yoga Classes · items.image</div></div>
+                  🧘
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+                    <div class="c-el bound" id="el-svc-cl-name-1" onclick="selEl(event,'el-svc-cl-name-1')" style="cursor:pointer">
+                      <div class="c-el-overlay" style="border-radius:4px"></div>
+                      <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.name</div></div>
+                      <div style="font-weight:700;font-size:15px;color:var(--t1)">Vinyasa Flow</div>
+                    </div>
+                    <div class="c-el bound" id="el-svc-cl-type-1" onclick="selEl(event,'el-svc-cl-type-1')" style="cursor:pointer">
+                      <div class="c-el-overlay" style="border-radius:4px"></div>
+                      <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.type</div></div>
+                      <div style="padding:2px 8px;background:#7c3aed18;color:#7c3aed;border-radius:10px;font-size:10px;font-weight:600">Flow</div>
+                    </div>
+                  </div>
+                  <div class="c-el bound" id="el-svc-cl-desc-1" onclick="selEl(event,'el-svc-cl-desc-1')" style="cursor:pointer">
+                    <div class="c-el-overlay" style="border-radius:4px"></div>
+                    <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.description</div></div>
+                    <div style="font-size:12px;color:var(--t3);line-height:1.5">Dynamic, flowing sequences synchronized with breath</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--b1)">
+                <div style="padding:10px 12px;border-right:1px solid var(--b1)">
+                  <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">👤 Staff &middot; L2</div>
+                  <div class="c-repeater bound" id="repeater-svc-staff-1" onclick="selEl(event,'repeater-svc-staff-1')" style="border-radius:6px">
+                    <div class="ctx-pill rep-pill" id="pill-repeater-svc-staff-1"></div>
+                    <div class="c-el-overlay"></div>
+                    <div class="rep-header" onclick="selElSettings(event,'repeater-svc-staff-1')">
+                      <span class="rep-icon">↻</span><span class="rep-label">Repeater</span>
+                      <span class="rep-count" id="rep-count-repeater-svc-staff-1">2 staff</span>
+                      <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-staff-1','Items')" title="Connect to list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:4px 6px">
+                      <div class="rep-item" id="rep-svc-st-1-1" onclick="selEl(event,'rep-svc-st-1-1')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1)">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-st-name-1-1" onclick="selEl(event,'el-svc-st-name-1-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.name</div></div>
+                          <div style="font-size:12px;font-weight:600;color:var(--t1)">Maya Lin</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-st-role-1-1" onclick="selEl(event,'el-svc-st-role-1-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.role</div></div>
+                          <div style="font-size:10px;color:var(--t3)">Lead Instructor</div>
+                        </div>
+                      </div>
+                      <div class="rep-item" id="rep-svc-st-1-2" onclick="selEl(event,'rep-svc-st-1-2')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1)">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-st-name-1-2" onclick="selEl(event,'el-svc-st-name-1-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.name</div></div>
+                          <div style="font-size:12px;font-weight:600;color:var(--t1)">Jordan Reed</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-st-role-1-2" onclick="selEl(event,'el-svc-st-role-1-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.role</div></div>
+                          <div style="font-size:10px;color:var(--t3)">Senior Instructor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding:10px 12px">
+                  <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">📅 Schedule &middot; L3</div>
+                  <div class="c-repeater bound" id="repeater-svc-sched-1" onclick="selEl(event,'repeater-svc-sched-1')" style="border-radius:6px">
+                    <div class="ctx-pill rep-pill" id="pill-repeater-svc-sched-1"></div>
+                    <div class="c-el-overlay"></div>
+                    <div class="rep-header" onclick="selElSettings(event,'repeater-svc-sched-1')">
+                      <span class="rep-icon">↻</span><span class="rep-label">Repeater</span>
+                      <span class="rep-count" id="rep-count-repeater-svc-sched-1">2 slots</span>
+                      <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-sched-1','Items')" title="Connect to list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:4px 6px">
+                      <div class="rep-item" id="rep-svc-sc-1-1" onclick="selEl(event,'rep-svc-sc-1-1')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-sc-day-1-1" onclick="selEl(event,'el-svc-sc-day-1-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.day</div></div>
+                          <div style="padding:1px 6px;background:var(--acc-d);color:var(--acc);border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap">Mon</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-sc-time-1-1" onclick="selEl(event,'el-svc-sc-time-1-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.time</div></div>
+                          <div style="font-size:12px;color:var(--t2)">7:00 AM</div>
+                        </div>
+                      </div>
+                      <div class="rep-item" id="rep-svc-sc-1-2" onclick="selEl(event,'rep-svc-sc-1-2')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-sc-day-1-2" onclick="selEl(event,'el-svc-sc-day-1-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.day</div></div>
+                          <div style="padding:1px 6px;background:var(--acc-d);color:var(--acc);border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap">Wed</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-sc-time-1-2" onclick="selEl(event,'el-svc-sc-time-1-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.time</div></div>
+                          <div style="font-size:12px;color:var(--t2)">6:30 PM</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- L1 Item 2: Hatha Yoga -->
+            <div class="rep-item" id="rep-svc-cl-2" onclick="selEl(event,'rep-svc-cl-2')" style="border-radius:10px;border:1px solid var(--b1);overflow:hidden;position:relative;cursor:pointer">
+              <div class="c-el-overlay" style="border-radius:10px"></div>
+              <div style="display:flex;gap:14px;padding:14px;align-items:flex-start">
+                <div class="c-el bound" id="el-svc-cl-img-2" onclick="selEl(event,'el-svc-cl-img-2')" style="cursor:pointer;width:72px;height:72px;border-radius:8px;background:linear-gradient(135deg,#6ee7b7,#10b981);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px">
+                  <div class="c-el-overlay" style="border-radius:8px"></div>
+                  <div class="el-tags"><div class="el-type-tag">Image</div><div class="el-bind-tag">🧘 Yoga Classes · items.image</div></div>
+                  🙏
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+                    <div class="c-el bound" id="el-svc-cl-name-2" onclick="selEl(event,'el-svc-cl-name-2')" style="cursor:pointer">
+                      <div class="c-el-overlay" style="border-radius:4px"></div>
+                      <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.name</div></div>
+                      <div style="font-weight:700;font-size:15px;color:var(--t1)">Hatha Yoga</div>
+                    </div>
+                    <div class="c-el bound" id="el-svc-cl-type-2" onclick="selEl(event,'el-svc-cl-type-2')" style="cursor:pointer">
+                      <div class="c-el-overlay" style="border-radius:4px"></div>
+                      <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.type</div></div>
+                      <div style="padding:2px 8px;background:#10b98118;color:#059669;border-radius:10px;font-size:10px;font-weight:600">Foundation</div>
+                    </div>
+                  </div>
+                  <div class="c-el bound" id="el-svc-cl-desc-2" onclick="selEl(event,'el-svc-cl-desc-2')" style="cursor:pointer">
+                    <div class="c-el-overlay" style="border-radius:4px"></div>
+                    <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.description</div></div>
+                    <div style="font-size:12px;color:var(--t3);line-height:1.5">Classic postures with alignment and breath focus</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--b1)">
+                <div style="padding:10px 12px;border-right:1px solid var(--b1)">
+                  <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">👤 Staff &middot; L2</div>
+                  <div class="c-repeater bound" id="repeater-svc-staff-2" onclick="selEl(event,'repeater-svc-staff-2')" style="border-radius:6px">
+                    <div class="ctx-pill rep-pill" id="pill-repeater-svc-staff-2"></div>
+                    <div class="c-el-overlay"></div>
+                    <div class="rep-header" onclick="selElSettings(event,'repeater-svc-staff-2')">
+                      <span class="rep-icon">↻</span><span class="rep-label">Repeater</span>
+                      <span class="rep-count" id="rep-count-repeater-svc-staff-2">2 staff</span>
+                      <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-staff-2','Items')" title="Connect to list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:4px 6px">
+                      <div class="rep-item" id="rep-svc-st-2-1" onclick="selEl(event,'rep-svc-st-2-1')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1)">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-st-name-2-1" onclick="selEl(event,'el-svc-st-name-2-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.name</div></div>
+                          <div style="font-size:12px;font-weight:600;color:var(--t1)">Sam Patel</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-st-role-2-1" onclick="selEl(event,'el-svc-st-role-2-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.role</div></div>
+                          <div style="font-size:10px;color:var(--t3)">Head Teacher</div>
+                        </div>
+                      </div>
+                      <div class="rep-item" id="rep-svc-st-2-2" onclick="selEl(event,'rep-svc-st-2-2')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1)">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-st-name-2-2" onclick="selEl(event,'el-svc-st-name-2-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.name</div></div>
+                          <div style="font-size:12px;font-weight:600;color:var(--t1)">Alex Torres</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-st-role-2-2" onclick="selEl(event,'el-svc-st-role-2-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.role</div></div>
+                          <div style="font-size:10px;color:var(--t3)">Instructor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding:10px 12px">
+                  <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">📅 Schedule &middot; L3</div>
+                  <div class="c-repeater bound" id="repeater-svc-sched-2" onclick="selEl(event,'repeater-svc-sched-2')" style="border-radius:6px">
+                    <div class="ctx-pill rep-pill" id="pill-repeater-svc-sched-2"></div>
+                    <div class="c-el-overlay"></div>
+                    <div class="rep-header" onclick="selElSettings(event,'repeater-svc-sched-2')">
+                      <span class="rep-icon">↻</span><span class="rep-label">Repeater</span>
+                      <span class="rep-count" id="rep-count-repeater-svc-sched-2">2 slots</span>
+                      <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-sched-2','Items')" title="Connect to list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:4px 6px">
+                      <div class="rep-item" id="rep-svc-sc-2-1" onclick="selEl(event,'rep-svc-sc-2-1')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-sc-day-2-1" onclick="selEl(event,'el-svc-sc-day-2-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.day</div></div>
+                          <div style="padding:1px 6px;background:var(--acc-d);color:var(--acc);border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap">Mon</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-sc-time-2-1" onclick="selEl(event,'el-svc-sc-time-2-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.time</div></div>
+                          <div style="font-size:12px;color:var(--t2)">9:00 AM</div>
+                        </div>
+                      </div>
+                      <div class="rep-item" id="rep-svc-sc-2-2" onclick="selEl(event,'rep-svc-sc-2-2')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-sc-day-2-2" onclick="selEl(event,'el-svc-sc-day-2-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.day</div></div>
+                          <div style="padding:1px 6px;background:var(--acc-d);color:var(--acc);border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap">Sat</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-sc-time-2-2" onclick="selEl(event,'el-svc-sc-time-2-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.time</div></div>
+                          <div style="font-size:12px;color:var(--t2)">10:00 AM</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- L1 Item 3: Yin & Restore -->
+            <div class="rep-item" id="rep-svc-cl-3" onclick="selEl(event,'rep-svc-cl-3')" style="border-radius:10px;border:1px solid var(--b1);overflow:hidden;position:relative;cursor:pointer">
+              <div class="c-el-overlay" style="border-radius:10px"></div>
+              <div style="display:flex;gap:14px;padding:14px;align-items:flex-start">
+                <div class="c-el bound" id="el-svc-cl-img-3" onclick="selEl(event,'el-svc-cl-img-3')" style="cursor:pointer;width:72px;height:72px;border-radius:8px;background:linear-gradient(135deg,#fcd34d,#fb923c);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px">
+                  <div class="c-el-overlay" style="border-radius:8px"></div>
+                  <div class="el-tags"><div class="el-type-tag">Image</div><div class="el-bind-tag">🧘 Yoga Classes · items.image</div></div>
+                  🌙
+                </div>
+                <div style="flex:1;min-width:0">
+                  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
+                    <div class="c-el bound" id="el-svc-cl-name-3" onclick="selEl(event,'el-svc-cl-name-3')" style="cursor:pointer">
+                      <div class="c-el-overlay" style="border-radius:4px"></div>
+                      <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.name</div></div>
+                      <div style="font-weight:700;font-size:15px;color:var(--t1)">Yin &amp; Restore</div>
+                    </div>
+                    <div class="c-el bound" id="el-svc-cl-type-3" onclick="selEl(event,'el-svc-cl-type-3')" style="cursor:pointer">
+                      <div class="c-el-overlay" style="border-radius:4px"></div>
+                      <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.type</div></div>
+                      <div style="padding:2px 8px;background:#fb923c18;color:#ea580c;border-radius:10px;font-size:10px;font-weight:600">Restorative</div>
+                    </div>
+                  </div>
+                  <div class="c-el bound" id="el-svc-cl-desc-3" onclick="selEl(event,'el-svc-cl-desc-3')" style="cursor:pointer">
+                    <div class="c-el-overlay" style="border-radius:4px"></div>
+                    <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · items.description</div></div>
+                    <div style="font-size:12px;color:var(--t3);line-height:1.5">Deep stretches and restorative poses for relaxation</div>
+                  </div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--b1)">
+                <div style="padding:10px 12px;border-right:1px solid var(--b1)">
+                  <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">👤 Staff &middot; L2</div>
+                  <div class="c-repeater bound" id="repeater-svc-staff-3" onclick="selEl(event,'repeater-svc-staff-3')" style="border-radius:6px">
+                    <div class="ctx-pill rep-pill" id="pill-repeater-svc-staff-3"></div>
+                    <div class="c-el-overlay"></div>
+                    <div class="rep-header" onclick="selElSettings(event,'repeater-svc-staff-3')">
+                      <span class="rep-icon">↻</span><span class="rep-label">Repeater</span>
+                      <span class="rep-count" id="rep-count-repeater-svc-staff-3">2 staff</span>
+                      <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-staff-3','Items')" title="Connect to list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:4px 6px">
+                      <div class="rep-item" id="rep-svc-st-3-1" onclick="selEl(event,'rep-svc-st-3-1')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1)">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-st-name-3-1" onclick="selEl(event,'el-svc-st-name-3-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.name</div></div>
+                          <div style="font-size:12px;font-weight:600;color:var(--t1)">Robin Wu</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-st-role-3-1" onclick="selEl(event,'el-svc-st-role-3-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.role</div></div>
+                          <div style="font-size:10px;color:var(--t3)">Senior Teacher</div>
+                        </div>
+                      </div>
+                      <div class="rep-item" id="rep-svc-st-3-2" onclick="selEl(event,'rep-svc-st-3-2')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1)">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-st-name-3-2" onclick="selEl(event,'el-svc-st-name-3-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.name</div></div>
+                          <div style="font-size:12px;font-weight:600;color:var(--t1)">Casey Morgan</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-st-role-3-2" onclick="selEl(event,'el-svc-st-role-3-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · instructors.role</div></div>
+                          <div style="font-size:10px;color:var(--t3)">Instructor</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding:10px 12px">
+                  <div style="font-size:9px;font-weight:700;color:var(--t3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">📅 Schedule &middot; L3</div>
+                  <div class="c-repeater bound" id="repeater-svc-sched-3" onclick="selEl(event,'repeater-svc-sched-3')" style="border-radius:6px">
+                    <div class="ctx-pill rep-pill" id="pill-repeater-svc-sched-3"></div>
+                    <div class="c-el-overlay"></div>
+                    <div class="rep-header" onclick="selElSettings(event,'repeater-svc-sched-3')">
+                      <span class="rep-icon">↻</span><span class="rep-label">Repeater</span>
+                      <span class="rep-count" id="rep-count-repeater-svc-sched-3">2 slots</span>
+                      <div class="rep-bind-btn" onclick="openDd(event,'repeater-svc-sched-3','Items')" title="Connect to list"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" width="12" height="12"><circle cx="4.5" cy="3.5" r="2"/><circle cx="11.5" cy="12.5" r="2"/><path d="M4.5 5.5C4.5 9 11.5 7 11.5 10.5"/></svg></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:4px;padding:4px 6px">
+                      <div class="rep-item" id="rep-svc-sc-3-1" onclick="selEl(event,'rep-svc-sc-3-1')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-sc-day-3-1" onclick="selEl(event,'el-svc-sc-day-3-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.day</div></div>
+                          <div style="padding:1px 6px;background:var(--acc-d);color:var(--acc);border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap">Tue</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-sc-time-3-1" onclick="selEl(event,'el-svc-sc-time-3-1')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.time</div></div>
+                          <div style="font-size:12px;color:var(--t2)">7:30 PM</div>
+                        </div>
+                      </div>
+                      <div class="rep-item" id="rep-svc-sc-3-2" onclick="selEl(event,'rep-svc-sc-3-2')" style="cursor:pointer;position:relative;padding:6px 8px;border-radius:6px;border:1px solid var(--b1);display:flex;align-items:center;gap:6px">
+                        <div class="c-el-overlay" style="border-radius:6px"></div>
+                        <div class="c-el bound" id="el-svc-sc-day-3-2" onclick="selEl(event,'el-svc-sc-day-3-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.day</div></div>
+                          <div style="padding:1px 6px;background:var(--acc-d);color:var(--acc);border-radius:8px;font-size:10px;font-weight:600;white-space:nowrap">Sun</div>
+                        </div>
+                        <div class="c-el bound" id="el-svc-sc-time-3-2" onclick="selEl(event,'el-svc-sc-time-3-2')" style="cursor:pointer">
+                          <div class="c-el-overlay" style="border-radius:4px"></div>
+                          <div class="el-tags"><div class="el-type-tag">Text</div><div class="el-bind-tag">🧘 Yoga Classes · schedule.time</div></div>
+                          <div style="font-size:12px;color:var(--t2)">9:00 AM</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- DEMO PAGE -->
     <div class="canvas-inner hidden-page" id="demo-page">
       <div class="page-sel-bar" id="psb-demo" onclick="selectPageEl(event,'page-demo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg> Page · Demo</div>
@@ -5409,6 +5822,31 @@ const CTX_DEFS = [
     contextActions: CMS_CONTEXT_ACTIONS,
     metadata: [],
     config:[]},
+  { id:'cms-yoga-classes', name:'Yoga Classes', icon:'🧘', type:'list', source:'CMS', group:'CMS', itemCount:3, cmsPermissions:'show',
+    fields:[
+      ...CMS_LIST_STATES,
+      {name:'items', type:'array', sample:'[{name, type, …}]', itemFields:[
+        {name:'name',        type:'string', sample:'"Vinyasa Flow"'},
+        {name:'type',        type:'string', sample:'"Flow"'},
+        {name:'description', type:'string', sample:'"Dynamic, flowing sequences..."'},
+        {name:'image',       type:'image',  sample:'[img url]'},
+        {name:'instructors', type:'array',  sample:'[{name, role}]', itemFields:[
+          {name:'name', type:'string', sample:'"Maya Lin"'},
+          {name:'role', type:'string', sample:'"Lead Instructor"'},
+        ]},
+        {name:'schedule', type:'array', sample:'[{day, time}]', itemFields:[
+          {name:'day',  type:'string', sample:'"Monday"'},
+          {name:'time', type:'string', sample:'"7:00 AM"'},
+        ]},
+        ...CMS_ITEM_SYSTEM_FIELDS,
+      ]},
+      ...CMS_COLLECTION_FIELDS,
+    ],
+    itemActions: CMS_ITEM_ACTIONS,
+    contextActions: CMS_CONTEXT_ACTIONS,
+    metadata: [],
+    config:[]},
+
   { id:'stores-current-item', name:'Current Item', icon:'', type:'object', source:'Wix Stores', group:'Apps',
     description:'The product currently being viewed on a dynamic product page. Provides all product fields — name, price, images, description, inventory status, and variants.',
     isDynamicPageCtx: true,
@@ -6676,6 +7114,68 @@ const EL_DEFS = {
   'el-ic-author-2': {name:'Author', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-author', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
   'el-ic-author-3': {name:'Author', type:'Text', section:'sec-ic-articles', repTemplate:'el-ic-author', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
 
+  // Services page (Yoga Studio)
+  'page-services': {name:'Page · Services', type:'Page', isPage:true, page:'services', props:[{k:'onClick',t:'function'},{k:'onDblClick',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'sec-svc-classes': {name:'Section · Yoga Classes', type:'Section', isContainer:true, page:'services', parentPage:'page-services', props:[]},
+  'repeater-svc-classes': {name:'Repeater · Classes', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'rep-svc-cl-1': {name:'Class Item 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-cl-2': {name:'Class Item 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-cl-3': {name:'Class Item 3', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'el-svc-cl-img-1':  {name:'Class Image', type:'Image', section:'sec-svc-classes', repTemplate:'el-svc-cl-img', props:[{k:'Source',t:'image'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-img-2':  {name:'Class Image', type:'Image', section:'sec-svc-classes', repTemplate:'el-svc-cl-img', props:[{k:'Source',t:'image'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-img-3':  {name:'Class Image', type:'Image', section:'sec-svc-classes', repTemplate:'el-svc-cl-img', props:[{k:'Source',t:'image'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-name-1': {name:'Class Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-name-2': {name:'Class Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-name-3': {name:'Class Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-type-1': {name:'Class Type', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-type', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-type-2': {name:'Class Type', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-type', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-type-3': {name:'Class Type', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-type', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-desc-1': {name:'Class Description', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-desc', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-desc-2': {name:'Class Description', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-desc', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-cl-desc-3': {name:'Class Description', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-cl-desc', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'repeater-svc-staff-1': {name:'Staff Repeater', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', repTemplate:'repeater-svc-staff', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'repeater-svc-staff-2': {name:'Staff Repeater', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', repTemplate:'repeater-svc-staff', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'repeater-svc-staff-3': {name:'Staff Repeater', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', repTemplate:'repeater-svc-staff', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'rep-svc-st-1-1': {name:'Staff 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-st-1-2': {name:'Staff 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-st-2-1': {name:'Staff 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-st-2-2': {name:'Staff 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-st-3-1': {name:'Staff 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-st-3-2': {name:'Staff 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'el-svc-st-name-1-1': {name:'Instructor Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-name-1-2': {name:'Instructor Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-name-2-1': {name:'Instructor Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-name-2-2': {name:'Instructor Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-name-3-1': {name:'Instructor Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-name-3-2': {name:'Instructor Name', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-name', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-role-1-1': {name:'Instructor Role', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-role', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-role-1-2': {name:'Instructor Role', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-role', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-role-2-1': {name:'Instructor Role', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-role', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-role-2-2': {name:'Instructor Role', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-role', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-role-3-1': {name:'Instructor Role', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-role', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-st-role-3-2': {name:'Instructor Role', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-st-role', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'repeater-svc-sched-1': {name:'Schedule Repeater', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', repTemplate:'repeater-svc-sched', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'repeater-svc-sched-2': {name:'Schedule Repeater', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', repTemplate:'repeater-svc-sched', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'repeater-svc-sched-3': {name:'Schedule Repeater', type:'Repeater', section:'sec-svc-classes', isRepeater:true, contextModel:'on-repeater', repTemplate:'repeater-svc-sched', props:[{k:'Items',t:'list'},{k:'Visible',t:'boolean'},{k:'onItemReady',t:'function'},{k:'onItemRemoved',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
+  'rep-svc-sc-1-1': {name:'Slot 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-sc-1-2': {name:'Slot 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-sc-2-1': {name:'Slot 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-sc-2-2': {name:'Slot 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-sc-3-1': {name:'Slot 1', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'rep-svc-sc-3-2': {name:'Slot 2', type:'RepItem', section:'sec-svc-classes', isRepItem:true, props:[]},
+  'el-svc-sc-day-1-1':  {name:'Day', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-day', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-day-1-2':  {name:'Day', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-day', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-day-2-1':  {name:'Day', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-day', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-day-2-2':  {name:'Day', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-day', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-day-3-1':  {name:'Day', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-day', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-day-3-2':  {name:'Day', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-day', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-time-1-1': {name:'Time', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-time', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-time-1-2': {name:'Time', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-time', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-time-2-1': {name:'Time', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-time', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-time-2-2': {name:'Time', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-time', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-time-3-1': {name:'Time', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-time', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+  'el-svc-sc-time-3-2': {name:'Time', type:'Text', section:'sec-svc-classes', repTemplate:'el-svc-sc-time', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
+
   'page-dropdown': {name:'Page · Dropdown Component', type:'Page', isPage:true, page:'dropdown', props:[{k:'onClick',t:'function'},{k:'onDblClick',t:'function'},{k:'onMouseIn',t:'function'},{k:'onMouseOut',t:'function'},{k:'onViewportEnter',t:'function'},{k:'onViewportLeave',t:'function'}]},
   'sec-dropdown':      {name:'Section · Dropdown', type:'Section', isContainer:true, page:'dropdown', parentPage:'page-dropdown', props:[]},
   'el-dd-title':       {name:'Title', type:'Text', section:'sec-dropdown', props:[{k:'Value',t:'string'},{k:'Visible',t:'boolean'}]},
@@ -6753,6 +7253,16 @@ const S = {
     'sec-optb-blank':   [],
     'sec-optb-uou':     ['cms-articles'],
     'sec-optb-empty':   [],
+    // Services page
+    'page-services':          [],
+    'sec-svc-classes':        [],
+    'repeater-svc-classes':   ['cms-yoga-classes'],
+    'repeater-svc-staff-1':   ['cms-yoga-classes'],
+    'repeater-svc-staff-2':   ['cms-yoga-classes'],
+    'repeater-svc-staff-3':   ['cms-yoga-classes'],
+    'repeater-svc-sched-1':   ['cms-yoga-classes'],
+    'repeater-svc-sched-2':   ['cms-yoga-classes'],
+    'repeater-svc-sched-3':   ['cms-yoga-classes'],
     // Items Config page
     'page-items-config': [],
     'sec-ic-articles':   [],
@@ -6893,6 +7403,50 @@ const S = {
     'el-rp-price-1|Value':  {ctxId:'stores', fieldName:'price', sample:'"$49.99"'},
     'el-rp-price-2|Value':  {ctxId:'stores', fieldName:'price', sample:'"$49.99"'},
     'el-rp-price-3|Value':  {ctxId:'stores', fieldName:'price', sample:'"$49.99"'},
+    // Services page
+    'repeater-svc-classes|Items':   {ctxId:'cms-yoga-classes', fieldName:'items',               sample:'[{name, type, …}]'},
+    'el-svc-cl-name-1|Value':       {ctxId:'cms-yoga-classes', fieldName:'name',                sample:'"Vinyasa Flow"'},
+    'el-svc-cl-name-2|Value':       {ctxId:'cms-yoga-classes', fieldName:'name',                sample:'"Hatha Yoga"'},
+    'el-svc-cl-name-3|Value':       {ctxId:'cms-yoga-classes', fieldName:'name',                sample:'"Yin & Restore"'},
+    'el-svc-cl-type-1|Value':       {ctxId:'cms-yoga-classes', fieldName:'type',                sample:'"Flow"'},
+    'el-svc-cl-type-2|Value':       {ctxId:'cms-yoga-classes', fieldName:'type',                sample:'"Foundation"'},
+    'el-svc-cl-type-3|Value':       {ctxId:'cms-yoga-classes', fieldName:'type',                sample:'"Restorative"'},
+    'el-svc-cl-desc-1|Value':       {ctxId:'cms-yoga-classes', fieldName:'description',         sample:'"Dynamic, flowing sequences..."'},
+    'el-svc-cl-desc-2|Value':       {ctxId:'cms-yoga-classes', fieldName:'description',         sample:'"Classic postures..."'},
+    'el-svc-cl-desc-3|Value':       {ctxId:'cms-yoga-classes', fieldName:'description',         sample:'"Deep stretches..."'},
+    'el-svc-cl-img-1|Source':       {ctxId:'cms-yoga-classes', fieldName:'image',               sample:'[img url]'},
+    'el-svc-cl-img-2|Source':       {ctxId:'cms-yoga-classes', fieldName:'image',               sample:'[img url]'},
+    'el-svc-cl-img-3|Source':       {ctxId:'cms-yoga-classes', fieldName:'image',               sample:'[img url]'},
+    'repeater-svc-staff-1|Items':   {ctxId:'cms-yoga-classes', fieldName:'instructors',         sample:'[{name, role}]'},
+    'repeater-svc-staff-2|Items':   {ctxId:'cms-yoga-classes', fieldName:'instructors',         sample:'[{name, role}]'},
+    'repeater-svc-staff-3|Items':   {ctxId:'cms-yoga-classes', fieldName:'instructors',         sample:'[{name, role}]'},
+    'el-svc-st-name-1-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.name',    sample:'"Maya Lin"'},
+    'el-svc-st-name-1-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.name',    sample:'"Jordan Reed"'},
+    'el-svc-st-name-2-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.name',    sample:'"Sam Patel"'},
+    'el-svc-st-name-2-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.name',    sample:'"Alex Torres"'},
+    'el-svc-st-name-3-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.name',    sample:'"Robin Wu"'},
+    'el-svc-st-name-3-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.name',    sample:'"Casey Morgan"'},
+    'el-svc-st-role-1-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.role',    sample:'"Lead Instructor"'},
+    'el-svc-st-role-1-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.role',    sample:'"Senior Instructor"'},
+    'el-svc-st-role-2-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.role',    sample:'"Head Teacher"'},
+    'el-svc-st-role-2-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.role',    sample:'"Instructor"'},
+    'el-svc-st-role-3-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.role',    sample:'"Senior Teacher"'},
+    'el-svc-st-role-3-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'instructors.role',    sample:'"Instructor"'},
+    'repeater-svc-sched-1|Items':   {ctxId:'cms-yoga-classes', fieldName:'schedule',            sample:'[{day, time}]'},
+    'repeater-svc-sched-2|Items':   {ctxId:'cms-yoga-classes', fieldName:'schedule',            sample:'[{day, time}]'},
+    'repeater-svc-sched-3|Items':   {ctxId:'cms-yoga-classes', fieldName:'schedule',            sample:'[{day, time}]'},
+    'el-svc-sc-day-1-1|Value':      {ctxId:'cms-yoga-classes', fieldName:'schedule.day',        sample:'"Monday"'},
+    'el-svc-sc-day-1-2|Value':      {ctxId:'cms-yoga-classes', fieldName:'schedule.day',        sample:'"Wednesday"'},
+    'el-svc-sc-day-2-1|Value':      {ctxId:'cms-yoga-classes', fieldName:'schedule.day',        sample:'"Monday"'},
+    'el-svc-sc-day-2-2|Value':      {ctxId:'cms-yoga-classes', fieldName:'schedule.day',        sample:'"Saturday"'},
+    'el-svc-sc-day-3-1|Value':      {ctxId:'cms-yoga-classes', fieldName:'schedule.day',        sample:'"Tuesday"'},
+    'el-svc-sc-day-3-2|Value':      {ctxId:'cms-yoga-classes', fieldName:'schedule.day',        sample:'"Sunday"'},
+    'el-svc-sc-time-1-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'schedule.time',       sample:'"7:00 AM"'},
+    'el-svc-sc-time-1-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'schedule.time',       sample:'"6:30 PM"'},
+    'el-svc-sc-time-2-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'schedule.time',       sample:'"9:00 AM"'},
+    'el-svc-sc-time-2-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'schedule.time',       sample:'"10:00 AM"'},
+    'el-svc-sc-time-3-1|Value':     {ctxId:'cms-yoga-classes', fieldName:'schedule.time',       sample:'"7:30 PM"'},
+    'el-svc-sc-time-3-2|Value':     {ctxId:'cms-yoga-classes', fieldName:'schedule.time',       sample:'"9:00 AM"'},
     // Items Config page
     'repeater-ic-articles|Items': {ctxId:'cms-articles', fieldName:'items', sample:'[{title, author, …}]'},
     'el-ic-title-1|Value':  {ctxId:'cms-articles', fieldName:'title',  sample:'"The Future of AI"'},
@@ -7234,7 +7788,7 @@ const ACTION_BAR_CONFIG = {
   Image:    [{label:'Change Image', action:'actionChangeImage'}, {label:'Design Image', action:'actionDesign'}],
   Icon:     [{label:'Change Icon'}, {label:'Design Icon', action:'actionDesign'}],
   Section:  [{label:'Design Section', action:'actionDesign'}],
-  Repeater: [{label:'Manage Repeater'}, {label:'Design Repeater', action:'actionDesign'}],
+  Repeater: null,
   RepItem:  [{label:'Design Item', action:'actionDesign'}],
   Page:     [{label:'Design Page', action:'actionDesign'}],
 };
@@ -7250,9 +7804,58 @@ function updateInspectorToggle() {
 
 function renderActionBar() {
   const bar = document.getElementById('action-bar');
+
+  // Items tab override: show level-specific CTAs when ctx settings Items tab is active
+  if (S.ctxSettingsView && S.ctxSettingsTab === 'items') {
+    const level = S.itemsTabActiveLevel || 1;
+    const ctx = findSource(S.ctxSettingsView);
+    const isMultiArray = (ctx?.config || []).some(c => c.nested);
+    if (isMultiArray) {
+      let html = '';
+      if (level === 1) {
+        html += `<div class="action-bar-text" onclick="actionManageItems()">Manage items</div>`;
+        html += '<div class="action-bar-sep"></div>';
+      }
+      html += `<div class="action-bar-text" onclick="actionSortFilter()">Sort &amp; Filter</div>`;
+      html += '<div class="action-bar-sep"></div>';
+      html += `<div class="action-bar-text" onclick="actionDesign()">Design Repeater</div>`;
+      html += '<div class="action-bar-sep"></div>';
+      html += `<div class="action-bar-icon">${ACTION_BAR_ICONS.comment}</div>`;
+      html += `<div class="action-bar-icon">${ACTION_BAR_ICONS.help}</div>`;
+      html += `<div class="action-bar-icon" onclick="actionSettings()">${ACTION_BAR_ICONS.settings}</div>`;
+      html += `<div class="action-bar-icon">${ACTION_BAR_ICONS.more}</div>`;
+      bar.innerHTML = html;
+      bar.classList.add('open');
+      updateInspectorToggle();
+      return;
+    }
+  }
+
   if (!S.sel) { bar.classList.remove('open'); updateInspectorToggle(); return; }
   const def = EL_DEFS[S.sel];
   if (!def) { bar.classList.remove('open'); updateInspectorToggle(); return; }
+  // Dynamic Repeater bar: hide Manage items for nested (L2+) repeaters
+  if (def.type === 'Repeater') {
+    const isNested = (S.ctxMap[S.sel] || []).length === 0;
+    let html = '';
+    if (!isNested) {
+      html += `<div class="action-bar-text" onclick="actionManageItems()">Manage items</div>`;
+      html += '<div class="action-bar-sep"></div>';
+    }
+    html += `<div class="action-bar-text" onclick="actionSortFilter()">Sort &amp; Filter</div>`;
+    html += '<div class="action-bar-sep"></div>';
+    html += `<div class="action-bar-text" onclick="actionDesign()">Design Repeater</div>`;
+    html += '<div class="action-bar-sep"></div>';
+    html += `<div class="action-bar-icon">${ACTION_BAR_ICONS.comment}</div>`;
+    html += `<div class="action-bar-icon">${ACTION_BAR_ICONS.help}</div>`;
+    html += `<div class="action-bar-icon" onclick="actionSettings()">${ACTION_BAR_ICONS.settings}</div>`;
+    html += `<div class="action-bar-icon">${ACTION_BAR_ICONS.more}</div>`;
+    bar.innerHTML = html;
+    bar.classList.add('open');
+    updateInspectorToggle();
+    return;
+  }
+
   const actions = ACTION_BAR_CONFIG[def.type];
   if (!actions) { bar.classList.remove('open'); updateInspectorToggle(); return; }
 
@@ -7267,7 +7870,7 @@ function renderActionBar() {
       html += '<div class="action-bar-sep"></div>';
       html += '<div style="display:flex;align-items:center;padding:0 8px"><div class="ab-color" style="background:var(--t1)"></div></div>';
     } else {
-      const click = a.action ? ` onclick="${a.action}()"` : '';
+      const click = a.onclick ? ` onclick="${a.onclick}"` : a.action ? ` onclick="${a.action}()"` : '';
       html += `<div class="action-bar-text"${click}>${a.label}</div>`;
     }
   });
@@ -7448,6 +8051,67 @@ function actionDesign() {
   S.inspectorOpen = true;
   S.tab = 'design';
   renderRP();
+  renderActionBar();
+}
+
+function getNestedDepth() {
+  if (!S.sel) return null;
+  const binding = S.bindings[S.sel + '|Items'];
+  if (!binding) return null;
+  const fieldName = binding.fieldName;
+  const ctxId = getRelevantCtxId();
+  if (!ctxId) return null;
+  const ctx = findSource(ctxId);
+  if (!ctx) return null;
+  const cfg = (ctx.config || []).find(c => {
+    if (!c.nested || !c.nestedPath) return false;
+    const parts = c.nestedPath.split(' → ').map(s => s.trim());
+    return parts[parts.length - 1] === fieldName;
+  });
+  return cfg ? cfg.depth : null;
+}
+
+function getRelevantCtxId() {
+  if (S.ctxSettingsView) return S.ctxSettingsView;
+  const direct = (S.ctxMap[S.sel] || [])[0];
+  if (direct) return direct;
+  // Nested repeater: no direct ctx — find parent repeater in same section that has one
+  const def = EL_DEFS[S.sel];
+  if (def) {
+    const sec = def.section;
+    const parentRep = Object.keys(EL_DEFS).find(id =>
+      id !== S.sel && EL_DEFS[id].isRepeater && EL_DEFS[id].section === sec && (S.ctxMap[id] || []).length > 0
+    );
+    if (parentRep) return (S.ctxMap[parentRep] || [])[0];
+    return (S.ctxMap[sec] || [])[0] || null;
+  }
+  return null;
+}
+
+function actionManageItems() {
+  if (!S.sel) return;
+  const ctxId = getRelevantCtxId();
+  if (!ctxId) return;
+  S.inspectorOpen = true;
+  S.tab = 'settings';
+  S.ctxSettingsView = ctxId;
+  S.ctxSettingsTab = 'items';
+  S.itemsTabActiveLevel = 1;
+  renderBody();
+  renderActionBar();
+}
+
+function actionSortFilter() {
+  if (!S.sel) return;
+  const ctxId = getRelevantCtxId();
+  if (!ctxId) return;
+  const level = getNestedDepth() || S.itemsTabActiveLevel || 1;
+  S.inspectorOpen = true;
+  S.tab = 'settings';
+  S.ctxSettingsView = ctxId;
+  S.ctxSettingsTab = 'configuration';
+  S.cfgAccordion[ctxId] = { [level]: true };
+  renderBody();
   renderActionBar();
 }
 
@@ -7674,7 +8338,7 @@ function canvasClick(e) {
 }
 
 function getCurrentPageId() {
-  const map = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown','Items Config':'page-items-config'};
+  const map = {'Homepage':'page-home','Home Page':'page-demo262','Items (List)':'page-items','Product Item':'page-rel-detail','Repeater Usecases':'page-ruc','Repeater':'page-rep','Multi-State Box':'page-msb','Repeaters':'page-opta','Option B · On Parent':'page-optb','Demo':'page-demo','Team Members List':'page-ref-tm','Team Member Item':'page-ref-tmi','Role Item':'page-ref-ri','Book Item':'page-ref-bi','Author Item':'page-ref-ai','Dropdown Component':'page-dropdown','Items Config':'page-items-config','Services':'page-services'};
   return map[S.currentPage] || 'page-home';
 }
 
@@ -10987,6 +11651,7 @@ function renderCtxList() {
       const hasConfig = (c.config && c.config.length > 0) || c.type === 'list' || c.isDynamicPageCtx;
       const configCount = hasConfig && c.config ? c.config.length : 0;
       const primary = isPrimaryCtx(c.id, S.sel);
+      const isBroken = !!(c.broken || c.sourceMissing || c.isBroken);
       const isUnconfigured = isUnmodifiedInstance(c.id);
       const totalFields = c.fields.length;
       const usedFields = getFieldsInUseCount(c.id, S.sel, c.fields);
@@ -11024,38 +11689,45 @@ function renderCtxList() {
         <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
         Related to <strong class="ctx-filter-parent-ref" onmouseenter="highlightParentCtx('${safeLinkedId}')" onmouseleave="clearParentCtxHighlight()">${parentCtxName}</strong>
       </div>` : '';
+      const sourceActionLabel = c.source === 'CMS'
+        ? 'Open Collection'
+        : c.group === 'Apps' || c.source === 'Wix Stores' || c.source === 'Wix Bookings'
+          ? 'Open in Dashboard'
+          : 'Open Source';
+      const bindIndicator = `<span class="ctx-card-bind-indicator ${hasUsed ? 'active' : 'idle'}" title="${hasUsed ? 'Fields in use' : 'No fields in use'}" aria-label="${hasUsed ? 'Fields in use' : 'No fields in use'}"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="12.5" r="2.25" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="8" r="2.25" stroke="currentColor" stroke-width="1.8"/><circle cx="12.5" cy="3.5" r="2.25" stroke="currentColor" stroke-width="1.8"/><path d="M5.1 10.9L6.4 9.6M9.6 6.4L10.9 5.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>`;
       return `
       <div class="ctx-group">
-        <div class="ctx-card${primary ? ' primary' : ''}${isUnconfigured ? ' unconfigured' : ''}">
-          <div class="ctx-card-name">${c.icon ? c.icon + ' ' : ''}${getCtxDisplayName(c.id, S.sel)} <span class="type-badge ${c.type==='list'?'tb-list':'tb-obj'}">${c.type}</span>${primary && isPage ? '<span class="type-badge" style="background:var(--b2);color:var(--t2)">Page</span>' : ''}${isUnconfigured ? '<span class="type-badge" style="background:var(--yel);color:#000;font-weight:600">New</span>' : ''}</div>
-          <div class="ctx-card-src">from ${c.source}</div>
-          ${primary && isPage ? '<div class="ctx-card-lock"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Comes with this page</div>' : ''}
-          ${isUnconfigured ? '<div class="ctx-card-lock" style="color:var(--yel);font-style:normal"><svg viewBox="0 0 24 24" style="stroke:var(--yel)"><path d="M12 9v4"/><circle cx="12" cy="16" r="0.5"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg> Configure settings to use as binding source</div>' : ''}
-          ${filterToggleHtml}
-          <div class="ctx-fields-toggle" onclick="toggleCtxFields(event,'${c.id}')" ${hasUsed ? `onmouseenter="highlightBoundEls('${c.id}','${S.sel}')" onmouseleave="clearHighlightEls()"` : ''}>
-            <span class="ctx-expand-chevron">›</span>
-            ${hasUsed
-              ? `<span class="ctx-fields-count active" style="color:#e84393;font-weight:600">In use</span>`
-              : `<span class="ctx-fields-count idle" style="color:var(--t3)">Not connected</span>`}
+        <div class="ctx-card${primary ? ' primary' : ''}${isUnconfigured ? ' unconfigured' : ''}${isBroken ? ' broken' : ''}">
+          <div class="ctx-card-head">
+            <div class="ctx-card-meta">
+              <div class="ctx-card-name">${c.icon ? c.icon + ' ' : ''}${getCtxDisplayName(c.id, S.sel)} ${bindIndicator}${primary && isPage ? '<span class="type-badge" style="background:var(--b2);color:var(--t2)">Page</span>' : ''}${isUnconfigured ? '<span class="type-badge" style="background:var(--yel);color:#000;font-weight:600">New</span>' : ''}${isBroken ? '<span class="type-badge" style="background:color-mix(in srgb, var(--red) 15%, transparent);color:var(--red);font-weight:600">Broken</span>' : ''}</div>
+              <div class="ctx-card-src">from ${c.source}</div>
+            </div>
+            <div class="ctx-card-menu" id="cmenu-${c.id}">
+              ${c.source === 'Custom Code' ? `<span class="ctx-code-btn" onclick="openCodeEditor(event,'${c.id}')" title="Open source code">&lt;/&gt;</span>` : ''}
+              ${hasConfig ? `<span class="ctx-gear" onclick="openCtxSettings(event,'${c.id}')" title="${configCount} settings">⚙</span>` : ''}
+              <span class="ctx-card-dots" onclick="toggleCtxMenu(event,'${c.id}','${S.sel}')">⋯</span>
+              <div class="ctx-card-dropdown" id="cdrop-${c.id}">
+                ${hasConfig ? `<div class="ctx-dd-item" onclick="openCtxSettings(event,'${c.id}')">⚙️ Configuration</div>` : ''}
+                <div class="ctx-dd-item" onclick="openCtxSource(event,'${c.id}')">📂 ${sourceActionLabel}</div>
+                <div class="ctx-dd-sep"></div>
+                <div class="ctx-dd-item" onclick="startRenameCtx(event,'${c.id}','${S.sel}')">✏️ Rename</div>
+                <div class="ctx-dd-sep"></div>
+                ${(primary && isPage) || c.group === 'System'
+                  ? `<div class="ctx-dd-item danger disabled" style="cursor:not-allowed;pointer-events:auto" onclick="event.stopPropagation()"><span style="opacity:.35">🗑 Remove context</span><div class="ctx-dd-tooltip">${c.group === 'System' ? 'System contexts are always available and cannot be removed.' : 'This context is part of the dynamic page content and cannot be removed.'}</div></div>`
+                  : `<div class="ctx-dd-item danger" onclick="confirmRemoveCtx(event,'${c.id}','${S.sel}')">🗑 Remove context</div>`}
+              </div>
+            </div>
           </div>
+          ${(primary && isPage) || isUnconfigured || isBroken || hasRel ? `<div class="ctx-card-status-row">
+            ${primary && isPage ? '<div class="ctx-card-lock"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Comes with this page</div>' : ''}
+            ${isUnconfigured ? '<div class="ctx-card-lock" style="color:var(--yel);font-style:normal"><svg viewBox="0 0 24 24" style="stroke:var(--yel)"><path d="M12 9v4"/><circle cx="12" cy="16" r="0.5"/><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg> Configure settings to use as binding source</div>' : ''}
+            ${isBroken ? '<div class="ctx-card-lock" style="color:var(--red);font-style:normal"><svg viewBox="0 0 24 24" style="stroke:var(--red)"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Source unavailable</div>' : ''}
+            ${filterToggleHtml}
+          </div>` : ''}
           <div class="ctx-fields-list" id="ctx-fields-${c.id}">
             <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;padding:0 4px 6px;font-family:'SF Mono',ui-monospace,Menlo,Consolas,monospace">What this context exposes</div>
             ${fieldsHtml}
-          </div>
-          <div class="ctx-card-menu" id="cmenu-${c.id}" style="display:flex;align-items:center;gap:4px">
-            ${c.source === 'Custom Code' ? `<span class="ctx-code-btn" onclick="openCodeEditor(event,'${c.id}')" title="Open source code">&lt;/&gt;</span>` : ''}
-            ${hasConfig ? `<span class="ctx-gear" onclick="openCtxSettings(event,'${c.id}')" title="${configCount} settings">⚙</span>` : ''}
-            <span class="ctx-card-dots" onclick="toggleCtxMenu(event,'${c.id}','${S.sel}')">⋯</span>
-            <div class="ctx-card-dropdown" id="cdrop-${c.id}">
-              ${hasConfig ? `<div class="ctx-dd-item" onclick="openCtxSettings(event,'${c.id}')">⚙️ Configuration</div>` : ''}
-              <div class="ctx-dd-item" onclick="openCtxSource(event,'${c.id}')">📂 ${c.source === 'CMS' ? 'Open Collection' : c.group === 'Apps' || c.source === 'Wix Stores' || c.source === 'Wix Bookings' ? 'Open in Dashboard' : 'Open Source'}</div>
-              <div class="ctx-dd-sep"></div>
-              <div class="ctx-dd-item" onclick="startRenameCtx(event,'${c.id}','${S.sel}')">✏️ Rename</div>
-              <div class="ctx-dd-sep"></div>
-              ${(primary && isPage) || c.group === 'System'
-                ? `<div class="ctx-dd-item danger disabled" style="cursor:not-allowed;pointer-events:auto" onclick="event.stopPropagation()"><span style="opacity:.35">🗑 Remove context</span><div class="ctx-dd-tooltip">${c.group === 'System' ? 'System contexts are always available and cannot be removed.' : 'This context is part of the dynamic page content and cannot be removed.'}</div></div>`
-                : `<div class="ctx-dd-item danger" onclick="confirmRemoveCtx(event,'${c.id}','${S.sel}')">🗑 Remove context</div>`}
-            </div>
           </div>
         </div>
       </div>`;
@@ -11160,7 +11832,9 @@ function openCtxSettings(e, ctxId) {
   document.querySelectorAll('.ctx-card-dropdown.open').forEach(d => d.classList.remove('open'));
   S.ctxSettingsMenuOpen = null;
   S.ctxSettingsView = ctxId;
+  S.itemsTabActiveLevel = 1;
   renderBody();
+  renderActionBar();
 }
 
 function openCtxSource(e, ctxId) {
@@ -11249,12 +11923,16 @@ function openCodeTab() {
 function closeCtxSettings() {
   S.ctxSettingsMenuOpen = null;
   S.ctxSettingsView = null;
+  S.ctxSettingsTab = null;
   renderBody();
+  renderActionBar();
 }
 
 function switchCtxSettingsTab(tab) {
   S.ctxSettingsTab = tab;
+  S.itemsTabActiveLevel = 1;
   renderBody();
+  renderActionBar();
 }
 
 function renderCtxSettings(ctxId) {
@@ -11263,6 +11941,10 @@ function renderCtxSettings(ctxId) {
   const displayName = getCtxDisplayName(ctxId, S.sel);
   const configs = ctx.config || [];
   const activeCtxTab = S.ctxSettingsTab || 'configuration';
+  const nonNestedConfigs = configs.filter(c => !c.nested);
+  // Configuration tab always shows — it hosts sort/filter and instance settings.
+  const showConfigTab = true;
+  const resolvedTab = activeCtxTab;
   const sourceActionLabel = ctx.source === 'CMS'
     ? 'Open Collection'
     : ctx.group === 'Apps' || ctx.source === 'Wix Stores' || ctx.source === 'Wix Bookings'
@@ -11303,15 +11985,19 @@ function renderCtxSettings(ctxId) {
           </div>
         </div>
         <div class="ctx-settings-tabs">
-          <div class="ctx-settings-tab ${activeCtxTab!=='items'&&activeCtxTab!=='index'?'active':''}" onclick="switchCtxSettingsTab('configuration')">Configuration</div>
-          ${ctx.type==='list' ? `<div class="ctx-settings-tab ${activeCtxTab==='items'?'active':''}" onclick="switchCtxSettingsTab('items')">Items</div>` : ''}
-          <div class="ctx-settings-tab ${activeCtxTab==='index'?'active':''}" onclick="switchCtxSettingsTab('index')">Index</div>
+          ${showConfigTab ? `<div class="ctx-settings-tab ${resolvedTab!=='items'&&resolvedTab!=='index'?'active':''}" onclick="switchCtxSettingsTab('configuration')">Configuration</div>` : ''}
+          ${ctx.type==='list' ? `<div class="ctx-settings-tab ${resolvedTab==='items'?'active':''}" onclick="switchCtxSettingsTab('items')">Items</div>` : ''}
+          <div class="ctx-settings-tab ${resolvedTab==='index'?'active':''}" onclick="switchCtxSettingsTab('index')">Index</div>
         </div>
       </div>
       <div class="ctx-settings-scroll">
-        ${activeCtxTab === 'items' ? renderItemsTabContent(ctxId, ctx, configs) : `
+        ${resolvedTab === 'items'
+          ? renderItemsTabContent(ctxId, ctx, configs)
+          : resolvedTab === 'index'
+          ? renderCtxIndexTab(ctxId, ctx)
+          : `
         <div class="ctx-settings-section">
-          <div class="ctx-cfg-row" style="margin-bottom:${configs.filter(c=>!c.nested).length > 0 ? '12px' : '0'}">
+          <div class="ctx-cfg-row" style="margin-bottom:${nonNestedConfigs.length > 0 ? '12px' : '0'}">
             <div class="ctx-cfg-lbl">Instance name <span class="cfg-info">i<span class="cfg-info-tip">A custom display name for this specific instance. Useful when you have multiple instances of the same data source.</span></span></div>
             <div class="ctx-cfg-right">
               <div class="cfg-prop-row"><div class="cfg-main"><div class="cfg-val">
@@ -11322,7 +12008,12 @@ function renderCtxSettings(ctxId) {
             </div>
           </div>
         </div>
-        ${ctx.type === 'list' ? renderListSettings(ctxId, ctx, configs) : (configs.length > 0 ? `<div class="ctx-settings-section">
+        ${ctx.type === 'list'
+          ? `${renderListSettings(ctxId, ctx, configs)}${nonNestedConfigs.length > 0 ? `<div class="ctx-settings-section">
+          <div class="ctx-settings-section-lbl">General Settings</div>
+          ${nonNestedConfigs.map(cfg => renderCfgRow(cfg, ctxId)).join('')}
+        </div>` : ''}`
+          : (configs.length > 0 ? `<div class="ctx-settings-section">
           <div class="ctx-settings-section-lbl">General Settings</div>
           ${configs.map(cfg => renderCfgRow(cfg, ctxId)).join('')}
         </div>` : `<div class="ctx-settings-section">
@@ -11334,6 +12025,81 @@ function renderCtxSettings(ctxId) {
         `}
       </div>
     </div>`;
+}
+
+function renderCtxIndexTab(ctxId, ctx) {
+  const sectionId = S.sel;
+  const systemFields = ['_id', '_createdDate', '_updatedDate', '_owner', '_slug'];
+  const isList = ctx.type === 'list';
+
+  const renderFieldRow = (f) => {
+    const used = isFieldInUse(ctxId, f.name, sectionId);
+    const hoverAttr = used ? `onmouseenter="highlightFieldEls('${ctxId}','${f.name}','${sectionId}')" onmouseleave="clearHighlightEls()"` : '';
+    return `<div class="ctx-idx-field-row" ${hoverAttr}>
+      <div class="ctx-field-icon">${getFieldTypeIcon(f.type)}</div>
+      <div class="ctx-field-name">${f.name}</div>
+      ${used
+        ? `<span class="ctx-field-badge in-use">In use</span><span class="ctx-field-remove" onclick="removeFieldElement('${ctxId}','${f.name}','${sectionId}')" title="Remove">×</span>`
+        : `<span class="ctx-field-add" onclick="addFieldElement('${ctxId}','${f.name}')">+ Add</span>`}
+    </div>`;
+  };
+
+  const renderBindableRow = (name, icon, label, type, scope) => {
+    const used = isFieldInUse(ctxId, name, sectionId);
+    const hoverAttr = used ? `onmouseenter="highlightFieldEls('${ctxId}','${name}','${sectionId}')" onmouseleave="clearHighlightEls()"` : '';
+    return `<div class="ctx-idx-field-row" ${hoverAttr}>
+      <div class="ctx-field-icon" ${type === 'action' ? 'style="background:var(--acc-d);color:var(--acc);font-size:12px"' : ''}>${icon}</div>
+      <div class="ctx-field-name">${label}</div>
+      ${scope ? `<span class="ctx-action-scope">${scope}</span>` : ''}
+      ${used
+        ? `<span class="ctx-field-badge in-use">In use</span><span class="ctx-field-remove" onclick="removeFieldElement('${ctxId}','${name}','${sectionId}')" title="Remove">×</span>`
+        : `<span class="ctx-field-add" onclick="addFieldElement('${ctxId}','${name}')">+ Add</span>`}
+    </div>`;
+  };
+
+  const dataFields = (ctx.fields || []);
+  const allActions = [
+    ...((isList && ctx.itemActions) ? ctx.itemActions.map(a => ({...a, scope: 'per item'})) : []),
+    ...((ctx.contextActions) ? ctx.contextActions.map(a => ({...a, scope: isList ? 'collection' : ''})) : []),
+  ];
+  const metaFields = ctx.metadata || [];
+
+  const canAddFields = ctx.source === 'CMS' || ctx.source === 'Custom Code';
+  const addFieldBtn = canAddFields
+    ? `<div class="ctx-add-field-btn" onclick="openAddFieldModal('${ctxId}')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add field</div>`
+    : '';
+
+  const openSrcLabel = ctx.source === 'CMS' ? 'Open Collection'
+    : (ctx.group === 'Apps' || ctx.source === 'Wix Stores' || ctx.source === 'Wix Bookings') ? 'Open in Dashboard'
+    : 'Open Source';
+
+  const mkSection = (label, count, bodyHtml, startOpen = false) => `
+    <div class="ctx-idx-section">
+      <div class="ctx-idx-section-head ${startOpen ? 'open' : ''}" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        <span class="ctx-idx-section-lbl">${label} <span class="ctx-idx-section-count">(${count})</span></span>
+        <span class="ctx-idx-chevron">›</span>
+      </div>
+      <div class="ctx-idx-section-body ${startOpen ? 'open' : ''}">${bodyHtml}</div>
+    </div>`;
+
+  const dataSection = mkSection('Data Fields', dataFields.length,
+    dataFields.map(renderFieldRow).join('') + addFieldBtn, true);
+  const actionsSection = allActions.length > 0
+    ? mkSection('Actions', allActions.length,
+        allActions.map(a => renderBindableRow(a.name, a.icon, a.label, 'action', a.scope)).join(''))
+    : '';
+  const metaSection = metaFields.length > 0
+    ? mkSection('Metadata', metaFields.length,
+        metaFields.map(m => renderBindableRow(m.name, getFieldTypeIcon(m.type), m.label, m.type, '')).join(''))
+    : '';
+  const sysSection = mkSection('System Fields', systemFields.length,
+    systemFields.map(f => `<div class="ctx-idx-field-row"><div class="ctx-field-icon" style="font-size:9px;color:var(--t3)">sys</div><div class="ctx-field-name" style="color:var(--t3)">${f}</div></div>`).join(''));
+
+  return `<div class="ctx-idx-wrap">
+    <div class="ctx-idx-header">What this context exposes</div>
+    ${dataSection}${actionsSection}${metaSection}${sysSection}
+    <div class="ctx-idx-open-src" onclick="event.stopPropagation()">📂 ${openSrcLabel}</div>
+  </div>`;
 }
 
 function renderItemsTabContent(ctxId, ctx, configs) {
@@ -11366,152 +12132,162 @@ function renderItemsTabContent(ctxId, ctx, configs) {
         <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1">Items <span style="font-size:10px;font-weight:400;color:var(--t3)">${itemCount > 0 ? itemCount+' total' : ''}</span></span>
       </div>
       <div>${rows}</div>
-      <div class="ctx-settings-section">${renderPageSizeAndRandomRows(ctxId, ctx)}</div>
     `;
   }
 
-  // ── Multi-array: accordion per level ──
+  // ── Multi-array: hierarchical tree (Categories → Dishes → Allergens) ──
   if (!S.itemsTabAccordion) S.itemsTabAccordion = {};
   if (!S.itemsTabAccordion[ctxId]) S.itemsTabAccordion[ctxId] = {};
-  depths.forEach((d, i) => { if (S.itemsTabAccordion[ctxId][d] === undefined) S.itemsTabAccordion[ctxId][d] = (i === 0); });
+  if (S.itemsTabAccordion[ctxId][1] === undefined) S.itemsTabAccordion[ctxId][1] = true;
+  if (!S.itemsTabExpanded) S.itemsTabExpanded = {};
+  if (!S.itemsTabExpanded[ctxId]) S.itemsTabExpanded[ctxId] = {};
 
-  // Build sample items per level from the nested structure
-  const l1Items = sampleData;
-  const l2Items = [];
-  sampleData.forEach(cat => {
-    (cat.dishes || []).forEach(dish => l2Items.push({...dish, _breadcrumb: cat.categoryName, _breadcrumbIcon: cat.categoryIcon||''}));
-  });
-  const allergenMap = {};
-  sampleData.forEach(cat => {
-    (cat.dishes || []).forEach(dish => {
-      (dish.allergens || []).forEach(a => {
-        if (!allergenMap[a.allergenName]) allergenMap[a.allergenName] = {...a, _count: 0};
-        allergenMap[a.allergenName]._count++;
-      });
-    });
-  });
-  const l3Items = Object.values(allergenMap);
-  const levelItems = {1: l1Items, 2: l2Items, 3: l3Items};
-
-  function renderLevelItem(item, depth) {
-    if (depth === 1) {
-      const dishCount = (item.dishes||[]).length;
-      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
-        <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
-        <span style="font-size:17px;flex-shrink:0;line-height:1">${item.categoryIcon||'📄'}</span>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:12px;font-weight:500;color:var(--t1)">${item.categoryName}</div>
-          <div style="font-size:10px;color:var(--t3)">${dishCount} dish${dishCount!==1?'es':''}${item.description?' · '+item.description:''}</div>
-        </div>
-        <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
-      </div>`;
-    } else if (depth === 2) {
-      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
-        <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:12px;font-weight:500;color:var(--t1)">${item.name}</div>
-          <div style="font-size:10px;color:var(--t3)">${item.price}${item._breadcrumb?' · '+item._breadcrumbIcon+' '+item._breadcrumb:''}</div>
-        </div>
-        <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
-      </div>`;
-    } else {
-      return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
-        <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">⠿</span>
-        <span style="font-size:17px;flex-shrink:0;line-height:1">${item.allergenIcon||'⚠️'}</span>
-        <div style="flex:1;min-width:0">
-          <div style="font-size:12px;font-weight:500;color:var(--t1)">${item.allergenName}</div>
-          <div style="font-size:10px;color:var(--t3)">${item._count} dish${item._count!==1?'es':''}</div>
-        </div>
-        <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
-      </div>`;
-    }
-  }
-
-  function renderConfigChips(depth) {
+  function getArrayBadge(depth) {
     const cfgsAtDepth = byDepth[depth] || [];
-    if (!cfgsAtDepth.length) return '';
-    return cfgsAtDepth.map(cfg => {
-      const val = S.cfgValues?.[ctxId]?.[cfg.key] ?? cfg.default ?? '';
-      const isDefault = !cfg.default || val === cfg.default;
-      const typeIcon = {sort:'↕', filter:'▽', limit:'#'}[cfg.nestedType||'sort']||'↕';
-      const bg = isDefault ? 'var(--sur)' : '#e8f0fe';
-      const border = isDefault ? 'var(--b2)' : '#a8c7fa';
-      const color = isDefault ? 'var(--t2)' : '#1558d6';
-      return `<span style="display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:10px;background:${bg};border:1px solid ${border};font-size:10px;color:${color};cursor:pointer;flex-shrink:0;white-space:nowrap"
-        onclick="event.stopPropagation();openItemsLevelModal('${ctxId}',${depth})"
-        title="${cfg.label}: ${val}">${typeIcon} ${val}</span>`;
-    }).join('');
+    const sortCfg = cfgsAtDepth.find(c => !c.nestedType || c.nestedType === 'sort');
+    const filterCfg = cfgsAtDepth.find(c => c.nestedType === 'filter');
+    const sortVal = sortCfg ? (S.cfgValues?.[ctxId]?.[sortCfg.key] ?? sortCfg.default ?? '') : '';
+    const filterVal = filterCfg ? (S.cfgValues?.[ctxId]?.[filterCfg.key] ?? filterCfg.default ?? '') : null;
+    let sortLabel;
+    if (!sortVal || sortVal === 'Default order') sortLabel = 'Default Order';
+    else if (sortVal.includes('A\u2192Z')) sortLabel = 'A\u2013Z';
+    else if (sortVal.includes('Z\u2192A')) sortLabel = 'Z\u2013A';
+    else if (sortVal.includes('low\u2192high')) sortLabel = 'Price \u2191';
+    else if (sortVal.includes('high\u2192low')) sortLabel = 'Price \u2193';
+    else sortLabel = sortVal;
+    const isDefaultSort = !sortVal || sortVal === 'Default order' || (sortCfg && sortVal === sortCfg.default);
+    const isDefaultFilter = !filterCfg || !filterVal || filterVal === filterCfg?.default;
+    const filterLabel = isDefaultFilter ? 'All' : 'Filtered';
+    const isModified = !isDefaultSort || !isDefaultFilter;
+    return { text: sortLabel + ' \u2022 ' + filterLabel, isModified };
   }
 
-  function renderLevelAccordion(depth) {
-    const label = byDepth[depth]?.[0]?.nestedLabel || ('Level '+depth);
-    const items = levelItems[depth] || [];
-    const isOpen = !!S.itemsTabAccordion[ctxId][depth];
-    const chips = renderConfigChips(depth);
-    const arrow = isOpen ? '▾' : '▸';
-    return `<div style="border-bottom:1px solid var(--b1)">
-      <div style="display:flex;align-items:center;gap:8px;padding:9px 12px;cursor:pointer;background:var(--sur2);user-select:none"
-        onclick="toggleItemsAccordion('${ctxId}',${depth})">
-        <span style="font-size:11px;color:var(--t3);flex-shrink:0">${arrow}</span>
-        <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1">${label}
-          <span style="font-size:10px;font-weight:400;color:var(--t3);margin-left:4px">${items.length}</span>
-        </span>
-        <div style="display:flex;align-items:center;gap:4px">${chips}</div>
+  function renderDishItem(dish, catIdx, dishIdx) {
+    const key = `c${catIdx}d${dishIdx}`;
+    const isOpen = !!S.itemsTabExpanded[ctxId][key];
+    const allergens = dish.allergens || [];
+    const allergenCount = allergens.length;
+    const hasAllergens = depths.includes(3) && allergenCount > 0;
+    const { text: allergenBadgeText, isModified: allergenMod } = hasAllergens ? getArrayBadge(3) : {text:'', isModified:false};
+
+    const allergensSection = (isOpen && hasAllergens) ? `
+      <div style="background:#f3f1f8;border-top:1px solid var(--b1)">
+        <div style="display:flex;align-items:center;gap:4px;padding:5px 12px 5px 44px;border-bottom:1px solid var(--b1)">
+          <span style="font-size:10px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.4px">Allergens</span>
+          <span style="font-size:11px;color:var(--t3);margin-left:2px">${allergenCount}</span>
+        </div>
+        ${allergens.map(a => `
+          <div style="display:flex;align-items:center;gap:8px;padding:5px 12px 5px 44px;border-bottom:1px solid var(--b1)">
+            <span style="font-size:14px;flex-shrink:0;line-height:1">${a.allergenIcon||'\u26a0\ufe0f'}</span>
+            <div style="font-size:11px;font-weight:500;color:var(--t1)">${a.allergenName}</div>
+          </div>`).join('')}
+      </div>` : '';
+
+    return `<div>
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 12px 7px 28px;border-bottom:1px solid var(--b1);cursor:${hasAllergens?'pointer':'default'}"
+        onclick="toggleItemExpanded('${ctxId}','${key}')">
+        ${hasAllergens
+          ? `<span style="font-size:10px;color:var(--t3);flex-shrink:0;width:12px">${isOpen?'\u25be':'\u25b8'}</span>`
+          : `<span style="width:12px;flex-shrink:0"></span>`}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:500;color:var(--t1)">${dish.name}</div>
+          <div style="font-size:10px;color:var(--t3)">${dish.price}${allergenCount?' \u00b7 '+allergenCount+' allergen'+(allergenCount!==1?'s':''):''}</div>
+        </div>
       </div>
-      ${isOpen ? `<div>${items.map(item => renderLevelItem(item, depth)).join('')}</div>` : ''}
+      ${allergensSection}
     </div>`;
   }
 
-  // Config modal (if open)
-  const modalHtml = (S.itemsTabModal?.ctxId === ctxId)
-    ? renderItemsLevelModal(ctxId, byDepth)
+  function renderCategoryItem(cat) {
+    const dishes = cat.dishes || [];
+    const dishCount = dishes.length;
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--b1)">
+      <span style="font-size:10px;color:var(--t3);cursor:grab;flex-shrink:0">\u2807</span>
+      <span style="font-size:17px;flex-shrink:0;line-height:1">${cat.categoryIcon||'\ud83d\udcc4'}</span>
+      <div style="flex:1;min-width:0">
+        <div style="font-size:12px;font-weight:500;color:var(--t1)">${cat.categoryName}</div>
+        <div style="font-size:10px;color:var(--t3)">${dishCount} dish${dishCount!==1?'es':''}${cat.description?' \u00b7 '+cat.description:''}</div>
+      </div>
+      <span style="font-size:11px;cursor:pointer;padding:4px;color:var(--t3)" title="Edit">✏️</span>
+    </div>`;
+  }
+
+  const topLabel = byDepth[1]?.[0]?.nestedLabel || 'Items';
+
+  const topSection = `<div>
+    <div style="display:flex;align-items:center;gap:4px;padding:8px 12px;border-bottom:1px solid var(--b1);background:var(--sur2)">
+      <span style="font-size:12px;font-weight:600;color:var(--t1);flex:1">${topLabel} <span style="font-size:10px;font-weight:400;color:var(--t3)">${sampleData.length} total</span></span>
+    </div>
+    <div>${sampleData.map(cat => renderCategoryItem(cat)).join('')}</div>
+  </div>`;
+
+  // Floating badge panel (if open for this ctx)
+  const badgePanelHtml = (S.itemsBadgePanel?.ctxId === ctxId)
+    ? renderItemsBadgePanel(ctxId, byDepth)
     : '';
 
-  return `<div style="position:relative">${modalHtml}${depths.map(d => renderLevelAccordion(d)).join('')}</div>`;
+  return `<div>${badgePanelHtml}${topSection}</div>`;
 }
 
-function renderItemsLevelModal(ctxId, byDepth) {
-  const depth = S.itemsTabModal.depth;
+function renderItemsBadgePanel(ctxId, byDepth) {
+  const { depth, top, left } = S.itemsBadgePanel;
   const cfgsAtDepth = byDepth[depth] || [];
-  const label = cfgsAtDepth[0]?.nestedLabel || ('Level '+depth);
+  const label = cfgsAtDepth[0]?.nestedLabel || ('Level ' + depth);
+  const panelRight = Math.max(8, window.innerWidth - left + 10);
+  const panelTop = Math.min(Math.max(8, top - 8), window.innerHeight - 260);
   const rows = cfgsAtDepth.map(cfg => {
     const val = S.cfgValues?.[ctxId]?.[cfg.key] ?? cfg.default ?? '';
-    const typeLabel = {sort:'Sort', filter:'Filter', limit:'Limit'}[cfg.nestedType||'sort']||'Sort';
+    const typeLabel = {sort:'Sort order', filter:'Filter', limit:'Show'}[cfg.nestedType||'sort'] || 'Sort order';
     const opts = (cfg.options||[]).map(o => `<option value="${o.replace(/"/g,'&quot;')}"${o===val?' selected':''}>${o}</option>`).join('');
-    const infoTip = cfg.description ? `<span class="cfg-info" style="margin-left:4px">?<span class="cfg-info-tip">${cfg.description}</span></span>` : '';
-    return `<div style="margin-bottom:10px">
-      <div style="font-size:11px;color:var(--t2);margin-bottom:4px;font-weight:500">${typeLabel}${infoTip}</div>
-      <select style="width:100%;padding:5px 8px;border-radius:6px;border:1px solid var(--b2);background:var(--sur);color:var(--t1);font-size:12px;cursor:pointer"
+    return `<div class="items-badge-fp-row">
+      <div class="items-badge-fp-lbl">${typeLabel}</div>
+      <select class="items-badge-fp-select"
         onchange="if(!S.cfgValues)S.cfgValues={};if(!S.cfgValues['${ctxId}'])S.cfgValues['${ctxId}']={};S.cfgValues['${ctxId}']['${cfg.key}']=this.value;markInstanceModified('${ctxId}');renderBody()">
         ${opts}
       </select>
     </div>`;
   }).join('');
-  return `<div style="position:absolute;inset:0;z-index:20;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;border-radius:4px" onclick="closeItemsLevelModal()">
-    <div style="background:var(--sur);border-radius:10px;padding:16px;width:210px;box-shadow:0 8px 28px rgba(0,0,0,.22)" onclick="event.stopPropagation()">
-      <div style="display:flex;align-items:center;margin-bottom:14px">
-        <div style="font-size:13px;font-weight:600;color:var(--t1);flex:1">Configure ${label}</div>
-        <span style="font-size:18px;cursor:pointer;color:var(--t3);line-height:1;padding:0 4px" onclick="closeItemsLevelModal()">×</span>
+  return `
+    <div onclick="closeItemsBadge()" style="position:fixed;inset:0;z-index:9998"></div>
+    <div class="items-badge-fp" style="top:${panelTop}px;right:${panelRight}px" onclick="event.stopPropagation()">
+      <div class="items-badge-fp-head">
+        <div class="items-badge-fp-title">${label}</div>
+        <button class="items-badge-fp-close" onclick="closeItemsBadge()">&#215;</button>
       </div>
       ${rows}
-    </div>
-  </div>`;
+    </div>`;
 }
 
 function toggleItemsAccordion(ctxId, depth) {
   if (!S.itemsTabAccordion) S.itemsTabAccordion = {};
   if (!S.itemsTabAccordion[ctxId]) S.itemsTabAccordion[ctxId] = {};
   S.itemsTabAccordion[ctxId][depth] = !S.itemsTabAccordion[ctxId][depth];
+  S.itemsTabActiveLevel = 1;
+  renderBody();
+  renderActionBar();
+}
+
+function toggleItemExpanded(ctxId, key) {
+  if (!S.itemsTabExpanded) S.itemsTabExpanded = {};
+  if (!S.itemsTabExpanded[ctxId]) S.itemsTabExpanded[ctxId] = {};
+  S.itemsTabExpanded[ctxId][key] = !S.itemsTabExpanded[ctxId][key];
+  // Set active level: dish key (c0d1) → L3, category key (c0) → L2
+  if (S.itemsTabExpanded[ctxId][key]) {
+    S.itemsTabActiveLevel = /d\d+/.test(key) ? 3 : 2;
+  }
+  renderBody();
+  renderActionBar();
+}
+
+function openItemsBadge(event, ctxId, depth) {
+  const rect = event.currentTarget.getBoundingClientRect();
+  S.itemsBadgePanel = { ctxId, depth: Number(depth), top: rect.top, left: rect.left, right: rect.right };
   renderBody();
 }
 
-function openItemsLevelModal(ctxId, depth) {
-  S.itemsTabModal = { ctxId, depth: Number(depth) };
-  renderBody();
-}
 
-function closeItemsLevelModal() {
-  S.itemsTabModal = null;
+function closeItemsBadge() {
+  S.itemsBadgePanel = null;
   renderBody();
 }
 
@@ -11598,7 +12374,7 @@ function renderListSettings(ctxId, ctx, configs) {
 
   const sortDesc = isRandomOn ? 'Random' : ((S.sortRules[ctxId]||[]).length > 0 ? (S.sortRules[ctxId]||[]).length + ' sort rule' + ((S.sortRules[ctxId]||[]).length > 1 ? 's' : '') : 'No sorting');
   const hasMixed = hasNestedFilters || hasNestedLimits;
-  const sortLabel = hasNestedCfgs ? (hasMixed ? 'Item config' : 'Sort order') : 'Sort';
+  const sortLabel = 'Sort';
   const sortTip = hasNestedCfgs
     ? 'Top-level sort runs server-side. Sort, filter, and limit for nested arrays run client-side after fetch.'
     : 'Controls the order items appear in the list';
@@ -11607,7 +12383,7 @@ function renderListSettings(ctxId, ctx, configs) {
     : '';
 
   const sortRow = `<div class="ctx-cfg-row">
-    <div class="ctx-cfg-lbl">${sortLabel} <span class="cfg-info">?<span class="cfg-info-tip">${sortTip}</span></span>${hasNestedCfgs ? `<span style="font-size:9px;color:var(--t3);font-family:'DM Mono',monospace;margin-left:4px;letter-spacing:0">${perLevelNote}</span>` : ''}</div>
+    <div class="ctx-cfg-lbl">${sortLabel} <span class="cfg-info">?<span class="cfg-info-tip">${sortTip}</span></span></div>
     <div class="ctx-cfg-right">
       <div class="cfg-prop-row ${sortBound?'bound':''}">
         <div class="cfg-main">
@@ -11709,10 +12485,12 @@ function renderListSettings(ctxId, ctx, configs) {
 
       let body = '';
       if (depth === 1) {
-        // L1 body: sort + filter (random order & items per load live in Items tab footer)
+        // L1 body: sort + filter + random order + items per load
         body = `<div style="padding:6px 8px;display:flex;flex-direction:column;gap:2px">
           ${filterRow}
           ${sortRow}
+          ${randomRow}
+          ${pageSizeRow}
         </div>`;
       } else {
         const rowsHtml = (byDepth[depth]||[]).map(cfg => {
@@ -11748,9 +12526,9 @@ function renderListSettings(ctxId, ctx, configs) {
         </div>`;
       }
 
-      return `<div style="border:1px solid ${hasCustom?'color-mix(in srgb,var(--acc) 35%,transparent)':'var(--b1)'};border-radius:6px;margin-bottom:6px;overflow:hidden">
+      const indent = depth > 1 ? `margin-left:${(depth - 1) * 12}px;` : '';
+      return `<div style="border:1px solid ${hasCustom?'color-mix(in srgb,var(--acc) 35%,transparent)':'var(--b1)'};border-radius:6px;margin-bottom:6px;overflow:hidden;${indent}">
         <div style="${headerStyle}" onclick="toggleCfgAccordion('${ctxId}',${depth})">
-          ${levelBadge}
           <span style="flex:1;font-size:12px;font-weight:600;color:var(--t1)">${label}</span>
           <span style="font-size:11px;color:${hasCustom?'var(--acc)':'var(--t3)'};font-style:${hasCustom?'normal':'italic'};max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${summary}</span>
           <span style="font-size:10px;color:var(--t3);margin-left:6px;transition:transform .15s;display:inline-block;transform:rotate(${isOpen?'90':'0'}deg)">›</span>
@@ -11764,7 +12542,7 @@ function renderListSettings(ctxId, ctx, configs) {
     const sectionsHtml = allDepths.map(d => accordionSection(d)).join('');
 
     return `<div class="ctx-settings-section">
-      <div class="ctx-settings-section-lbl">Item config</div>
+      <div class="ctx-settings-section-lbl">Items sort &amp; filter</div>
       ${sectionsHtml}
     </div>
     ${hasOtherCfgs ? `<div class="ctx-settings-section">
@@ -12058,7 +12836,7 @@ const ITEM_DATA = [
 function selectPage(el, name) {
   document.querySelectorAll('.pp-item, .pp-sub').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
-  const pageIcon = name === 'Product Item' ? '🛒' : name === 'Repeater Usecases' || name === 'Repeater' ? '↻' : name === 'Multi-State Box' ? '◫' : name === 'Repeaters' ? '↻' : name.startsWith('Option B') ? 'Ⓑ' : name === 'Team Members List' ? '👥' : name === 'Team Member Item' ? '👤' : name === 'Role Item' ? '🏷' : name === 'Book Item' ? '📖' : name === 'Author Item' ? '✍️' : name === 'Dropdown Component' ? '📋' : name === 'Items Config' ? '⚡' : '📄';
+  const pageIcon = name === 'Product Item' ? '🛒' : name === 'Repeater Usecases' || name === 'Repeater' ? '↻' : name === 'Multi-State Box' ? '◫' : name === 'Repeaters' ? '↻' : name.startsWith('Option B') ? 'Ⓑ' : name === 'Team Members List' ? '👥' : name === 'Team Member Item' ? '👤' : name === 'Role Item' ? '🏷' : name === 'Book Item' ? '📖' : name === 'Author Item' ? '✍️' : name === 'Dropdown Component' ? '📋' : name === 'Items Config' ? '⚡' : name === 'Services' ? '🧘' : '📄';
   document.querySelector('.page-sel').innerHTML = `<span class="page-sel-name">${pageIcon} ${name}</span> <span class="page-sel-chevron">▾</span>`;
   document.getElementById('pages-panel').classList.remove('open');
 
@@ -12079,6 +12857,7 @@ function selectPage(el, name) {
   const aiPage = document.getElementById('author-item-page');
   const ddPage = document.getElementById('dropdown-page');
   const icPage = document.getElementById('items-config-page');
+  const svcPage = document.getElementById('services-page');
   S.currentPage = name;
   _addedSuggestedIds.clear();
 
@@ -12099,6 +12878,7 @@ function selectPage(el, name) {
   aiPage.classList.remove('active-page');
   ddPage.classList.remove('active-page');
   icPage.classList.remove('active-page');
+  svcPage.classList.remove('active-page');
 
   if (name === 'Items (List)') {
     itemsPage.classList.add('active-page');
@@ -12130,6 +12910,8 @@ function selectPage(el, name) {
     ddPage.classList.add('active-page');
   } else if (name === 'Items Config') {
     icPage.classList.add('active-page');
+  } else if (name === 'Services') {
+    svcPage.classList.add('active-page');
   } else if (name === 'Demo') {
     demoPage.classList.remove('hidden-page');
   } else if (name === 'Home Page') {
@@ -15613,7 +16395,7 @@ function startRenameCtx(e, ctxId, sectionId) {
   if (!nameEl || !ctx) return;
   const sectionAliases = S.ctxAliases[sectionId] || {};
   const currentName = sectionAliases[ctxId] || ctx.name;
-  nameEl.innerHTML = ctx.icon + ' <input class="ctx-rename-input" id="rinp-' + ctxId + '" value="' + currentName + '">';
+  nameEl.innerHTML = '<input class="ctx-rename-input" id="rinp-' + ctxId + '" value="' + currentName + '">' + '<span class="ctx-card-accent" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle cx="5" cy="18" r="3" stroke="currentColor" stroke-width="2.8"/><circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="2.8"/><circle cx="19" cy="5" r="3" stroke="currentColor" stroke-width="2.8"/><path d="M7.4 15.9L9.6 13.4M14.2 8.7L16.6 6.4" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></span>';
   const inp = document.getElementById('rinp-' + ctxId);
   inp.focus();
   inp.select();
@@ -21242,6 +22024,16 @@ document.addEventListener('mousedown', function(e) {
   if (editing.contains(e.target)) return;
   exitTextEditing();
 }, true);
+
+// ─── DEFAULT: Restaurant Menu repeater in Home Page · sec-d262-empty2 ────────
+(function initHomeRestaurantMenu() {
+  const sBody = document.querySelector('#sec-d262-empty2 .s-body');
+  if (!sBody) return;
+  const _toast = window.toast;
+  window.toast = function() {};
+  addRestaurantMenuRepeater(sBody, 'sec-d262-empty2', 'repeater-restaurant-home', 'home');
+  window.toast = _toast;
+})();
 </script>
 </body>
 </html>
